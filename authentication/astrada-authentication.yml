@@ -1,0 +1,27 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/astrada-openapi-original.json
+docs: https://docs.astrada.co/reference/authentication
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - client_credentials
+  bearer: true
+notes: >-
+  Astrada uses OAuth 2.0. The documented grant is the client-credentials flow: POST
+  client_id/client_secret/grant_type=client_credentials to the Keycloak (OpenID Connect)
+  token endpoint, then send Authorization: Bearer <access_token>. Access tokens are
+  short-lived (expires_in ~300s). Client ID, Client Secret and Account ID are provisioned
+  by Astrada support. NOTE: the OpenAPI declares the scheme flow as 'implicit', but the
+  docs and token endpoint describe client_credentials.
+schemes:
+- name: main-auth
+  type: oauth2
+  documented_grant: client_credentials
+  spec_declared_flow: implicit
+  token_endpoint: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+  scopes: 34
+  sources:
+  - openapi/astrada-openapi-original.json
+  - https://docs.astrada.co/reference/authentication
