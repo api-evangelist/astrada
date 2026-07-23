@@ -1,0 +1,37 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/reference/base-api-responses
+note: >-
+  Cross-cutting standards conformance. OAuth2 and error/hypermedia conventions derived
+  from the OpenAPI and docs; PCI DSS / GDPR / CCPA sourced from the published security page.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: OpenAPI securityScheme type oauth2 (client_credentials); token endpoint documented.
+  - id: rfc6749-oauth2
+    conforms: true
+    evidence: Authentication doc cites RFC 6749 client-credentials flow.
+  - id: rfc7807-problem-details
+    conforms: true
+    evidence: Error responses use application/problem+json with title/detail (API Responses doc).
+  - id: rfc9457-problem-details
+    conforms: true
+    evidence: RFC 7807 is obsoleted by RFC 9457; same problem+json envelope.
+  - id: hal-hypermedia
+    conforms: true
+    evidence: Success responses use application/hal+json with _links/_embedded (draft-kelly-json-hal-06).
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset/Deprecation header support documented.
+  - id: idempotency-key
+    conforms: false
+    evidence: No idempotency-key header documented or present in the OpenAPI.
+  - id: pci-dss
+    conforms: true
+    evidence: PCI DSS v4 Level 1 Service Provider certification (astrada.co/security).
+  - id: gdpr
+    conforms: true
+    evidence: Stated GDPR compliance (astrada.co/security).
+  - id: ccpa
+    conforms: true
+    evidence: Stated CCPA compliance (astrada.co/security).

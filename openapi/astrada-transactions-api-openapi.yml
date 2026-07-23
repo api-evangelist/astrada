@@ -1,0 +1,569 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts transactions API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: transactions
+  description: Transaction resource
+paths:
+  /transactions/{transactionId}:
+    parameters:
+    - $ref: '#/components/parameters/transaction-id'
+    get:
+      tags:
+      - transactions
+      summary: Retrieve transaction
+      description: 'Returns a transaction by its unique identifier, including details about the transaction''s state and relevant transactional data.
+
+        '
+      operationId: GetTransactionById
+      security:
+      - main-auth:
+        - transactions:read
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/transaction'
+              examples:
+                Example Get Transaction Response:
+                  $ref: '#/components/examples/transaction'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /transactions:
+    get:
+      tags:
+      - transactions
+      summary: List transactions
+      description: 'Returns a list of all transactions under the account.
+
+
+        By default, `GET /transactions` returns transactions ordered by the latest `createdAt`. You can combine the different filters as documented.
+
+
+        This endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).
+
+        '
+      operationId: GetTransactions
+      parameters:
+      - $ref: '#/components/parameters/transaction-message-id'
+      - $ref: '#/components/parameters/subaccount-id'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/card-id'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/order'
+      security:
+      - main-auth:
+        - transactions:read
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          content:
+            application/hal+json:
+              schema:
+                type: object
+                required:
+                - _links
+                - _embedded
+                properties:
+                  _links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                      next:
+                        $ref: '#/components/schemas/link'
+                  _embedded:
+                    type: object
+                    required:
+                    - transactions
+                    properties:
+                      transactions:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/transaction'
+              examples:
+                Example List Transactions Response:
+                  value:
+                    _links:
+                      self:
+                        href: /transactions
+                    _embedded:
+                      transactions:
+                      - _links:
+                          messages:
+                          - href: /transaction-messages/f4b24a0a-6a37-4ce3-8845-ddf0b604a9b4
+                          - href: /transaction-messages/934f8701-53e3-4a2b-a000-6bb52195d2ea
+                          card:
+                            href: /subaccounts/f4b24a0a-6a37-4ce3-8845-ddf0b604a9b6
+                          subaccount:
+                            href: /subaccounts/f4b24a0a-6a37-4ce3-8845-ddf0b604a9b5
+                          self:
+                            href: /transactions/f4b24a0a-6a37-4ce3-8845-ddf0b604a9b4
+                        acceptor:
+                          city: LONDON
+                          country: GBR
+                          mcc: '5734'
+                          state: LND
+                        cardId: 4d1ff59f-4286-4209-9662-92e174193562
+                        cardholderBillingCurrency: GBP
+                        cardholderBillingHoldAmount: 0
+                        cardholderBillingSettledAmount: 0.81
+                        createdAt: '2024-05-01T06:41:43.810Z'
+                        descriptor: Uber
+                        id: 8697df0c-9011-47ca-a52b-8d2a7a4ad903
+                        network: MASTERCARD
+                        status: SETTLED
+                        subaccountId: c6d5e036-361e-4773-a514-b9496cf2d2b5
+                        supersededMessageIds: []
+                        transactionCurrency: USD
+                        transactionHoldAmount: 0
+                        transactionOccurrenceDate: '2024-05-01'
+                        transactionSettledAmount: 1
+                        transactionType: DEBIT_01
+                        updatedAt: '2024-05-02T08:41:43.810Z'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    transaction-message-id:
+      in: query
+      name: transactionMessageId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 9a88aa0e-c1d3-4e70-b5e1-45ab64eb5aac
+    order:
+      in: query
+      name: order
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+      example: desc
+    card-id:
+      in: query
+      name: cardId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
+    transaction-id:
+      in: path
+      name: transactionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  examples:
+    transaction:
+      description: Example of Transaction resource
+      value:
+        _links:
+          card:
+            href: /cards/4d1ff59f-4286-4209-9662-92e174193562
+          subaccount:
+            href: /subaccounts/c6d5e036-361e-4773-a514-b9496cf2d2b5
+          self:
+            href: /transactions/8697df0c-9011-47ca-a52b-8d2a7a4ad903
+          messages:
+          - href: /transaction-messages/f4b24a0a-6a37-4ce3-8845-ddf0b604a9b4
+          - href: /transaction-messages/934f8701-53e3-4a2b-a000-6bb52195d2ea
+        acceptor:
+          city: LONDON
+          country: GBR
+          mcc: '5734'
+          state: LND
+        cardId: 4d1ff59f-4286-4209-9662-92e174193562
+        cardholderBillingCurrency: GBP
+        cardholderBillingHoldAmount: 0
+        cardholderBillingSettledAmount: 0.81
+        createdAt: '2024-05-01T06:41:43.810Z'
+        descriptor: Uber
+        id: 8697df0c-9011-47ca-a52b-8d2a7a4ad903
+        network: MASTERCARD
+        status: SETTLED
+        subaccountId: c6d5e036-361e-4773-a514-b9496cf2d2b5
+        supersededMessageIds: []
+        transactionCurrency: USD
+        transactionHoldAmount: 0
+        transactionOccurrenceDate: '2024-05-01'
+        transactionSettledAmount: 1
+        updatedAt: '2024-05-02T08:41:43.810Z'
+  schemas:
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    transaction:
+      type: object
+      properties:
+        _links:
+          type: object
+          properties:
+            messages:
+              type: array
+              items:
+                $ref: '#/components/schemas/link'
+            card:
+              $ref: '#/components/schemas/link'
+            self:
+              $ref: '#/components/schemas/link'
+            subaccount:
+              $ref: '#/components/schemas/link'
+          required:
+          - messages
+        acceptor:
+          type: object
+          description: The details relating to the acceptor (merchant) from the latest transaction message.
+          properties:
+            city:
+              type: string
+              nullable: true
+              description: The acceptor's registered city. Defined by the acquirer/processor.
+            country:
+              type: string
+              nullable: true
+              description: The acceptor's registered country following ISO 3166 alpha-3.
+            mcc:
+              type: string
+              nullable: true
+              description: The Merchant Category Code provided by the acquirer/processor. Used to classify businesses by the types of goods provided or services rendered.
+            state:
+              type: string
+              nullable: true
+              description: The acceptor's registered state (e.g. Michigan) as assigned by the acquirer/processor.
+          required:
+          - city
+          - country
+          - mcc
+          - state
+        cardId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the card related to this entity. Null only for bank-sourced transactions on a bank account with no linked cards (the card-less unified feed); the `_links.card` link is omitted in that case.
+        cardholderBillingCurrency:
+          type: string
+          description: The currency of the country of issuance following ISO 4217 alpha-3 format.
+        cardholderBillingHoldAmount:
+          type: number
+          format: double
+          description: This amount models the hold on the cardholder account, in the card's issued currency, that occurs after an authorization and before a financial message. This amount will change as both authorization and financial messages are added to the Transaction in order to reflect the remaining hold amount.
+        cardholderBillingSettledAmount:
+          type: number
+          format: double
+          description: The settled amount models the bottom line impact to the customer's bank statement in the card's issued currency. This amount will change as financial messages are added to the Transaction.
+        descriptor:
+          type: string
+          nullable: true
+          description: Cleansed merchant name.
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this transaction entity.
+        network:
+          type: string
+          description: The card network that processed this payment.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount related to this entity.
+        supersededMessageIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Message ids from `_links.messages` whose financial contribution was superseded during aggregation — typically duplicate deliveries of the same clearing across network feeds, or a provisional bank-sourced settlement replaced by the network clearing. Superseded messages stay listed in `_links.messages` for audit but do not count toward the settled amounts, so exclude them when deriving totals from individual messages (or better, use `transactionSettledAmount` / `cardholderBillingSettledAmount` directly). Always a subset of `_links.messages`. Each payload carries the full current set (a snapshot, not a delta). Transactions last updated before this field was introduced report `[]` until their next update.
+        status:
+          type: string
+          description: A semantic understanding of the state of the transaction within the transaction lifecycle. [Learn More](https://docs.astrada.co/docs/transaction)
+          enum:
+          - PENDING
+          - VOIDED
+          - DECLINED
+          - SETTLED
+        transactionCurrency:
+          type: string
+          description: The currency in which the transaction took place following ISO 4217 alpha-3 format.
+        transactionHoldAmount:
+          type: number
+          format: double
+          description: This amount models the hold on the cardholder account, in the currency the transaction was conducted in, that occurs after an authorization and before a financial message. This amount will change as both authorization and financial messages are added to the Transaction in order to reflect the remaining hold amount.
+        transactionOccurrenceDate:
+          type: string
+          format: date
+          nullable: true
+          description: The UTC date when the transaction took place, following ISO 8601 format (YYYY-MM-DD). This is a date-only field with no time component.
+        transactionSettledAmount:
+          type: number
+          format: double
+          description: The settled amount models the bottom line impact to the customer's bank statement in the currency the transaction was conducted in. This amount will change as financial messages are added to the Transaction.
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+      required:
+      - _links
+      - acceptor
+      - cardId
+      - cardholderBillingCurrency
+      - cardholderBillingHoldAmount
+      - cardholderBillingSettledAmount
+      - createdAt
+      - descriptor
+      - id
+      - network
+      - subaccountId
+      - status
+      - transactionCurrency
+      - transactionHoldAmount
+      - transactionOccurrenceDate
+      - transactionSettledAmount
+      - updatedAt
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

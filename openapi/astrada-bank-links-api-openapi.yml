@@ -1,0 +1,1001 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts bank-links API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: bank-links
+  description: Manage bank enrollment links. A bank link represents an invitation for a user to connect their bank account via Plaid.
+paths:
+  /bank-links:
+    post:
+      tags:
+      - bank-links
+      summary: Create bank link
+      description: 'Creates a new bank link to initiate a bank enrollment. The response includes a `hostedLink` URL where the user can connect their bank account via Plaid.
+
+
+        The hosted link expires after 4 hours. If the link expires before the user completes enrollment, retrieve the bank link via `GET /bank-links/{bankLinkId}` to get a refreshed URL.
+
+
+        Creating a bank link with an ID that already exists for the account will return a `409 Conflict` error, unless the existing link has expired.
+
+        '
+      operationId: CreateBankLink
+      security:
+      - main-auth:
+        - banking:write
+      requestBody:
+        description: Bank link creation request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: A client-provided identifier for the bank link. Must be alphanumeric with hyphens and underscores only.
+                  type: string
+                  minLength: 1
+                  maxLength: 256
+                  pattern: ^[a-zA-Z0-9_-]+$
+                subaccountId:
+                  description: The subaccount identifier to associate with this bank link.
+                  type: string
+                  format: uuid
+                filters:
+                  type: object
+                  description: 'Optional per-link narrowing of the account''s bank-linking policy. Values may
+
+                    only NARROW what the policy allows — the current system default is
+
+                    `accountTypes: [credit]` (credit-card accounts only). Requests widening beyond
+
+                    the policy are rejected with `400`. Account-type enforcement is applied by the
+
+                    provider at link-token creation and also filters the institution-select list.
+
+                    '
+                  properties:
+                    accountTypes:
+                      type: array
+                      minItems: 1
+                      description: Account types selectable during this hosted session.
+                      items:
+                        type: string
+                        enum:
+                        - checking
+                        - savings
+                        - credit
+                    linkCustomizationName:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                      description: 'Name of an allowlisted provider (Plaid) Link customization to apply to
+
+                        this hosted session — e.g. `amex_only` to surface an Amex-first
+
+                        institution list with a tailored headline for card-enrollment
+
+                        connections. Only names on the account''s allowlist are accepted; others
+
+                        are rejected with `400`. Institution steering is by account-type
+
+                        filtering plus the customization''s Dashboard configuration — the
+
+                        provider does not support hard institution pre-selection for hosted
+
+                        sessions.
+
+                        '
+                bin6:
+                  type: string
+                  pattern: ^\d{6}$
+                  description: 'First 6 digits captured client-side before an institution
+
+                    pivot (e.g. an American Express BIN typed into the card form
+
+                    before the SDK pivots to bank linking). Persisted with the
+
+                    link and attached to the completion-time bank-derived card
+
+                    mint when exactly one card is minted — it becomes that
+
+                    card''s `first6digits`.
+
+                    '
+              required:
+              - id
+              - subaccountId
+            examples:
+              BankLinkRequestExample:
+                value:
+                  id: enrollment_abc123
+                  subaccountId: 50cced63-ee4e-4ff7-a469-aaa989f220f2
+              AmexCardEnrollmentExample:
+                value:
+                  id: enrollment_amex_7f2c
+                  subaccountId: 50cced63-ee4e-4ff7-a469-aaa989f220f2
+                  filters:
+                    accountTypes:
+                    - credit
+                    linkCustomizationName: amex_only
+                  bin6: '371449'
+      responses:
+        '201':
+          description: Bank link created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bank-link'
+              examples:
+                Example Create Bank Link Response:
+                  value:
+                    _links:
+                      self:
+                        href: /bank-links/enrollment_abc123
+                    id: enrollment_abc123
+                    accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+                    subaccountId: 50cced63-ee4e-4ff7-a469-aaa989f220f2
+                    state: pending
+                    hostedLink: https://hosted.plaid.com/link/abc123
+                    linkExpiresAt: '2025-10-03T14:25:27.000Z'
+                    createdAt: '2025-10-03T10:25:27.069Z'
+          links:
+            GetBankLink:
+              operationId: GetBankLink
+              parameters:
+                bankLinkId: $response.body#/id
+              description: Retrieve the created bank link.
+            CompleteBankLink:
+              operationId: PatchBankLink
+              parameters:
+                bankLinkId: $response.body#/id
+              description: Complete the bank link enrollment.
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/server-error'
+    get:
+      tags:
+      - bank-links
+      summary: List bank links
+      description: 'Returns a list of bank links under the account.
+
+
+        By default, `GET /bank-links` returns bank links ordered by the latest `createdAt`.
+
+
+        This endpoint supports cursor-based pagination.
+
+        '
+      operationId: ListBankLinks
+      parameters:
+      - $ref: '#/components/parameters/subaccount-id'
+      - $ref: '#/components/parameters/bank-link-state'
+      - $ref: '#/components/parameters/banking-limit'
+      - $ref: '#/components/parameters/cursor'
+      security:
+      - main-auth:
+        - banking:read
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - items
+                - pagination
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/bank-link'
+                  pagination:
+                    type: object
+                    required:
+                    - hasMore
+                    properties:
+                      cursor:
+                        type: string
+                        description: Cursor to use for the next page of results.
+                      hasMore:
+                        type: boolean
+                        description: Whether there are more results available.
+              examples:
+                Example List Bank Links Response:
+                  value:
+                    items:
+                    - _links:
+                        self:
+                          href: /bank-links/enrollment_792dcb7d
+                        bankAccounts:
+                        - href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+                      id: enrollment_792dcb7d
+                      accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+                      subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+                      state: completed
+                      hostedLink: null
+                      linkExpiresAt: null
+                      completedAt: '2025-10-03T10:55:42.000Z'
+                      bankAccounts:
+                      - id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+                        name: Checking
+                      createdAt: '2025-10-03T10:25:27.069Z'
+                    - _links:
+                        self:
+                          href: /bank-links/enrollment_a1b2c3d4
+                      id: enrollment_a1b2c3d4
+                      accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+                      subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+                      state: pending
+                      hostedLink: https://hosted.plaid.com/link/abc123
+                      linkExpiresAt: '2025-10-04T14:25:27.000Z'
+                      createdAt: '2025-10-04T10:25:27.069Z'
+                    pagination:
+                      cursor: ZXhhbXBsZQ==
+                      hasMore: false
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /bank-links/{bankLinkId}:
+    parameters:
+    - $ref: '#/components/parameters/bank-link-id'
+    delete:
+      tags:
+      - bank-links
+      summary: Delete bank link
+      description: 'Deletes a bank link and all associated resources, including the bank subscription, bank accounts, and bank transactions.
+
+
+        **Note:** This action is irreversible and will revoke access to the connected financial institution.
+
+        '
+      operationId: DeleteBankLink
+      security:
+      - main-auth:
+        - banking:admin
+      responses:
+        '204':
+          description: Bank link deleted
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/server-error'
+    get:
+      tags:
+      - bank-links
+      summary: Retrieve bank link
+      description: 'Returns detailed information about a specific bank link by its identifier.
+
+
+        If the bank link is in `pending` state and the hosted link URL has expired, this endpoint will automatically refresh the URL and return the updated link.
+
+        '
+      operationId: GetBankLink
+      security:
+      - main-auth:
+        - banking:read
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bank-link'
+              examples:
+                Example Get Bank Link Response:
+                  $ref: '#/components/examples/bank-link'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    patch:
+      tags:
+      - bank-links
+      summary: Complete bank link
+      description: 'Completes a bank link enrollment, transitioning it from `pending` to `completed` state. The request body must contain `state: "completed"`.
+
+
+        When a bank link is completed, the system exchanges the enrollment credentials with the provider, creates a bank subscription (connection), and discovers the associated bank accounts.
+
+
+        This endpoint is idempotent — completing an already completed bank link returns the existing subscription and accounts.
+
+        '
+      operationId: PatchBankLink
+      security:
+      - main-auth:
+        - banking:write
+      requestBody:
+        description: Bank link completion request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  description: The target state for the bank link. Only `completed` is accepted.
+                  type: string
+                  enum:
+                  - completed
+              required:
+              - state
+            examples:
+              BankLinkRequestExample:
+                value:
+                  state: completed
+      responses:
+        '200':
+          description: Bank link completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bank-link'
+              examples:
+                Example Complete Bank Link Response:
+                  $ref: '#/components/examples/bank-link'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /bank-links/{bankLinkId}/sync:
+    parameters:
+    - $ref: '#/components/parameters/bank-link-id'
+    post:
+      tags:
+      - bank-links
+      summary: Sync bank link
+      description: 'Triggers a manual sync of transactions for the bank link''s associated subscription. This fetches the latest transactions from the financial institution.
+
+
+        Transaction syncs also occur automatically via provider webhooks and scheduled jobs. Use this endpoint to force an immediate sync when needed.
+
+        '
+      operationId: SyncBankLink
+      security:
+      - main-auth:
+        - banking:admin
+      requestBody:
+        description: Optional sync configuration
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhooks:
+                  description: The types of webhook events to emit after syncing.
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - banktransaction.created
+                    - transaction.match.created
+                force:
+                  description: Set to `true` to force a full sync even if no new transactions are detected.
+                  type: boolean
+                  default: false
+            examples:
+              SyncWithWebhooksExample:
+                value:
+                  webhooks:
+                  - banktransaction.created
+                  force: false
+      responses:
+        '200':
+          description: Sync triggered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Human-readable confirmation message.
+              examples:
+                Example Sync Response:
+                  value:
+                    message: Transactions synced successfully
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /bank-links/{bankLinkId}/webhook:
+    parameters:
+    - $ref: '#/components/parameters/bank-link-id'
+    patch:
+      tags:
+      - bank-links
+      summary: Update bank link webhook
+      description: 'Updates the webhook URL for a bank link. Webhook events related to this bank link and its associated resources will be delivered to the specified URL.
+
+
+        After updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.
+
+        '
+      operationId: UpdateBankLinkWebhook
+      security:
+      - main-auth:
+        - banking:admin
+      requestBody:
+        description: Webhook URL update request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhookUrl:
+                  description: The HTTPS URL where webhook events will be delivered.
+                  type: string
+                  format: uri
+              required:
+              - webhookUrl
+            examples:
+              UpdateWebhookExample:
+                value:
+                  webhookUrl: https://example.com/webhooks/banking
+      responses:
+        '200':
+          description: Webhook URL updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - message
+                - webhookUrl
+                properties:
+                  status:
+                    type: string
+                    description: The webhook update status. Always `pending` immediately after updating.
+                    enum:
+                    - pending
+                  message:
+                    type: string
+                    description: Human-readable confirmation message.
+                  webhookUrl:
+                    type: string
+                    description: The webhook URL that was requested for update.
+              examples:
+                Example Update Webhook Response:
+                  value:
+                    status: pending
+                    message: Webhook update requested. The update will be confirmed when a WEBHOOK_UPDATE_ACKNOWLEDGED webhook is received from Plaid.
+                    webhookUrl: https://example.com/webhooks/banking
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    bank-link-state:
+      in: query
+      name: state
+      description: Filter bank links by state
+      required: false
+      schema:
+        type: string
+        enum:
+        - pending
+        - completed
+        - expired
+      example: completed
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
+    bank-link-id:
+      in: path
+      name: bankLinkId
+      description: The client-provided identifier of the bank link.
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+        pattern: ^[a-zA-Z0-9_-]+$
+      example: enrollment_792dcb7d
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+  responses:
+    conflict:
+      description: Request conflict with the current state of the target resource
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/conflict'
+          examples:
+            Minimum shape (detail only):
+              value:
+                detail: Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.
+            Resource conflict with currentValue:
+              value:
+                title: Conflict
+                detail: The target resource already exists.
+                currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  examples:
+    bank-link:
+      description: Example of a completed Bank Link resource
+      value:
+        _links:
+          self:
+            href: /bank-links/enrollment_792dcb7d
+          bankAccounts:
+          - href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+        id: enrollment_792dcb7d
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        state: completed
+        hostedLink: null
+        linkExpiresAt: null
+        completedAt: '2025-10-03T10:55:42.000Z'
+        bankAccounts:
+        - id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          name: Checking
+        createdAt: '2025-10-03T10:25:27.069Z'
+  schemas:
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    bank-link:
+      type: object
+      required:
+      - _links
+      - id
+      - accountId
+      - subaccountId
+      - state
+      - hostedLink
+      - linkExpiresAt
+      - createdAt
+      properties:
+        _links:
+          type: object
+          description: HAL-style links to related resources.
+          required:
+          - self
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            bankAccounts:
+              type: array
+              description: Links to the bank accounts created from this link. Only present when state is `completed` and accounts exist.
+              items:
+                $ref: '#/components/schemas/link'
+        id:
+          type: string
+          description: The client-provided identifier of the bank link. Must be alphanumeric with hyphens and underscores only.
+          minLength: 1
+          maxLength: 256
+          pattern: ^[a-zA-Z0-9_-]+$
+        accountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the account that owns this bank link.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount associated with this bank link.
+        state:
+          type: string
+          description: 'Current state of the bank link.
+
+            - `pending`: The link has been created and is awaiting user enrollment.
+
+            - `completed`: The user has successfully connected their bank account.
+
+            - `expired`: The link has expired without being completed.
+
+            '
+          enum:
+          - pending
+          - completed
+          - expired
+        hostedLink:
+          type: string
+          nullable: true
+          description: The hosted URL where the user can complete the bank enrollment. This link expires after 4 hours and is automatically refreshed when retrieved via GET.
+        linkExpiresAt:
+          description: Date and time when the hosted link expires, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+          nullable: true
+        completedAt:
+          description: Date and time when the bank link enrollment was completed, in UTC, following ISO 8601 format. Only present when state is `completed`.
+          type: string
+          format: date-time
+        filters:
+          type: object
+          description: 'The account filtering actually applied to this link, after resolution against the
+
+            account''s bank-linking policy. Echoes what the hosted session will offer; absent on
+
+            links created before filtering existed.
+
+            '
+          properties:
+            accountTypes:
+              type: array
+              description: Account types selectable in the hosted session.
+              items:
+                type: string
+                enum:
+                - checking
+                - savings
+                - credit
+            institutionId:
+              type: string
+              description: 'Provider institution id (Plaid `ins_*`) recorded and validated for this
+
+                session. Informational — steering is via account-type filters and Dashboard
+
+                Link customization; the provider does not currently support hard
+
+                pre-selection for hosted sessions.
+
+                '
+              pattern: ^ins_[A-Za-z0-9]+$
+        bankAccounts:
+          type: array
+          description: Summary of bank accounts created from this link. Only present when state is `completed` and accounts exist.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: The bank account identifier.
+              name:
+                type: string
+                description: The display name of the bank account.
+              mask:
+                type: string
+                nullable: true
+                description: 'Last 4 digits of the account number. For `credit` accounts this is the card
+
+                  number''s last 4 — the per-card identity for bank-connected (e.g. American
+
+                  Express) enrollments. Not guaranteed per-card when the institution combines
+
+                  multiple cards into one account.
+
+                  '
+              type:
+                type: string
+                nullable: true
+                description: Normalized account type (e.g. `checking`, `savings`, `credit`).
+              cardIds:
+                type: array
+                description: 'Identifiers of already-enrolled cards linked to this account — matched
+
+                  immediately at completion when an enrolled card''s last 4 equals a credit
+
+                  account''s mask, and over time by transaction-based discovery. A link is an
+
+                  association to an EXISTING card, not a new enrollment.
+
+                  '
+                items:
+                  type: string
+                  format: uuid
+              cards:
+                type: array
+                description: 'Cards created from this account at completion (`bank-feed` enrollments),
+
+                  each paired with its subscription. Present only on credit accounts that
+
+                  created a card; a created card also appears in `cardIds`.
+
+                  '
+                items:
+                  type: object
+                  required:
+                  - id
+                  - subscriptionId
+                  - last4digits
+                  - network
+                  - enrollmentType
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    subscriptionId:
+                      type: string
+                      format: uuid
+                    last4digits:
+                      type: string
+                      pattern: ^\d{4}$
+                    network:
+                      type: string
+                      nullable: true
+                    enrollmentType:
+                      type: string
+                      enum:
+                      - bank-feed
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

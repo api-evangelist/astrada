@@ -1,0 +1,161 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/astrada-openapi-original.json
+note: Candidate tool list derived one-per-operation from the reconstructed OpenAPI. Astrada publishes
+  no official hosted MCP server as of this pass.
+server:
+  name: astrada
+  transport: http
+  url: null
+tools:
+- name: ListBankAccounts
+  description: List bank accounts
+  source_operation: openapi/astrada-openapi-original.json#ListBankAccounts
+- name: LinkEnrolledCards
+  description: Link enrolled cards to bank accounts (admin backfill)
+  source_operation: openapi/astrada-openapi-original.json#LinkEnrolledCards
+- name: DeleteBankAccount
+  description: Delete bank account
+  source_operation: openapi/astrada-openapi-original.json#DeleteBankAccount
+- name: GetBankAccount
+  description: Retrieve bank account
+  source_operation: openapi/astrada-openapi-original.json#GetBankAccount
+- name: UpdateBankAccount
+  description: Update bank account
+  source_operation: openapi/astrada-openapi-original.json#UpdateBankAccount
+- name: RefreshBankAccount
+  description: Refresh bank account
+  source_operation: openapi/astrada-openapi-original.json#RefreshBankAccount
+- name: CreateBankLink
+  description: Create bank link
+  source_operation: openapi/astrada-openapi-original.json#CreateBankLink
+- name: ListBankLinks
+  description: List bank links
+  source_operation: openapi/astrada-openapi-original.json#ListBankLinks
+- name: DeleteBankLink
+  description: Delete bank link
+  source_operation: openapi/astrada-openapi-original.json#DeleteBankLink
+- name: GetBankLink
+  description: Retrieve bank link
+  source_operation: openapi/astrada-openapi-original.json#GetBankLink
+- name: PatchBankLink
+  description: Complete bank link
+  source_operation: openapi/astrada-openapi-original.json#PatchBankLink
+- name: SyncBankLink
+  description: Sync bank link
+  source_operation: openapi/astrada-openapi-original.json#SyncBankLink
+- name: UpdateBankLinkWebhook
+  description: Update bank link webhook
+  source_operation: openapi/astrada-openapi-original.json#UpdateBankLinkWebhook
+- name: ListBankSubscriptions
+  description: List bank subscriptions
+  source_operation: openapi/astrada-openapi-original.json#ListBankSubscriptions
+- name: GetBankSubscriptionByConnection
+  description: Retrieve bank subscription by connection
+  source_operation: openapi/astrada-openapi-original.json#GetBankSubscriptionByConnection
+- name: GetBankSubscription
+  description: Retrieve bank subscription
+  source_operation: openapi/astrada-openapi-original.json#GetBankSubscription
+- name: UpdateBankSubscriptionWebhook
+  description: Update bank subscription webhook
+  source_operation: openapi/astrada-openapi-original.json#UpdateBankSubscriptionWebhook
+- name: ListBankTransactions
+  description: List bank transactions
+  source_operation: openapi/astrada-openapi-original.json#ListBankTransactions
+- name: TriggerBankTransactionWebhooks
+  description: Trigger bank transaction webhooks
+  source_operation: openapi/astrada-openapi-original.json#TriggerBankTransactionWebhooks
+- name: GetBankTransaction
+  description: Retrieve bank transaction
+  source_operation: openapi/astrada-openapi-original.json#GetBankTransaction
+- name: BinLookup
+  description: Lookup card information by BIN
+  source_operation: openapi/astrada-openapi-original.json#BinLookup
+- name: ListCardSubscriptions
+  description: List card subscriptions
+  source_operation: openapi/astrada-openapi-original.json#ListCardSubscriptions
+- name: GetCardSubscription
+  description: Retrieve card subscription
+  source_operation: openapi/astrada-openapi-original.json#GetCardSubscription
+- name: UpdateCardSubscription
+  description: Update card subscription
+  source_operation: openapi/astrada-openapi-original.json#UpdateCardSubscription
+- name: CardVerificationList
+  description: List a card's 3DS verifications
+  source_operation: openapi/astrada-openapi-original.json#CardVerificationList
+- name: GetCardVerification
+  description: Retrieve 3DS verification
+  source_operation: openapi/astrada-openapi-original.json#GetCardVerification
+- name: CardVerificationAttemptLockoutUnlock
+  description: Unlock a card's verification attempt lockout
+  source_operation: openapi/astrada-openapi-original.json#CardVerificationAttemptLockoutUnlock
+- name: ListCards
+  description: List cards
+  source_operation: openapi/astrada-openapi-original.json#ListCards
+- name: GetCard
+  description: Retrieve card
+  source_operation: openapi/astrada-openapi-original.json#GetCard
+- name: GetCardholder
+  description: Retrieve cardholder information
+  source_operation: openapi/astrada-openapi-original.json#GetCardholder
+- name: UpdateCardholder
+  description: Update cardholder information
+  source_operation: openapi/astrada-openapi-original.json#UpdateCardholder
+- name: EnrollmentMethods
+  description: List the available enrollment methods given a card BIN (BETA)
+  source_operation: openapi/astrada-openapi-original.json#EnrollmentMethods
+- name: CreateNetworkBulkFeed
+  description: Create network bulk feed
+  source_operation: openapi/astrada-openapi-original.json#CreateNetworkBulkFeed
+- name: ListNetworkBulkFeeds
+  description: List network bulk feed
+  source_operation: openapi/astrada-openapi-original.json#ListNetworkBulkFeeds
+- name: GetNetworkBulkFeed
+  description: Retrieve a network bulk feed
+  source_operation: openapi/astrada-openapi-original.json#GetNetworkBulkFeed
+- name: CreateSubaccount
+  description: Create subaccount
+  source_operation: openapi/astrada-openapi-original.json#CreateSubaccount
+- name: GetSubaccounts
+  description: List subaccounts
+  source_operation: openapi/astrada-openapi-original.json#GetSubaccounts
+- name: GetSubaccount
+  description: Retrieve subaccount
+  source_operation: openapi/astrada-openapi-original.json#GetSubaccount
+- name: UpdateSubaccount
+  description: Update subaccount configurations
+  source_operation: openapi/astrada-openapi-original.json#UpdateSubaccount
+- name: ListTransactionMatches
+  description: List transaction matches
+  source_operation: openapi/astrada-openapi-original.json#ListTransactionMatches
+- name: GetTransactionMatch
+  description: Retrieve transaction match
+  source_operation: openapi/astrada-openapi-original.json#GetTransactionMatch
+- name: GetTransactionMessageById
+  description: Retrieve transaction message
+  source_operation: openapi/astrada-openapi-original.json#GetTransactionMessageById
+- name: GetRawTransactionMessageById
+  description: Retrieve the raw transaction message
+  source_operation: openapi/astrada-openapi-original.json#GetRawTransactionMessageById
+- name: GetTransactions
+  description: List transactions
+  source_operation: openapi/astrada-openapi-original.json#GetTransactions
+- name: GetTransactionById
+  description: Retrieve transaction
+  source_operation: openapi/astrada-openapi-original.json#GetTransactionById
+- name: createWebhook
+  description: Create webhook
+  source_operation: openapi/astrada-openapi-original.json#createWebhook
+- name: listWebhooks
+  description: List webhooks
+  source_operation: openapi/astrada-openapi-original.json#listWebhooks
+- name: deleteWebhook
+  description: Delete webhook
+  source_operation: openapi/astrada-openapi-original.json#deleteWebhook
+- name: getWebhook
+  description: Retrieve webhook
+  source_operation: openapi/astrada-openapi-original.json#getWebhook
+- name: updateWebhook
+  description: Update webhook
+  source_operation: openapi/astrada-openapi-original.json#updateWebhook

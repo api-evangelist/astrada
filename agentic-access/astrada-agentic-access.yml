@@ -1,0 +1,742 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/astrada-openapi-original.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 50
+  by_action_class:
+    connected: 29
+    acting: 21
+  by_consequence:
+    read: 29
+    write: 21
+  human_in_the_loop_required: 0
+operations:
+- path: /bin-lookup
+  method: get
+  operationId: BinLookup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - cards:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /card-verifications/unlock
+  method: post
+  operationId: CardVerificationAttemptLockoutUnlock
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subaccounts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /card-verifications/3ds
+  method: get
+  operationId: CardVerificationList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card-verifications:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-links
+  method: post
+  operationId: CreateBankLink
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-links
+  method: get
+  operationId: ListBankLinks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /network-bulk-feeds
+  method: post
+  operationId: CreateNetworkBulkFeed
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - network-bulk-feeds:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /network-bulk-feeds
+  method: get
+  operationId: ListNetworkBulkFeeds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - network-bulk-feeds:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subaccounts
+  method: post
+  operationId: CreateSubaccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subaccounts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subaccounts
+  method: get
+  operationId: GetSubaccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subaccounts:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhooks
+  method: post
+  operationId: createWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - webhooks:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks
+  method: get
+  operationId: listWebhooks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - webhooks:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-accounts/{bankAccountId}
+  method: delete
+  operationId: DeleteBankAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-accounts/{bankAccountId}
+  method: get
+  operationId: GetBankAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-accounts/{bankAccountId}
+  method: patch
+  operationId: UpdateBankAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-links/{bankLinkId}
+  method: delete
+  operationId: DeleteBankLink
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-links/{bankLinkId}
+  method: get
+  operationId: GetBankLink
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-links/{bankLinkId}
+  method: patch
+  operationId: PatchBankLink
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/{webhookId}
+  method: delete
+  operationId: deleteWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - webhooks:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/{webhookId}
+  method: get
+  operationId: getWebhook
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - webhooks:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhooks/{webhookId}
+  method: patch
+  operationId: updateWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - webhooks:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /enrollment-methods
+  method: post
+  operationId: EnrollmentMethods
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enrollment-methods:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-subscriptions/{bankSubscriptionId}
+  method: get
+  operationId: GetBankSubscription
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-subscriptions/by-connection/{connectionId}
+  method: get
+  operationId: GetBankSubscriptionByConnection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-transactions/{subaccountId}/{transactionId}
+  method: get
+  operationId: GetBankTransaction
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cards/{cardId}
+  method: get
+  operationId: GetCard
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - cards:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cards/{cardId}/cardholder
+  method: get
+  operationId: GetCardholder
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - cardholder:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cards/{cardId}/cardholder
+  method: patch
+  operationId: UpdateCardholder
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - cardholder:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /card-subscriptions/{subscriptionId}
+  method: get
+  operationId: GetCardSubscription
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card-subscriptions:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /card-subscriptions/{subscriptionId}
+  method: patch
+  operationId: UpdateCardSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - card-subscriptions:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /card-verifications/3ds/{verificationId}
+  method: get
+  operationId: GetCardVerification
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card-verifications:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /network-bulk-feeds/{networkBulkFeedId}
+  method: get
+  operationId: GetNetworkBulkFeed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - network-bulk-feeds:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /transaction-messages/{transactionMessageId}/raw
+  method: get
+  operationId: GetRawTransactionMessageById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction-messages:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subaccounts/{subaccountId}
+  method: get
+  operationId: GetSubaccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subaccounts:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subaccounts/{subaccountId}
+  method: patch
+  operationId: UpdateSubaccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subaccounts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /transactions/{transactionId}
+  method: get
+  operationId: GetTransactionById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transactions:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /transaction-matches/{subaccountId}/{transactionMatchId}
+  method: get
+  operationId: GetTransactionMatch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /transaction-messages/{transactionMessageId}
+  method: get
+  operationId: GetTransactionMessageById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transaction-messages:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /transactions
+  method: get
+  operationId: GetTransactions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - transactions:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-accounts/link-enrolled-cards
+  method: post
+  operationId: LinkEnrolledCards
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-accounts
+  method: get
+  operationId: ListBankAccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-subscriptions
+  method: get
+  operationId: ListBankSubscriptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-transactions/{subaccountId}
+  method: get
+  operationId: ListBankTransactions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cards
+  method: get
+  operationId: ListCards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - cards:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /card-subscriptions
+  method: get
+  operationId: ListCardSubscriptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - card-subscriptions:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /transaction-matches/{subaccountId}
+  method: get
+  operationId: ListTransactionMatches
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - banking:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bank-accounts/{bankAccountId}/refresh
+  method: post
+  operationId: RefreshBankAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-links/{bankLinkId}/sync
+  method: post
+  operationId: SyncBankLink
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-transactions/{subaccountId}/webhooks
+  method: post
+  operationId: TriggerBankTransactionWebhooks
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-links/{bankLinkId}/webhook
+  method: patch
+  operationId: UpdateBankLinkWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /bank-subscriptions/{bankSubscriptionId}/webhook
+  method: patch
+  operationId: UpdateBankSubscriptionWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - banking:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

@@ -1,27 +1,343 @@
 aid: astrada
 name: Astrada
-description: 'Astrada is a company surfaced as a portfolio company of qed-investors and added to the API
-  Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Astrada is the data layer for autonomous finance, providing real-time, structured card
+  transaction data pulled directly from the card networks rather than relying on delayed bank
+  feeds. Its Transaction Data API lets expense management, travel, and accounting/ERP platforms
+  enroll corporate cards (with 3DS cardholder verification), receive real-time transaction
+  messages and enriched transactions, link bank accounts, and auto-reconcile card-to-bank
+  activity. Founded in 2024 by Salman Syed (ex-Mastercard, Marqeta, Fidel API), Astrada is
+  PCI DSS v4 Level 1 certified, a Mastercard Start Path and Visa Ventures portfolio company,
+  and is backed by QED Investors.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://files.readme.io/45785f4-brandmark-blue.svg
 url: https://raw.githubusercontent.com/api-evangelist/astrada/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - qed-investors
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enrichment-pipeline
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Fintech
-apis: []
+- Payments
+- Card Data
+- Transaction Data
+- Reconciliation
+- Expense Management
+- Data Infrastructure
+apis:
+- aid: astrada:astrada-bank-accounts-api
+  name: Astrada bank-accounts API
+  description: >-
+    Manage connected bank accounts. Bank accounts are created automatically when a bank link enrollment
+    is completed.
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - bank-accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-bank-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-bank-links-api
+  name: Astrada bank-links API
+  description: >-
+    Manage bank enrollment links. A bank link represents an invitation for a user to connect their bank
+    account via Plaid.
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - bank-links
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-bank-links-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-bank-subscriptions-api
+  name: Astrada bank-subscriptions API
+  description: >-
+    Manage bank subscriptions (Plaid connections). A subscription represents an active connection to a
+    financial institution.
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - bank-subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-bank-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-bank-transactions-api
+  name: Astrada bank-transactions API
+  description: >-
+    Access bank transactions synced from connected accounts. Transactions are ingested via Plaid and can
+    be matched against card transactions.
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - bank-transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-bank-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-bin-lookup-api
+  name: Astrada bin-lookup API
+  description: BIN Lookup
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - bin-lookup
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-bin-lookup-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-card-api
+  name: Astrada card API
+  description: Card resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - card
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-card-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-card-subscription-api
+  name: Astrada card-subscription API
+  description: Card Subscription resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - card-subscription
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-card-subscription-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-card-verification-api
+  name: Astrada card-verification API
+  description: Card Verification
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - card-verification
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-card-verification-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-enrollment-methods-api
+  name: Astrada enrollment-methods API
+  description: Enrollment methods resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - enrollment-methods
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-enrollment-methods-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-network-bulk-feeds-api
+  name: Astrada network-bulk-feeds API
+  description: Network bulk feed resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - network-bulk-feeds
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-network-bulk-feeds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-subaccounts-api
+  name: Astrada subaccounts API
+  description: Subaccount resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - subaccounts
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-subaccounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-transaction-matches-api
+  name: Astrada transaction-matches API
+  description: >-
+    Access transaction matches between bank and card transactions, including confidence scores and match
+    reasoning.
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - transaction-matches
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-transaction-matches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-transaction-messages-api
+  name: Astrada transaction-messages API
+  description: Transaction messages resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - transaction-messages
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-transaction-messages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-transactions-api
+  name: Astrada transactions API
+  description: Transaction resource
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
+- aid: astrada:astrada-webhooks-api
+  name: Astrada webhooks API
+  description: Manage webhooks
+  humanURL: https://docs.astrada.co/reference
+  baseURL: https://api.astrada.co
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/astrada-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.astrada.co/docs/home
+  - type: APIReference
+    url: https://docs.astrada.co/reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+# --- Link properties (identity / discoverability) ---
 - type: Website
   url: https://astrada.co/
+- type: Portal
+  url: https://docs.astrada.co
+- type: Documentation
+  url: https://docs.astrada.co/docs/home
+- type: APIReference
+  url: https://docs.astrada.co/reference
+- type: GettingStarted
+  url: https://docs.astrada.co/docs/getting-started-1
+- type: Blog
+  url: https://astrada.co/blog
+- type: Support
+  url: https://astrada.co/company/contact
+- type: SignUp
+  url: https://astrada.co/company/contact
+- type: StatusPage
+  url: https://status.astrada.co
+- type: TermsOfService
+  url: https://astrada.co/legal
+- type: PrivacyPolicy
+  url: https://astrada.co/legal
+- type: Security
+  url: https://astrada.co/security
+- type: Compliance
+  url: https://astrada.co/security
+# --- Enrichment artifacts ---
+- type: Authentication
+  url: authentication/astrada-authentication.yml
+- type: OAuthScopes
+  url: scopes/astrada-scopes.yml
+- type: Conventions
+  url: conventions/astrada-conventions.yml
+- type: ErrorCatalog
+  url: errors/astrada-problem-types.yml
+- type: DeclineCodes
+  url: errors/astrada-decline-codes.yml
+- type: Lifecycle
+  url: lifecycle/astrada-lifecycle.yml
+- type: ChangeLog
+  url: changelog/astrada-changelog.yml
+- type: Sandbox
+  url: sandbox/astrada-sandbox.yml
+- type: Components
+  url: components/astrada-components.yml
+- type: DataModel
+  url: data-model/astrada-data-model.yml
+- type: Conformance
+  url: conformance/astrada-conformance.yml
+- type: AsyncAPI
+  url: asyncapi/astrada-events-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/astrada-webhooks.yml
+- type: MCPServer
+  url: mcp/astrada-mcp.yml
+- type: LLMsTxt
+  url: llms/astrada-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/astrada-agentic-access.yml
+- type: DomainSecurity
+  url: security/astrada-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/astrada-vulnerability-disclosure.yml
+- type: TrustCenter
+  url: security/astrada-trust-center.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

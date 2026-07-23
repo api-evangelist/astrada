@@ -1,0 +1,52 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/docs/sandbox-testing
+note: >-
+  Astrada sandbox testing is enabled per subaccount (verificationPolicy.sandbox: true)
+  against the PRODUCTION API, or via a dedicated sandbox environment/subaccount. Known
+  test cards route to a verification sandbox for deterministic 3DS outcomes with no real
+  money movement. Routing is fail-closed and matches the full PAN exactly (never a BIN/prefix).
+enabling:
+  mechanism: Set verificationPolicy.sandbox = true on the subaccount via UpdateSubaccount.
+  operation: UpdateSubaccount
+  scope: Applies to every verification tier, including HIGHEST (two-hold flow runs as test-mode auths).
+  guidance: Use a dedicated sandbox subaccount, never a production one.
+test_vs_live:
+  stripe_publishable_key: Sandbox verifications return a test-mode stripePublishableKey (pk_test_...).
+  hold_amounts: sandboxHoldAmounts (amount1/amount2) is returned on the HIGHEST place-holds response in test mode only.
+common_settings:
+  expiry: Any future expiry, e.g. 12/2034
+  cvc: Any 3-digit value, e.g. 123
+network_test_cards:
+  - {pan: '4000 0000 0000 1117', network: Visa, behavior: '3DS bypassed (test-card exemption); authenticationFlow null'}
+  - {pan: '4242 4242 4242 4241', network: Visa, behavior: 'Invalid PAN (Luhn fails)'}
+  - {pan: '5156 7637 1936 6465', network: Mastercard, behavior: 'Invalid PAN (Luhn fails)'}
+  - {pan: '5555 5555 5555 4444', network: Mastercard, behavior: 'Network pre-check fails (rejected at create)'}
+sandbox_test_card_matrix:
+  - {pan: '4242424242424242', network: Visa, product: Consumer, outcome: 'Success (frictionless / challenge-approved)', status: completed, decline_code: none}
+  - {pan: '4000002760003184', network: Visa, product: Consumer, outcome: '3DS challenge required', status: 'stripe-3ds -> challenge -> completed', decline_code: none}
+  - {pan: '4000008400001629', network: Visa, product: Consumer, outcome: '3DS authentication fails', status: failed, decline_code: none}
+  - {pan: '4000000000000101', network: Visa, product: Consumer, outcome: 'CVC check fails', status: failed, decline_code: incorrect_cvc}
+  - {pan: '4000000000000002', network: Visa, product: Consumer, outcome: 'Generic decline', status: failed, decline_code: generic_decline}
+  - {pan: '4000000000000069', network: Visa, product: Consumer, outcome: 'Expired card', status: failed, decline_code: expired_card}
+  - {pan: '4000000000009979', network: Visa, product: Consumer, outcome: 'Stolen card (hard decline)', status: failed, decline_code: stolen_card}
+  - {pan: '4000000000009995', network: Visa, product: Consumer, outcome: 'Insufficient funds', status: failed, decline_code: insufficient_funds}
+  - {pan: '4000000000009987', network: Visa, product: Consumer, outcome: 'Lost card (hard decline)', status: failed, decline_code: lost_card}
+  - {pan: '4000000000000119', network: Visa, product: Consumer, outcome: 'Processing error (transient)', status: failed, decline_code: processing_error}
+  - {pan: '4000000000000341', network: Visa, product: Consumer, outcome: 'HIGHEST: verification hold declines', status: 'failed at place-holds', decline_code: 'hold decline'}
+  - {pan: '4000000000003220', network: Visa, product: Commercial, outcome: '3DS challenge -> success', status: 'stripe-3ds -> challenge -> completed', decline_code: none}
+  - {pan: '5555555555554444', network: Mastercard, product: Consumer, outcome: 'Frictionless (issuer attests)', status: 'MEDIUM/HIGH -> completed; HIGHEST -> two-hold -> completed', decline_code: none}
+  - {pan: '5200828282828210', network: Mastercard, product: Consumer, outcome: '3DS challenge -> success', status: 'fingerprint -> challenge -> completed', decline_code: none}
+  - {pan: '2223003122003222', network: Mastercard, product: Consumer, outcome: '3DS challenge -> authentication fails', status: 'failed (challenge POST -> 500)', decline_code: none}
+  - {pan: '5105105105105100', network: Mastercard, product: Consumer, outcome: '3DS challenge -> abandoned', status: 'failed (challenge POST -> 409)', decline_code: none}
+  - {pan: '5555558265554449', network: Mastercard, product: Consumer, outcome: 'Network pre-check declined (rejected at create)', status: '400 at create, no verification created', decline_code: none}
+  - {pan: '5200828282828897', network: Mastercard, product: Commercial, outcome: 'Frictionless (issuer attests)', status: 'MEDIUM/HIGH -> completed; HIGHEST -> two-hold -> completed', decline_code: none}
+  - {pan: '5555552500001001', network: Mastercard, product: Commercial, outcome: '3DS challenge -> success', status: 'fingerprint -> challenge -> completed', decline_code: none}
+enrollment_restriction:
+  note: >-
+    In the dedicated sandbox environment, POST /card-subscriptions accepts ONLY published
+    test cards; any other PAN is rejected up front with a typed 403
+    (errorCode card_subscription.sandbox_card_not_allowed) before any network call.
+mastercard_note: >-
+  Mastercard test cards are served by an in-process emulator; the live network is never
+  called and the 3DS challenge is simulated (advance via POST /steps/challenge).

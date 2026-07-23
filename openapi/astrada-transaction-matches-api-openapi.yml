@@ -1,0 +1,622 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts transaction-matches API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: transaction-matches
+  description: Access transaction matches between bank and card transactions, including confidence scores and match reasoning.
+paths:
+  /transaction-matches/{subaccountId}/{transactionMatchId}:
+    parameters:
+    - $ref: '#/components/parameters/subaccount-id-2'
+    - $ref: '#/components/parameters/transaction-match-id'
+    get:
+      tags:
+      - transaction-matches
+      summary: Retrieve transaction match
+      description: Returns detailed information about a specific transaction match, including the confidence level, numeric score, and a breakdown of the scoring factors.
+      operationId: GetTransactionMatch
+      security:
+      - main-auth:
+        - banking:read
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transaction-match'
+              examples:
+                Example Get Transaction Match Response:
+                  $ref: '#/components/examples/transaction-match'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /transaction-matches/{subaccountId}:
+    parameters:
+    - $ref: '#/components/parameters/subaccount-id-2'
+    get:
+      tags:
+      - transaction-matches
+      summary: List transaction matches
+      description: 'Returns a list of transaction matches for a subaccount. Each match represents a link between a bank transaction and a card transaction, along with a confidence score and the reasoning behind the match.
+
+
+        By default, matches are filtered to `MEDIUM` confidence and above. Use the `minConfidence` parameter to adjust the threshold.
+
+
+        By default, `GET /transaction-matches/{subaccountId}` returns matches ordered by the latest `createdAt`.
+
+
+        This endpoint supports cursor-based pagination.
+
+        '
+      operationId: ListTransactionMatches
+      parameters:
+      - $ref: '#/components/parameters/bank-account-id-2'
+      - $ref: '#/components/parameters/card-id-2'
+      - $ref: '#/components/parameters/bank-transaction-id'
+      - $ref: '#/components/parameters/card-transaction-id'
+      - $ref: '#/components/parameters/min-confidence'
+      - $ref: '#/components/parameters/start-date'
+      - $ref: '#/components/parameters/end-date'
+      - $ref: '#/components/parameters/banking-limit'
+      - $ref: '#/components/parameters/cursor'
+      security:
+      - main-auth:
+        - banking:read
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - items
+                - pagination
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/transaction-match'
+                  pagination:
+                    type: object
+                    required:
+                    - hasMore
+                    properties:
+                      cursor:
+                        type: string
+                        description: Cursor to use for the next page of results.
+                      hasMore:
+                        type: boolean
+                        description: Whether there are more results available.
+              examples:
+                Example List Transaction Matches Response:
+                  value:
+                    items:
+                    - _links:
+                        self:
+                          href: /transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+                        cardTransaction:
+                          href: /transactions/a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+                        bankTransaction:
+                          href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+                      id: b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+                      accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+                      subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+                      cardTransactionId: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+                      bankTransactionId: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+                      confidence: HIGH
+                      score: 0.85
+                      cardTransaction:
+                        date: '2025-10-15'
+                        amount: 42.5
+                        currency: USD
+                        descriptor: UBER TRIP
+                      bankTransaction:
+                        date: '2025-10-15'
+                        amount: 42.5
+                        currency: USD
+                        description: UBER TRIP
+                        merchantName: Uber
+                      reasons:
+                      - type: Amount
+                        score: 1
+                        cardValue: '42.50'
+                        bankValue: '42.50'
+                        diff: 0
+                        message: Exact amount match ($42.50)
+                      - type: Date
+                        score: 0.9
+                        cardValue: '2025-10-15'
+                        bankValue: '2025-10-15'
+                        diff: 0
+                        message: Transaction dates within 1 day
+                      - type: Merchant
+                        score: 0.85
+                        cardValue: UBER TRIP
+                        bankValue: Uber
+                        diff: 0
+                        message: Merchant name contains match (Uber)
+                      createdAt: '2025-10-15T14:31:00.000Z'
+                    pagination:
+                      hasMore: false
+          links:
+            GetFirstTransactionMatch:
+              operationId: GetTransactionMatch
+              parameters:
+                transactionMatchId: $response.body#/items/0/id
+              description: Retrieve the first transaction match from the list.
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    card-transaction-id:
+      in: query
+      name: cardTransactionId
+      description: Filter by card transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+    transaction-match-id:
+      in: path
+      name: transactionMatchId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: c3d4e5f6-a7b8-9012-cdef-123456789012
+    start-date:
+      in: query
+      name: startDate
+      description: Filter results from this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-01'
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    min-confidence:
+      in: query
+      name: minConfidence
+      description: Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.
+      required: false
+      schema:
+        type: string
+        enum:
+        - HIGH
+        - MEDIUM
+        - LOW
+        default: MEDIUM
+      example: MEDIUM
+    bank-transaction-id:
+      in: query
+      name: bankTransactionId
+      description: Filter by bank transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+    bank-account-id-2:
+      in: query
+      name: bankAccountId
+      description: Filter by bank account identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
+    end-date:
+      in: query
+      name: endDate
+      description: Filter results up to this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-31'
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+  schemas:
+    transaction-match:
+      type: object
+      required:
+      - _links
+      - id
+      - accountId
+      - subaccountId
+      - cardTransactionId
+      - bankTransactionId
+      - confidence
+      - score
+      - cardTransaction
+      - bankTransaction
+      - reasons
+      - createdAt
+      properties:
+        _links:
+          type: object
+          description: HAL-style links to related resources.
+          required:
+          - self
+          - cardTransaction
+          - bankTransaction
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            cardTransaction:
+              $ref: '#/components/schemas/link'
+            bankTransaction:
+              $ref: '#/components/schemas/link'
+            card:
+              $ref: '#/components/schemas/link'
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the transaction match.
+        accountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the account that owns this match.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount associated with this match.
+        cardTransactionId:
+          type: string
+          format: uuid
+          description: The unique identifier of the matched card transaction.
+        bankTransactionId:
+          type: string
+          format: uuid
+          description: The unique identifier of the matched bank transaction.
+        confidence:
+          type: string
+          description: 'The confidence level of the match.
+
+            - `HIGH`: Score >= 0.70
+
+            - `MEDIUM`: Score >= 0.50
+
+            - `LOW`: Score >= 0.20
+
+            '
+          enum:
+          - HIGH
+          - MEDIUM
+          - LOW
+        score:
+          type: number
+          description: The numeric match score between 0 and 1, representing how closely the bank and card transactions match.
+          minimum: 0
+          maximum: 1
+        cardTransaction:
+          type: object
+          description: Summary of the matched card transaction.
+          properties:
+            cardId:
+              type: string
+              format: uuid
+              nullable: true
+              description: The card identifier associated with the matched card transaction.
+            date:
+              type: string
+              description: The transaction date.
+            amount:
+              type: number
+              description: The transaction amount.
+            currency:
+              type: string
+              description: The transaction currency.
+            descriptor:
+              type: string
+              description: The merchant descriptor.
+        bankTransaction:
+          type: object
+          description: Summary of the matched bank transaction.
+          properties:
+            date:
+              type: string
+              description: The transaction date.
+            amount:
+              type: number
+              description: The transaction amount.
+            currency:
+              type: string
+              description: The transaction currency.
+            description:
+              type: string
+              description: The transaction description.
+            merchantName:
+              type: string
+              nullable: true
+              description: The merchant name.
+        reasons:
+          type: array
+          description: Breakdown of the scoring factors that contributed to the match score.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The matching factor type.
+                enum:
+                - Amount
+                - Date
+                - Merchant
+                - ReferenceId
+                - PreAuth
+              score:
+                type: number
+                description: The individual score for this factor.
+              cardValue:
+                description: The value from the card transaction used for comparison. May be a string or numeric value.
+                type: string
+                nullable: true
+              bankValue:
+                description: The value from the bank transaction used for comparison. May be a string or numeric value.
+                type: string
+                nullable: true
+              diff:
+                type: number
+                description: The numeric difference between the card and bank values.
+              message:
+                type: string
+                description: Human-readable explanation of the score for this factor.
+        createdAt:
+          description: Date and time when this match was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+  examples:
+    transaction-match:
+      description: Example of a Transaction Match resource
+      value:
+        _links:
+          self:
+            href: /transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+          cardTransaction:
+            href: /transaction-messages/a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+          bankTransaction:
+            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+          card:
+            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
+        id: b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        cardTransactionId: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+        bankTransactionId: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+        confidence: HIGH
+        score: 0.85
+        cardTransaction:
+          cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+          date: '2025-10-15'
+          amount: 42.5
+          currency: USD
+          descriptor: UBER TRIP
+        bankTransaction:
+          date: '2025-10-15'
+          amount: 42.5
+          currency: USD
+          description: UBER TRIP
+          merchantName: Uber
+        reasons:
+        - type: Amount
+          score: 1
+          cardValue: '42.50'
+          bankValue: '42.50'
+          diff: 0
+          message: Exact amount match ($42.50)
+        - type: Date
+          score: 0.9
+          cardValue: '2025-10-15'
+          bankValue: '2025-10-15'
+          diff: 0
+          message: Transaction dates within 1 day
+        - type: Merchant
+          score: 0.85
+          cardValue: UBER TRIP
+          bankValue: Uber
+          diff: 0
+          message: Merchant name contains match (Uber)
+        createdAt: '2025-10-15T14:31:00.000Z'
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

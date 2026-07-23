@@ -1,0 +1,705 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts network-bulk-feeds API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: network-bulk-feeds
+  description: Network bulk feed resource
+paths:
+  /network-bulk-feeds:
+    post:
+      tags:
+      - network-bulk-feeds
+      summary: Create network bulk feed
+      description: Registers a new feed for network bulk
+      security:
+      - main-auth:
+        - network-bulk-feeds:write
+      operationId: CreateNetworkBulkFeed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - type: object
+                properties:
+                  networkReference:
+                    description: 'The identifier associated with the card network''s bulk enrollment feed.
+
+                      For Amex, this field should contain the Recipient ID in the following format ''R{RecipientId}'', such as ''R123456''.
+
+                      For Mastercard, this field should contain the Delivery ID.
+
+                      For Visa-VBDS, this field should contain the RPIC in the following format ''RegionId_ProcessorId_IssuerId_CompanyId'', such as ''123_456_789_1''.
+
+                      For Visa-VCF, this field should contain the PIC in the following format ''ProcessorId_IssuerId_CompanyId'', such as ''123_45_6789''.
+
+                      For more details on our bulk enrollment process, refer to [this guide](https://docs.astrada.co/docs/network-bulk-enrollment).
+
+                      '
+                    type: string
+                  subaccountId:
+                    description: The subaccount identifier
+                    type: string
+                    format: uuid
+                  expectedCardCount:
+                    description: 'The expected number of cards that will be enrolled under this bulk feed.
+
+                      Optional. When provided, the value is echoed back on the response and on the
+
+                      `networkbulkfeed.statechanged` webhook payload.
+
+                      '
+                    type: integer
+                    minimum: 1
+                    maximum: 1000000
+                  newCards:
+                    description: 'Sandbox only. The number of synthetic Visa cards to create when this
+
+                      bulk feed is created in the sandbox environment. The cards are drawn
+
+                      from Astrada''s published sandbox Visa test-card pool. Only valid for
+
+                      `network: VISA`. Requests containing this field outside the sandbox
+
+                      environment, or for other networks, are rejected with a 400.
+
+                      '
+                    type: integer
+                    minimum: 1
+                    maximum: 20
+                    default: 5
+                required:
+                - networkReference
+                - network
+                - subaccountId
+              - oneOf:
+                - type: object
+                  properties:
+                    network:
+                      description: The network that the feed belongs
+                      type: string
+                      enum:
+                      - AMEX
+                    type:
+                      description: The type of card network's bulk enrollment feed
+                      type: string
+                      enum:
+                      - GL
+                      default: GL
+                  required:
+                  - network
+                - type: object
+                  properties:
+                    network:
+                      description: The network that the feed belongs
+                      type: string
+                      enum:
+                      - MASTERCARD
+                    type:
+                      description: The type of card network's bulk enrollment feed
+                      type: string
+                      enum:
+                      - SMARTDATA
+                      default: SMARTDATA
+                  required:
+                  - network
+                - type: object
+                  properties:
+                    network:
+                      description: The network that the feed belongs
+                      type: string
+                      enum:
+                      - VISA
+                    type:
+                      description: The type of card network's bulk enrollment feed
+                      type: string
+                      enum:
+                      - VBDS
+                      - VCF
+                      default: VBDS
+                  required:
+                  - network
+            examples:
+              Create Network Bulk Feed Request Example (Amex):
+                value:
+                  networkReference: R123456
+                  network: AMEX
+                  subaccountId: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+              Create Network Bulk Feed Request Example (Mastercard):
+                value:
+                  networkReference: G1234567
+                  network: MASTERCARD
+                  subaccountId: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+              Create Network Bulk Feed Request Example (Visa):
+                value:
+                  networkReference: 119999789452
+                  network: VISA
+                  type: VBDS
+                  subaccountId: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+              Create Network Bulk Feed Request Example (Visa, sandbox synthetic cards):
+                value:
+                  networkReference: 119999789452
+                  network: VISA
+                  type: VBDS
+                  subaccountId: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+                  newCards: 5
+      responses:
+        '201':
+          description: Resource created
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/network-bulk-feeds'
+              examples:
+                Example Create Network Bulk Feed Response:
+                  $ref: '#/components/examples/network-bulk-feeds'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '409':
+          $ref: '#/components/responses/conflict'
+        '500':
+          $ref: '#/components/responses/server-error'
+    get:
+      parameters:
+      - $ref: '#/components/parameters/network-reference'
+      - $ref: '#/components/parameters/subaccount-id'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      tags:
+      - network-bulk-feeds
+      summary: List network bulk feed
+      description: 'Returns all network bulk feeds under the account.
+
+
+        By default, `GET /network-bulk-feeds` returns network bulk feeds ordered by the latest `createdAt`.
+
+
+        This endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).
+
+        '
+      security:
+      - main-auth:
+        - network-bulk-feeds:read
+      operationId: ListNetworkBulkFeeds
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                type: object
+                required:
+                - _links
+                - _embedded
+                - totalItems
+                properties:
+                  _links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                      first:
+                        $ref: '#/components/schemas/link'
+                      next:
+                        $ref: '#/components/schemas/link'
+                      prev:
+                        $ref: '#/components/schemas/link'
+                      last:
+                        $ref: '#/components/schemas/link'
+                  _embedded:
+                    type: object
+                    required:
+                    - networkBulkFeeds
+                    properties:
+                      networkBulkFeeds:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/network-bulk-feeds'
+                  totalItems:
+                    type: integer
+                    description: Total number of network bulk feeds
+              examples:
+                Example List Network Bulk feeds Response:
+                  value:
+                    _links:
+                      self:
+                        href: /network-bulk-feeds
+                    _embedded:
+                      networkBulkFeeds:
+                      - _links:
+                          self:
+                            href: /network-bulk-feeds/75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+                        id: 75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+                        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+                        network: MASTERCARD
+                        networkReference: G1234567
+                        state: submitted
+                        type: SMARTDATA
+                        createdAt: '2024-12-19T14:45:00Z'
+                        updatedAt: '2024-12-19T14:45:00Z'
+                      - _links:
+                          self:
+                            href: /network-bulk-feeds/c73f2da7-aa1f-4775-ad38-864b1b6f3162
+                        id: c73f2da7-aa1f-4775-ad38-864b1b6f3162
+                        subaccountId: 29cb4277-b812-4137-b008-e0befa8c6a47
+                        network: MASTERCARD
+                        networkReference: G1234567
+                        state: submitted
+                        type: SMARTDATA
+                        createdAt: '2024-10-19T14:45:00Z'
+                        updatedAt: '2024-10-19T14:45:00Z'
+                      - _links:
+                          self:
+                            href: /network-bulk-feeds/a3b1c2d4-5e6f-7890-abcd-ef1234567890
+                        id: a3b1c2d4-5e6f-7890-abcd-ef1234567890
+                        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+                        network: VISA
+                        networkReference: 119999789452
+                        state: failed
+                        type: VBDS
+                        errorReason: 'Starter data ingestion failed: invalid RPIC configuration'
+                        createdAt: '2024-12-19T14:45:00Z'
+                        updatedAt: '2024-12-20T10:30:00Z'
+                    totalItems: 3
+                No network bulk feeds found:
+                  value:
+                    _links:
+                      self:
+                        href: /network-bulk-feeds
+                    _embedded:
+                      networkBulkFeeds: []
+                    totalItems: 0
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /network-bulk-feeds/{networkBulkFeedId}:
+    parameters:
+    - $ref: '#/components/parameters/network-bulk-feed-id'
+    get:
+      tags:
+      - network-bulk-feeds
+      summary: Retrieve a network bulk feed
+      description: Returns detailed information about a specific network bulk feed by its identifier.
+      security:
+      - main-auth:
+        - network-bulk-feeds:read
+      operationId: GetNetworkBulkFeed
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/network-bulk-feeds'
+              examples:
+                Example Get Network Bulk Subscription Response:
+                  $ref: '#/components/examples/network-bulk-feeds'
+                Example Get Failed Network Bulk Subscription Response (VISA):
+                  $ref: '#/components/examples/network-bulk-feeds-failed'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    offset:
+      in: query
+      name: offset
+      description: The offset to use for pagination. Identifies the position of the first item returned in the collection
+      required: false
+      schema:
+        type: number
+        default: 0
+      example: 20
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    network-reference:
+      in: query
+      name: networkReference
+      required: false
+      schema:
+        type: string
+      example: ABC12345
+    network-bulk-feed-id:
+      in: path
+      name: networkBulkFeedId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3
+  examples:
+    network-bulk-feeds-failed:
+      description: Example of a Network Bulk Feed resource in failed state (VISA)
+      value:
+        _links:
+          self:
+            href: /network-bulk-feeds/a3b1c2d4-5e6f-7890-abcd-ef1234567890
+        id: a3b1c2d4-5e6f-7890-abcd-ef1234567890
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        network: VISA
+        networkReference: 119999789452
+        state: failed
+        type: VBDS
+        errorReason: 'Starter data ingestion failed: invalid RPIC configuration'
+        createdAt: '2024-12-19T14:45:00Z'
+        updatedAt: '2024-12-20T10:30:00Z'
+    network-bulk-feeds:
+      description: Example of a Network Bulk Feed resource
+      value:
+        _links:
+          self:
+            href: /network-bulk-feeds/75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+        id: 75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        network: MASTERCARD
+        networkReference: G1234567
+        state: submitted
+        type: SMARTDATA
+        createdAt: '2024-12-19T14:45:00Z'
+        updatedAt: '2024-12-19T14:45:00Z'
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    conflict:
+      description: Request conflict with the current state of the target resource
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/conflict'
+          examples:
+            Minimum shape (detail only):
+              value:
+                detail: Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.
+            Resource conflict with currentValue:
+              value:
+                title: Conflict
+                detail: The target resource already exists.
+                currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  schemas:
+    network-bulk-feeds:
+      type: object
+      required:
+      - _links
+      - id
+      - subaccountId
+      - network
+      - networkReference
+      - state
+      - type
+      - createdAt
+      - updatedAt
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this network bulk feed entity.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount related to this entity.
+        network:
+          type: string
+          enum:
+          - AMEX
+          - MASTERCARD
+          - VISA
+          description: The network where the feed belongs.
+        networkReference:
+          type: string
+          description: The identifier associated with the card network's bulk enrollment feed.
+        state:
+          type: string
+          enum:
+          - submitted
+          - active
+          - deactivated
+          - failed
+          description: 'The state of the network bulk feed entity.
+
+
+            > **Note**: The `failed` state is currently only applicable to VISA bulk feeds.
+
+            '
+        type:
+          type: string
+          enum:
+          - GL
+          - SMARTDATA
+          - VBDS
+          - VCF
+        errorReason:
+          type: string
+          nullable: true
+          description: 'A human-readable reason explaining why the bulk feed failed. Only present when `state` is `failed`.
+
+
+            > **Note**: Currently only applicable to VISA bulk feeds.
+
+            '
+        expectedCardCount:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          description: 'The expected number of cards that will be enrolled under this bulk feed, as provided at creation time.
+
+            Only present when the feed was created with this field.
+
+            '
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

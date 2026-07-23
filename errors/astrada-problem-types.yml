@@ -1,0 +1,65 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/reference/base-api-responses
+format: rfc9457
+media_type: application/problem+json
+envelope:
+  fields:
+  - title
+  - detail
+  optional:
+  - errors
+  - type
+  - instance
+  validation_errors: Nested errors[] each with its own title/detail (Problem Details structure).
+  note: title/detail are human-readable and must not be parsed to determine error nature. Additional RFC
+    7807/9457 members may be present.
+problems:
+- status: 400
+  title: Bad Request
+  detail: The request is not well-formed, syntactically incorrect, or violates schema.
+  in_spec: true
+- status: 401
+  title: Unauthorized
+  detail: Missing or invalid authentication credentials (incorrect/expired token, wrong Account ID).
+  in_spec: true
+- status: 403
+  title: Forbidden
+  detail: Credentials are valid but lack the required permission/scope for the resource.
+  in_spec: true
+- status: 404
+  title: Not Found
+  detail: The specified resource does not exist.
+  in_spec: true
+- status: 405
+  title: Method Not Allowed
+  detail: The server does not implement the requested HTTP method.
+  in_spec: false
+- status: 409
+  title: Conflict
+  detail: The request conflicts with another request or the current state of the resource.
+  in_spec: true
+- status: 413
+  title: Content Too Large
+  detail: The request entity is larger than the limits defined by the server.
+  in_spec: true
+- status: 422
+  title: Unprocessable Entity
+  detail: The request is well formatted but fails business-logic validation.
+  in_spec: true
+- status: 429
+  title: Too Many Requests
+  detail: The rate limit for the user, application, or token was exceeded.
+  in_spec: false
+- status: 500
+  title: Internal Server Error
+  detail: An internal server error has occurred.
+  in_spec: true
+- status: 501
+  title: Not Implemented
+  detail: The server does not support the functionality required to fulfill the request.
+  in_spec: false
+- status: 503
+  title: Service Unavailable
+  detail: The service is temporarily unavailable.
+  in_spec: false

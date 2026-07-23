@@ -1,0 +1,20 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/astrada-openapi-original.json
+note: >-
+  Packaged Agent Skills for the Astrada API. Each step is grounded in a verified
+  operationId from the reconstructed OpenAPI. No provider-published AGENTS.md/skill
+  files were found.
+skills:
+  - file: astrada-enroll-and-monitor-card.md
+    name: Enroll a card and monitor its transactions
+    api: openapi/astrada-openapi-original.json
+    operations: [CreateSubaccount, EnrollmentMethods, ListCards, GetCard, GetCardholder, GetTransactions, GetTransactionById]
+  - file: astrada-link-bank-and-reconcile.md
+    name: Link a bank account and reconcile card transactions
+    api: openapi/astrada-openapi-original.json
+    operations: [CreateBankLink, GetBankLink, ListBankAccounts, LinkEnrolledCards, SyncBankLink, ListTransactionMatches, GetTransactionMatch]
+  - file: astrada-manage-webhooks.md
+    name: Register and verify Astrada webhooks
+    api: openapi/astrada-openapi-original.json
+    operations: [createWebhook, listWebhooks, getWebhook, updateWebhook, deleteWebhook]

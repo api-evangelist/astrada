@@ -1,0 +1,214 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/astrada-openapi-original.json
+schemes:
+- name: main-auth
+  source: openapi/astrada-openapi-original.json
+  flows:
+  - flow: implicit
+    authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+scopes:
+- scope: accounts:read
+  description: Accounts read resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: accounts:write
+  description: Accounts write resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:cards:read
+  description: View enrolled cards in the appstore
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:enrollment:write
+  description: Enroll cards via the appstore B2C flow
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:sessions:read
+  description: Read appstore session state
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:sessions:write
+  description: Write or delete appstore session state
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:tokens:read
+  description: Read appstore stored tokens and connections
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:tokens:write
+  description: Write appstore stored tokens and connections
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:transactions:read
+  description: View synced transactions in the appstore
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: appstore:transactions:sync
+  description: Trigger transaction sync in the appstore
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: banking:admin
+  description: Admin banking operations
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: banking:read
+  description: Read banking resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: banking:write
+  description: Write banking resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-connector-consents:read
+  description: Card Consent read resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-connector-consents:write
+  description: Card Consent write resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-connector-data-links:write
+  description: card-connector-data-link resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-subscriptions:read
+  description: Read card subscription
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-subscriptions:write
+  description: Create card subscription
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-verifications:read
+  description: Read Card verification
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: card-verifications:write
+  description: Create card verification
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: cardholder:read
+  description: Read Cardholder resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: cardholder:write
+  description: Write Cardholder resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: cards:read
+  description: Read Card resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: enrollment-methods:write
+  description: Write enrollment methods
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: network-bulk-feeds:read
+  description: Read network bulk feed
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: network-bulk-feeds:write
+  description: Write network bulk feed
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: network-links:write
+  description: Write network link
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: simulation:write
+  description: Write sandbox simulations
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: subaccounts:read
+  description: Subaccounts read resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: subaccounts:write
+  description: Subaccounts write resource
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: transaction-messages:read
+  description: Read Transaction Message resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: transactions:read
+  description: Read Transaction resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: webhooks:read
+  description: Read Webhook resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json
+- scope: webhooks:write
+  description: Write Webhook resources
+  flows:
+  - implicit
+  sources:
+  - openapi/astrada-openapi-original.json

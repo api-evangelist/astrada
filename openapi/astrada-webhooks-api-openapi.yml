@@ -1,0 +1,605 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts webhooks API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: webhooks
+  description: Manage webhooks
+paths:
+  /webhooks:
+    post:
+      tags:
+      - webhooks
+      summary: Create webhook
+      description: Registers a new webhook for capturing event notifications.
+      operationId: createWebhook
+      security:
+      - main-auth:
+        - webhooks:write
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                url:
+                  type: string
+                  format: uri
+                description:
+                  type: string
+                eventTypes:
+                  $ref: '#/components/schemas/webhook-event-types'
+                subaccountId:
+                  type: string
+                  format: uuid
+                enabled:
+                  type: boolean
+                  default: true
+              required:
+              - url
+              - eventTypes
+              - subaccountId
+            examples:
+              Card transaction events:
+                value:
+                  url: https://example-api.com/path
+                  description: Example of Webhook description
+                  eventTypes:
+                  - transactionmessage.created
+                  subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+              Bank linking events:
+                value:
+                  url: https://example-api.com/bank-events
+                  description: Bank linking lifecycle and bank-record events
+                  eventTypes:
+                  - banklink.completed
+                  - bankaccount.state_changed
+                  - banktransaction.created
+                  - transaction.match.created
+                  subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/webhook'
+                - type: object
+                  properties:
+                    secret:
+                      type: string
+                      description: Only returned on Webhook creation
+                  required:
+                  - secret
+              examples:
+                Example Create Webhook Response:
+                  value:
+                    _links:
+                      self:
+                        href: /webhooks/3a45ba7f-8d8f-4f6a-86a5-a17ea0328241
+                    id: 3a45ba7f-8d8f-4f6a-86a5-a17ea0328241
+                    url: https://example-api.com/path
+                    description: Example of Webhook description
+                    eventTypes:
+                    - transactionmessage.created
+                    subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+                    createdAt: '2023-12-19T14:45:00Z'
+                    updatedAt: '2023-12-19T14:45:00Z'
+                    enabled: true
+                    secret: ODk4ZDAxYjYtZjM4NC00MzdmLWEzMDMtM2M0NjA1NWY5NTQ5
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    get:
+      parameters:
+      - $ref: '#/components/parameters/subaccount-id'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/cursor'
+      tags:
+      - webhooks
+      summary: List webhooks
+      description: 'Returns all webhooks configured under the account, optionally filtered by subaccount, including details on the events each webhook is subscribed to.
+
+
+        This endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).
+
+        '
+      operationId: listWebhooks
+      security:
+      - main-auth:
+        - webhooks:read
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                type: object
+                additionalProperties: false
+                description: Astrada's Webhook resources.
+                required:
+                - _links
+                - _embedded
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                      next:
+                        $ref: '#/components/schemas/link'
+                  _embedded:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/webhook'
+              examples:
+                Example List Webhooks Response:
+                  value:
+                    _links:
+                      self:
+                        href: /webhooks
+                    _embedded:
+                      webhooks:
+                      - _links:
+                          self:
+                            href: /webhooks/3a45ba7f-8d8f-4f6a-86a5-a17ea0328241
+                        id: 3a45ba7f-8d8f-4f6a-86a5-a17ea0328241
+                        url: https://example-api.com/path
+                        description: Example of Webhook description
+                        eventTypes:
+                        - transactionmessage.created
+                        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+                        createdAt: '2023-12-19T14:45:00Z'
+                        updatedAt: '2023-12-19T14:45:00Z'
+                        enabled: true
+                      - _links:
+                          self:
+                            href: /webhooks/627f9c6d-ec9f-4118-84f3-97a77f447e32
+                        id: 627f9c6d-ec9f-4118-84f3-97a77f447e32
+                        url: https://example-api.com/path
+                        description: Example of Webhook description
+                        eventTypes:
+                        - transactionmessage.created
+                        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+                        createdAt: '2023-12-19T14:46:00Z'
+                        updatedAt: '2023-12-19T14:46:00Z'
+                        enabled: true
+                Example no Webhooks found:
+                  value:
+                    _links:
+                      self:
+                        href: /webhooks
+                    _embedded:
+                      webhooks: []
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /webhooks/{webhookId}:
+    parameters:
+    - $ref: '#/components/parameters/webhook-id'
+    delete:
+      tags:
+      - webhooks
+      summary: Delete webhook
+      description: Remove a configured webhook by its identifier. Results in the resource being deleted and no longer available.
+      operationId: deleteWebhook
+      security:
+      - main-auth:
+        - webhooks:write
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    get:
+      tags:
+      - webhooks
+      summary: Retrieve webhook
+      description: Returns detailed information about a specific webhook by its identifier, including its configuration and event subscription details.
+      operationId: getWebhook
+      security:
+      - main-auth:
+        - webhooks:read
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/webhook'
+              examples:
+                Example Get Webhook Response:
+                  $ref: '#/components/examples/webhook'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    patch:
+      tags:
+      - webhooks
+      summary: Update webhook
+      description: Updates the configuration of an existing webhook, allowing changes to the event subscriptions or notification URL.
+      operationId: updateWebhook
+      security:
+      - main-auth:
+        - webhooks:write
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              minProperties: 1
+              properties:
+                url:
+                  type: string
+                  format: uri
+                description:
+                  type: string
+                eventTypes:
+                  $ref: '#/components/schemas/webhook-event-types'
+                enabled:
+                  type: boolean
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/webhook'
+              examples:
+                Example Update Webhook Response:
+                  $ref: '#/components/examples/webhook'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    webhook-id:
+      in: path
+      name: webhookId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 3c750084-a60f-478c-ab91-c53567d11fac
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+  schemas:
+    webhook-event-types:
+      type: array
+      minItems: 1
+      items:
+        type: string
+        enum:
+        - cardsubscription.created
+        - cardsubscription.updated
+        - transaction.created
+        - transaction.updated
+        - transactionmessage.created
+        - networkbulkfeed.statechanged
+        - enrichment.merchant.created
+        - banklink.completed
+        - bankaccount.state_changed
+        - banktransaction.created
+        - banktransaction.deleted
+        - transaction.match.created
+        - transaction.match.deleted
+    webhook:
+      type: object
+      description: Astrada's Webhook resource.
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        description:
+          nullable: true
+          type: string
+        eventTypes:
+          $ref: '#/components/schemas/webhook-event-types'
+        subaccountId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+        enabled:
+          type: boolean
+          default: true
+      required:
+      - _links
+      - id
+      - url
+      - description
+      - eventTypes
+      - subaccountId
+      - createdAt
+      - updatedAt
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  examples:
+    webhook:
+      description: Example of Webhook resource
+      value:
+        _links:
+          self:
+            href: /webhooks/3a45ba7f-8d8f-4f6a-86a5-a17ea0328241
+        id: 3a45ba7f-8d8f-4f6a-86a5-a17ea0328241
+        url: https://example-api.com/path
+        description: Example of Webhook description
+        eventTypes:
+        - transactionmessage.created
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        createdAt: '2023-12-19T14:45:00Z'
+        updatedAt: '2023-12-19T14:45:00Z'
+        enabled: true
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

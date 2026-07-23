@@ -1,0 +1,555 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts transaction-messages API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: transaction-messages
+  description: Transaction messages resource
+paths:
+  /transaction-messages/{transactionMessageId}/raw:
+    parameters:
+    - $ref: '#/components/parameters/transaction-message-id-2'
+    get:
+      tags:
+      - transaction-messages
+      summary: Retrieve the raw transaction message
+      description: Return a raw transaction message by the transaction message unique identifier.
+      operationId: GetRawTransactionMessageById
+      security:
+      - main-auth:
+        - transaction-messages:read
+      responses:
+        '200':
+          description: Raw transaction message retrieved successfully
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/raw-transaction-message'
+              examples:
+                Example Get Raw Transaction Message Response:
+                  $ref: '#/components/examples/raw-transaction-message'
+        '204':
+          $ref: '#/components/responses/no-content'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /transaction-messages/{transactionMessageId}:
+    parameters:
+    - $ref: '#/components/parameters/transaction-message-id-2'
+    get:
+      tags:
+      - transaction-messages
+      summary: Retrieve transaction message
+      description: Return a transaction message by its unique identifier, including details about the transaction's type and relevant transactional data.
+      operationId: GetTransactionMessageById
+      security:
+      - main-auth:
+        - transaction-messages:read
+      responses:
+        '200':
+          description: Transaction message retrieved successfully
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/transaction-message'
+              examples:
+                Example Get Transaction Message Response:
+                  $ref: '#/components/examples/transaction-message'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+    no-content:
+      description: The request has been successfully processed and there is no content to return
+  examples:
+    raw-transaction-message:
+      description: Example of Raw Transaction Message resource
+      value:
+        _links:
+          self:
+            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc/raw
+          message:
+            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc
+        raw:
+          messageTypeIndicator: '0100'
+          primaryAccountNumber: 444444******0000
+          processingCode: '000000'
+          transactionAmount: '000000000145'
+          transmissionDateTime: '0425000000'
+          systemsTraceAuditNumber: '537254'
+          localTransactionTime: '133945'
+          localTransactionDate: '0424'
+          merchantType: '5734'
+          acquiringInstitutionIdentificationCode: KWGBYTEI4FL0QQQ
+          retrievalReferenceNumber: IWVQ22_2024-04-24
+          authorizationIdentificationResponse: '537254'
+          responseCode: '00'
+          cardAcceptorTerminalIdentification: TERMINAL01
+          cardAcceptorIdentificationCode: KWGBYTEI4FL0QQQ
+          cardAcceptorNameLocation: Uber                    LONDON      LNDGBR
+          transactionCurrencyCode: '840'
+          cardholderBillingAmount: 000000000118
+          cardholderBillingCurrency: '826'
+          networkManagementInformationCode: MASTERCARD
+    transaction-message:
+      description: Example of Transaction Message resource
+      value:
+        _links:
+          self:
+            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc
+          raw:
+            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc/raw
+        acceptor:
+          acquirerId: null
+          city: LONDON
+          country: GBR
+          id: KWGBYTEI4FL0QQQ
+          mcc: '5734'
+          name: Uber
+          state: LND
+        accountId: a49fdf13-62ce-4704-80bf-82f317cc215e
+        approvalCode: '537254'
+        bankData: null
+        cardId: bf4d1e23-0f5a-42a7-81f2-bc66f392a98c
+        cardType: virtual
+        cardholderBillingAmount: 1.18
+        cardholderBillingCurrency: GBP
+        createdDateTime: '2024-04-26T01:41:22.544Z'
+        dateTime: '2024-04-24T13:39:45Z'
+        id: 80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc
+        messageType: FINL_ADVC
+        network: MASTERCARD
+        result: APPROVED
+        subaccountId: cb4d801e-a10a-4f42-b9de-1c51685ffd8a
+        transactionAmount: 1.45
+        transactionCurrency: USD
+        transactionReference: IWVQ22_2024-04-24
+        transactionType: DEBIT_01
+        transmissionDateTime: '2024-04-25T00:00:00.000Z'
+  parameters:
+    transaction-message-id-2:
+      in: path
+      name: transactionMessageId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
+  schemas:
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    raw-transaction-message:
+      type: object
+      properties:
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            message:
+              $ref: '#/components/schemas/link'
+          required:
+          - message
+          - self
+        raw:
+          type: object
+          description: The raw payload from the network that originated the underlying transaction message (will vary by network and message).
+      required:
+      - _links
+      - raw
+    transaction-message:
+      type: object
+      properties:
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            raw:
+              $ref: '#/components/schemas/link'
+          required:
+          - self
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this transaction message entity.
+        acceptor:
+          type: object
+          description: The details relating to the acceptor (merchant) that initiated the transaction message.
+          properties:
+            acquirerId:
+              type: string
+              nullable: true
+              description: The identifier of the acquirer/processor used by the acceptor as assigned by the network.
+            city:
+              type: string
+              nullable: true
+              description: The acceptor's registered city. Defined by the acquirer/processor.
+            country:
+              type: string
+              nullable: true
+              description: The acceptor's registered country following ISO 3166 alpha-3.
+            id:
+              type: string
+              nullable: true
+              description: The identifier of the payment acceptor (merchant) as assigned by the acquirer/processor.
+            mcc:
+              type: string
+              nullable: true
+              description: The Merchant Category Code provided by the acquirer/processor. Used to classify businesses by the types of goods provided or services rendered.
+            name:
+              type: string
+              nullable: true
+              description: The acceptor (merchant) name.
+            state:
+              type: string
+              nullable: true
+              description: The acceptor's registered state (e.g. Michigan) as assigned by the acquirer/processor.
+          required:
+          - acquirerId
+          - id
+          - city
+          - mcc
+          - name
+          - state
+        approvalCode:
+          type: string
+          nullable: true
+          description: Unique code that authorizes a transaction message, sent by the card issuer/issuer-processor when approving a transaction. Always absent on bank-only messages — no card authorization occurred (its absence, together with the `bank_`-prefixed transactionReference, is the marker of a bank-only message).
+        bankData:
+          type: object
+          nullable: true
+          description: Bank-side provenance, present only on bank-sourced messages (null otherwise). Deliberately slim — the bank's merchant string, dates and amounts map into the canonical fields above; `bankTransactionId` is the stable join key back to the bank feed. It equals `banktransaction.created.id` and `transaction.match.created.matches[].id`, and resolves via `GET /bank-transactions/{id}` for the full bank record.
+          properties:
+            provider:
+              type: string
+              enum:
+              - plaid
+              description: Open banking provider that observed the bank transaction.
+            bankTransactionId:
+              type: string
+              format: uuid
+              description: The bank transaction entity id — the canonical, lifecycle-stable join key across every bank-data surface.
+            personalFinanceCategory:
+              type: object
+              nullable: true
+              description: Provider categorization of the bank transaction — the one bank-only datum with no card-side equivalent.
+              properties:
+                primary:
+                  type: string
+                  description: Primary category (e.g. FOOD_AND_DRINK).
+                detailed:
+                  type: string
+                  nullable: true
+                  description: Detailed category (e.g. FOOD_AND_DRINK_RESTAURANT).
+          required:
+          - provider
+          - bankTransactionId
+        cardId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the card related to this entity. Null only for bank-sourced messages from a bank account with no linked cards (the card-less unified feed).
+        cardType:
+          type: string
+          description: The type of card used in the transaction. The only available value is 'virtual' and the field is nullable.
+        cardholderBillingAmount:
+          type: number
+          description: The amount in the currency of the country of issuance. The transactionAmount and cardholderBillingAmount values may differ in case of international transactions.
+        cardholderBillingCurrency:
+          type: string
+          description: The currency of the country of issuance following ISO 4217 alpha-3 format.
+        createdDateTime:
+          type: string
+          format: date-time
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+        dateTime:
+          type: string
+          format: date-time
+          description: 'The timestamp of the transaction message (e.g. authorization, movement of funds, etc) following ISO 8601 format. The timezone depends on the card network:
+
+            - **Visa/Amex**: UTC (suffixed with `Z`)
+
+            - **Mastercard**: Local time zone of the merchant/acquirer (no `Z` suffix, timezone offset not included)
+
+
+            The presence or absence of the `Z` suffix indicates whether the value is UTC or local time.
+
+            '
+        messageType:
+          type: string
+          description: The type of operation this transaction message represents. [Learn More](https://docs.astrada.co/docs/transaction-message)
+          enum:
+          - AUTH_ADVC
+          - AUTH_REQU
+          - FINL_ADVC
+          - CBCK_ADVC
+          - FINL_REQU
+        network:
+          type: string
+          description: The rail that processed this payment. `OPEN_BANKING` marks a bank-sourced message with no card-network involvement (the concrete provider is in `bankData.provider`).
+          enum:
+          - VISA
+          - MASTERCARD
+          - AMEX
+          - OPEN_BANKING
+        subaccountId:
+          type: string
+          description: The unique identifier of the subaccount related to this entity.
+          format: uuid
+        result:
+          type: string
+          description: The issuer's decision on whether the transaction message is authorized.
+          enum:
+          - APPROVED
+          - DECLINED
+        transactionAmount:
+          type: number
+          description: The amount of the transaction message in the currency it was charged in. In the case of international transactions, the transactionAmount and cardholderBillingAmount may differ due to being in different currencies.
+        transactionCurrency:
+          type: string
+          description: The currency in which the transaction took place following ISO 4217 alpha-3 format.
+        transactionReference:
+          type: string
+          description: Identification of the Transaction that has to be unique for a time period.
+        transactionType:
+          type: string
+          nullable: true
+          description: Types provide additional information about the transaction message, describing the effect that it had on the customer account and the type of accounts affected. [Learn More](https://docs.astrada.co/docs/transaction-message)
+          enum:
+          - DEBIT_01
+          - DEBIT_02
+          - DEBIT_19
+          - CREDIT_01
+          - CREDIT_02
+          - INQUIRY_01
+          - TRANSFER_01
+          - ADMIN_01
+          - ADMIN_02
+        transmissionDateTime:
+          type: string
+          nullable: true
+          format: date-time
+          description: The timestamp of when the transaction message was received by the data source (i.e. Mastercard or Visa), in UTC, following ISO 8601 format.
+      required:
+      - _links
+      - acceptor
+      - cardId
+      - cardholderBillingAmount
+      - cardholderBillingCurrency
+      - createdDateTime
+      - dateTime
+      - id
+      - messageType
+      - network
+      - result
+      - subaccountId
+      - transactionAmount
+      - transactionCurrency
+      - transactionReference
+      - transactionType
+      - transmissionDateTime
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

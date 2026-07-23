@@ -1,0 +1,40 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/changelog
+feed: https://docs.astrada.co/changelog.rss
+scheme: dated-entries
+note: >-
+  Recent window captured from the ReadMe-hosted changelog RSS feed. Entries dated
+  2025 are individual API/SDK change notes; the 2026 "Week Ending" entries are weekly
+  rollups.
+entries:
+  - title: Week Ending 2026-07-10
+    date: '2026-07-10'
+    type: rollup
+  - title: Week Ending 2026-07-03
+    date: '2026-07-03'
+    type: rollup
+  - title: New header in Webhook delivery
+    date: '2025-06-18'
+    type: addition
+  - title: New field enrollmentGuidance returned by the SDK
+    date: '2025-05-29'
+    type: addition
+  - title: New link on Card Subscription resource
+    date: '2025-05-29'
+    type: addition
+  - title: New field on Cardholder resource
+    date: '2025-05-09'
+    type: addition
+  - title: Network bulk feed resource
+    date: '2025-03-17'
+    type: addition
+  - title: Acceptor details on the transaction entity and webhooks
+    date: '2025-02-27'
+    type: addition
+  - title: Transaction occurrence date on the transaction entity and webhooks
+    date: '2025-02-27'
+    type: addition
+  - title: New error returned by the SDK
+    date: '2024-10-25'
+    type: addition

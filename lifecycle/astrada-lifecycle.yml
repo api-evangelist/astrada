@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/reference/base-api-responses
+versioning:
+  scheme: date-based
+  openapi_version: '2024-02-28'
+  docs_version: 0.2.0
+  docs: https://docs.astrada.co/reference/api-basics
+  notes: >-
+    The OpenAPI info.version is a date (2024-02-28); the docs hub tracks a separate
+    0.x documentation version. No URL/path or header API version is required on requests.
+compatibility_policy:
+  additive_fields_non_breaking: true
+  source: https://docs.astrada.co/reference/base-api-responses
+  webhook_source: https://docs.astrada.co/docs/webhooks-1
+  statement: >-
+    Adding new fields to API responses and webhook payloads is not considered a breaking
+    change; consumers should tolerate unknown fields.
+deprecation:
+  policy_documented: false
+  sunset_header: false
+  notes: No explicit deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+status_page: https://status.astrada.co
+sla:
+  documented: false
+changelog: https://docs.astrada.co/changelog
+changelog_feed: https://docs.astrada.co/changelog.rss
+deprecated_operations: []

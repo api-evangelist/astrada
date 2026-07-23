@@ -1,0 +1,196 @@
+asyncapi: 2.6.0
+info:
+  title: Astrada Webhook Events
+  version: '2024-02-28'
+  description: Webhook event surface for the Astrada API, generated from the documented Event Types and webhook delivery mechanics.
+    Astrada delivers events via HTTP POST to registered HTTPS endpoints with at-least-once semantics and HMAC-SHA256 signing.
+  contact:
+    email: developer@astrada.co
+x-provenance:
+  generated: '2026-07-18'
+  method: searched
+  source: https://docs.astrada.co/reference/event-types
+  delivery_docs: https://docs.astrada.co/docs/webhooks-1
+defaultContentType: application/json
+servers:
+  webhook:
+    url: https://your-registered-endpoint
+    protocol: https
+    description: Consumer-registered HTTPS endpoint (created via POST /webhooks).
+channels:
+  transactionmessage.created:
+    subscribe:
+      summary: A new Transaction Message was registered in Astrada.
+      message:
+        $ref: '#/components/messages/transactionmessage_created'
+  transaction.created:
+    subscribe:
+      summary: A new Transaction was created.
+      message:
+        $ref: '#/components/messages/transaction_created'
+  transaction.updated:
+    subscribe:
+      summary: A Transaction was updated.
+      message:
+        $ref: '#/components/messages/transaction_updated'
+  transaction.match.created:
+    subscribe:
+      summary: A transaction match (card-to-bank reconciliation) was created.
+      message:
+        $ref: '#/components/messages/transaction_match_created'
+  transaction.match.deleted:
+    subscribe:
+      summary: A transaction match was deleted.
+      message:
+        $ref: '#/components/messages/transaction_match_deleted'
+  banklink.completed:
+    subscribe:
+      summary: A bank-link enrollment completed; bank accounts discovered.
+      message:
+        $ref: '#/components/messages/banklink_completed'
+  banktransaction.created:
+    subscribe:
+      summary: A new bank transaction was created.
+      message:
+        $ref: '#/components/messages/banktransaction_created'
+  banktransaction.deleted:
+    subscribe:
+      summary: A bank transaction was deleted.
+      message:
+        $ref: '#/components/messages/banktransaction_deleted'
+  cardsubscription.created:
+    subscribe:
+      summary: A card subscription (enrolled card) was created.
+      message:
+        $ref: '#/components/messages/cardsubscription_created'
+  cardsubscription.updated:
+    subscribe:
+      summary: A card subscription was updated.
+      message:
+        $ref: '#/components/messages/cardsubscription_updated'
+  enrichment.merchant.created:
+    subscribe:
+      summary: A merchant enrichment record was created.
+      message:
+        $ref: '#/components/messages/enrichment_merchant_created'
+components:
+  messages:
+    transactionmessage_created:
+      name: transactionmessage.created
+      title: transactionmessage.created
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for transactionmessage.created. Additive fields may appear; consumers should not reject
+          unknown fields.
+    transaction_created:
+      name: transaction.created
+      title: transaction.created
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for transaction.created. Additive fields may appear; consumers should not reject unknown
+          fields.
+    transaction_updated:
+      name: transaction.updated
+      title: transaction.updated
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for transaction.updated. Additive fields may appear; consumers should not reject unknown
+          fields.
+    transaction_match_created:
+      name: transaction.match.created
+      title: transaction.match.created
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for transaction.match.created. Additive fields may appear; consumers should not reject
+          unknown fields.
+    transaction_match_deleted:
+      name: transaction.match.deleted
+      title: transaction.match.deleted
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for transaction.match.deleted. Additive fields may appear; consumers should not reject
+          unknown fields.
+    banklink_completed:
+      name: banklink.completed
+      title: banklink.completed
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for banklink.completed. Additive fields may appear; consumers should not reject unknown
+          fields.
+    banktransaction_created:
+      name: banktransaction.created
+      title: banktransaction.created
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for banktransaction.created. Additive fields may appear; consumers should not reject unknown
+          fields.
+    banktransaction_deleted:
+      name: banktransaction.deleted
+      title: banktransaction.deleted
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for banktransaction.deleted. Additive fields may appear; consumers should not reject unknown
+          fields.
+    cardsubscription_created:
+      name: cardsubscription.created
+      title: cardsubscription.created
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for cardsubscription.created. Additive fields may appear; consumers should not reject unknown
+          fields.
+    cardsubscription_updated:
+      name: cardsubscription.updated
+      title: cardsubscription.updated
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for cardsubscription.updated. Additive fields may appear; consumers should not reject unknown
+          fields.
+    enrichment_merchant_created:
+      name: enrichment.merchant.created
+      title: enrichment.merchant.created
+      traits:
+      - $ref: '#/components/messageTraits/astradaWebhook'
+      payload:
+        type: object
+        description: Event payload for enrichment.merchant.created. Additive fields may appear; consumers should not reject
+          unknown fields.
+  messageTraits:
+    astradaWebhook:
+      headers:
+        type: object
+        properties:
+          webhook-event-type:
+            type: string
+            description: The event type name.
+          webhook-subaccount-id:
+            type: string
+            description: Subaccount the event relates to.
+          webhook-id:
+            type: string
+            description: Unique message id, stable across retries.
+          webhook-timestamp:
+            type: string
+            description: Epoch seconds at send time.
+          webhook-signature:
+            type: string
+            description: Base64 HMAC-SHA256 over webhook-id, webhook-timestamp and raw body joined by a full stop.

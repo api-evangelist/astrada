@@ -1,0 +1,38 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Astrada API
+  version: 1.0.0
+extends: openapi/astrada-openapi-original.json
+x-provenance:
+  generated: '2026-07-18'
+  method: generated
+  source: openapi/astrada-openapi-original.json
+  note: >-
+    Non-destructive enhancements captured by the API Evangelist enrichment pipeline.
+    The reconstructed spec was assembled from Astrada's per-operation ReadMe reference
+    pages; this overlay records our cross-artifact bindings without mutating it.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: true
+      x-api-evangelist-artifacts:
+        authentication: authentication/astrada-authentication.yml
+        scopes: scopes/astrada-scopes.yml
+        conventions: conventions/astrada-conventions.yml
+        errors: errors/astrada-problem-types.yml
+        decline_codes: errors/astrada-decline-codes.yml
+        lifecycle: lifecycle/astrada-lifecycle.yml
+        data_model: data-model/astrada-data-model.yml
+        webhooks: asyncapi/astrada-webhooks.yml
+        asyncapi: asyncapi/astrada-events-asyncapi.yml
+        sandbox: sandbox/astrada-sandbox.yml
+        agentic_access: agentic-access/astrada-agentic-access.yml
+  - target: $.info
+    update:
+      x-authentication:
+        grant: client_credentials
+        note: OpenAPI declares the oauth2 flow as 'implicit', but the documented grant is client_credentials against the Keycloak token endpoint.
+  - target: $.servers
+    update:
+      - url: https://api.astrada.co
+        description: Production

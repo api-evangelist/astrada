@@ -1,0 +1,150 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/astrada-openapi-original.json
+note: Entity graph derived from OpenAPI component schemas and id-reference fields. Relationship directions
+  are inferred from *Id foreign-key fields.
+entities:
+- bank-account
+- bank-link
+- bank-linking-policy
+- bank-subscription
+- bank-transaction
+- bin-lookup
+- card
+- card-subscription
+- card-verification
+- cardholder
+- conflict
+- create-subaccount-configurations
+- customer-enrollment-policy
+- enrollment-policy
+- failure-reason
+- link
+- network-bulk-feeds
+- raw-transaction-message
+- subaccount
+- subaccount-configuration
+- transaction
+- transaction-match
+- transaction-message
+- unprocessable-entity
+- verification-policy
+- webhook
+- webhook-event-types
+relationships:
+- from: bank-account
+  to: account
+  type: belongs_to
+  via: accountId
+- from: bank-account
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: bank-account
+  to: bank-link
+  type: belongs_to
+  via: bankLinkId
+- from: bank-link
+  to: account
+  type: belongs_to
+  via: accountId
+- from: bank-link
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: bank-subscription
+  to: account
+  type: belongs_to
+  via: accountId
+- from: bank-subscription
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: bank-subscription
+  to: bank-link
+  type: belongs_to
+  via: connectionId
+- from: bank-transaction
+  to: account
+  type: belongs_to
+  via: accountId
+- from: bank-transaction
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: bank-transaction
+  to: bank-account
+  type: belongs_to
+  via: bankAccountId
+- from: bank-transaction
+  to: card
+  type: belongs_to
+  via: cardId
+- from: card
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: card-subscription
+  to: account
+  type: belongs_to
+  via: accountId
+- from: card-subscription
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: card-subscription
+  to: card
+  type: belongs_to
+  via: cardId
+- from: card-subscription
+  to: network-bulk-feeds
+  type: belongs_to
+  via: networkBulkFeedId
+- from: card-subscription
+  to: bank-account
+  type: belongs_to
+  via: bankAccountId
+- from: card-verification
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: card-verification
+  to: card
+  type: belongs_to
+  via: cardId
+- from: network-bulk-feeds
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: subaccount
+  to: account
+  type: belongs_to
+  via: accountId
+- from: transaction
+  to: card
+  type: belongs_to
+  via: cardId
+- from: transaction
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: transaction-match
+  to: account
+  type: belongs_to
+  via: accountId
+- from: transaction-match
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: transaction-message
+  to: card
+  type: belongs_to
+  via: cardId
+- from: transaction-message
+  to: subaccount
+  type: belongs_to
+  via: subaccountId
+- from: webhook
+  to: subaccount
+  type: belongs_to
+  via: subaccountId

@@ -1,0 +1,40 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/docs/sandbox-testing
+note: >-
+  Card-verification decline / failure reasons observed in Astrada's sandbox test-card
+  matrix. Astrada verifies card ownership via 3DS (Stripe-backed) rather than acquiring
+  card payments, so these are verification-failure reasons surfaced on a failed
+  card-verification, complementing errors/astrada-problem-types.yml (API-level errors).
+envelope_field: failureReason
+verification_status_on_decline: failed
+decline_codes:
+  - code: incorrect_cvc
+    meaning: The card CVC check failed.
+    action: Confirm the CVC entered by the cardholder; retry with correct value.
+  - code: generic_decline
+    meaning: The card was declined with no specific reason (issuer generic decline).
+    action: Ask the cardholder to contact their issuer or try a different card.
+  - code: expired_card
+    meaning: The card is expired.
+    action: Enroll a card with a valid expiry date.
+  - code: stolen_card
+    meaning: Hard decline - card reported stolen.
+    action: Do not retry; cardholder must use a different card.
+  - code: lost_card
+    meaning: Hard decline - card reported lost.
+    action: Do not retry; cardholder must use a different card.
+  - code: insufficient_funds
+    meaning: The verification hold could not be placed due to insufficient funds.
+    action: Cardholder should ensure available balance or use another card.
+  - code: processing_error
+    meaning: Transient processing error during verification.
+    action: Retry the verification; escalate if persistent.
+masked_to_buyers: >-
+  Hard-decline reasons (stolen_card, lost_card) are typically not surfaced verbatim to
+  end cardholders; present a generic failure message and remediation path.
+related:
+  network_precheck_failures: >-
+    Some test cards are rejected at create (HTTP 400) before any verification is created
+    (network pre-check declined); see the sandbox test-card matrix.
+  cross_reference: errors/astrada-problem-types.yml

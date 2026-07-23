@@ -1,0 +1,1830 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts subaccounts API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: subaccounts
+  description: Subaccount resource
+paths:
+  /subaccounts:
+    post:
+      tags:
+      - subaccounts
+      summary: Create subaccount
+      description: 'Creates a new subaccount, allowing you to set network and regional configurations.
+
+
+        Each network''s `countries` can be set to either an array of specific ISO 3166 alpha-3 country codes, or the string `"*"` to inherit all countries from the parent account''s capabilities for that network.
+
+
+        When using `"*"`, the subaccount will automatically reflect the parent account''s current country list. If the parent account''s capabilities change, subaccounts configured with `"*"` will inherit the updated countries.
+
+
+        The single and bulk enrollment configurations are not required when creating a subaccount, but if not provided they will default to the same country list as the main `countries` property for that network.
+
+        The supported card types for single and bulk enrollment is CONSUMER, while the supported funding card types is DEBIT. If not provided, the block rules for both card types will default to the parent account''s default block rule for that network and enrollment level.
+
+
+        To set the default rule on the parent account, please reach out to your account manager or support.
+
+        '
+      operationId: CreateSubaccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the subaccount
+                configurations:
+                  $ref: '#/components/schemas/create-subaccount-configurations'
+              required:
+              - name
+              - configurations
+            examples:
+              Specific countries:
+                value:
+                  name: Subaccount A
+                  configurations:
+                    VISA:
+                      countries:
+                      - USA
+                      - CAN
+                    MASTERCARD:
+                      countries:
+                      - USA
+              Wildcard countries:
+                value:
+                  name: Subaccount B
+                  configurations:
+                    VISA:
+                      countries: '*'
+                    MASTERCARD:
+                      countries: '*'
+      security:
+      - main-auth:
+        - subaccounts:write
+      responses:
+        '201':
+          description: New subaccount created successfully
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/subaccount'
+              examples:
+                Example Create Subaccount Response:
+                  $ref: '#/components/examples/subaccount'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+    get:
+      tags:
+      - subaccounts
+      summary: List subaccounts
+      description: 'Returns a list of all subaccounts associated with the account.
+
+
+        This endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).
+
+        '
+      operationId: GetSubaccounts
+      parameters:
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      security:
+      - main-auth:
+        - subaccounts:read
+      responses:
+        '200':
+          description: Subaccounts list retrieved successfully
+          content:
+            application/hal+json:
+              schema:
+                type: object
+                properties:
+                  _embedded:
+                    type: object
+                    required:
+                    - subaccounts
+                    properties:
+                      subaccounts:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/subaccount'
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                      next:
+                        $ref: '#/components/schemas/link'
+                    required:
+                    - self
+                required:
+                - _embedded
+                - _links
+              examples:
+                Example List Subaccounts Response:
+                  value:
+                    _links:
+                      self:
+                        href: /subaccounts
+                    _embedded:
+                      subaccounts:
+                      - _links:
+                          self:
+                            href: /subaccounts/81e7c267-0927-4234-a2bd-78cef799de54
+                        accountId: 073fe1bb-3350-46ad-b3a6-32afb3780994
+                        id: 81e7c267-0927-4234-a2bd-78cef799de54
+                        name: Subaccount A
+                        createdAt: '2024-05-01T17:08:43.810Z'
+                        updatedAt: '2024-05-01T17:08:43.810Z'
+                        configurations:
+                          VISA:
+                            countries:
+                            - USA
+                            - CAN
+                            single-enrollment:
+                              countries:
+                              - USA
+                              - CAN
+                              blockedCardTypes:
+                              - CONSUMER
+                              blockedFundingCardTypes:
+                              - DEBIT
+                            bulk-enrollment:
+                              countries:
+                              - USA
+                              - CAN
+                              blockedCardTypes:
+                              - CONSUMER
+                              blockedFundingCardTypes:
+                              - DEBIT
+                          MASTERCARD:
+                            countries:
+                            - USA
+                            single-enrollment:
+                              countries:
+                              - USA
+                              blockedCardTypes: []
+                              blockedFundingCardTypes: []
+                            bulk-enrollment:
+                              countries:
+                              - USA
+                              blockedCardTypes: []
+                              blockedFundingCardTypes: []
+                      - _links:
+                          self:
+                            href: /subaccounts/3788493c-49f5-4f5e-9152-56abc2a4e153
+                        accountId: 073fe1bb-3350-46ad-b3a6-32afb3780994
+                        id: 3788493c-49f5-4f5e-9152-56abc2a4e153
+                        name: Subaccount B
+                        createdAt: '2024-05-01T17:08:43.810Z'
+                        updatedAt: '2024-05-01T17:08:43.810Z'
+                        configurations:
+                          VISA:
+                            countries:
+                            - USA
+                            - CAN
+                            single-enrollment:
+                              countries:
+                              - USA
+                              - CAN
+                              blockedCardTypes: []
+                              blockedFundingCardTypes:
+                              - DEBIT
+                            bulk-enrollment:
+                              countries:
+                              - USA
+                              - CAN
+                              blockedCardTypes: []
+                              blockedFundingCardTypes: []
+                          MASTERCARD:
+                            countries:
+                            - USA
+                            single-enrollment:
+                              countries:
+                              - USA
+                              blockedCardTypes:
+                              - CONSUMER
+                              blockedFundingCardTypes: []
+                            bulk-enrollment:
+                              countries:
+                              - USA
+                              blockedCardTypes: []
+                              blockedFundingCardTypes: []
+                Example no Subaccounts found:
+                  value:
+                    _links:
+                      self:
+                        href: /subaccounts
+                    _embedded:
+                      subaccounts: []
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /subaccounts/{subaccountId}:
+    parameters:
+    - $ref: '#/components/parameters/subaccount-id-2'
+    get:
+      tags:
+      - subaccounts
+      summary: Retrieve subaccount
+      description: Returns detailed information about a specific subaccount by its identifier, including configuration details and associated data.
+      operationId: GetSubaccount
+      security:
+      - main-auth:
+        - subaccounts:read
+      responses:
+        '200':
+          description: Details of the subaccount giving the accountId and subaccountId
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/subaccount'
+              examples:
+                Example Get Subaccount Response:
+                  $ref: '#/components/examples/subaccount'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    patch:
+      tags:
+      - subaccounts
+      summary: Update subaccount configurations
+      description: 'Update a subaccount name and configurations.
+
+        All updated configurations are validated against the capabilities of the main account to ensure compliance.
+
+        It is possible to add new networks and/or regions but it is not possible to remove any configurations that were previously set.
+
+
+        Each network''s `countries` can be set to either an array of specific ISO 3166 alpha-3 country codes, or the string `"*"` to inherit all countries from the parent account''s capabilities for that network.
+
+
+        When using `"*"`, the subaccount will automatically reflect the parent account''s current country list. If the parent account''s capabilities change, subaccounts configured with `"*"` will inherit the updated countries.
+
+
+        The single and bulk enrollment configurations are not required when creating a subaccount, but if not provided they will default to the same country list as the main countries property for that network. The supported card types for single and bulk enrollment is CONSUMER, while the supported funding card types is DEBIT. If not provided, the block rules for both card types will default to the parent account''s default block rule for that network and enrollment level.
+
+
+        To set the default rule on the parent account, please reach out to your account manager or support.
+
+        '
+      operationId: UpdateSubaccount
+      security:
+      - main-auth:
+        - subaccounts:write
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                configurations:
+                  $ref: '#/components/schemas/create-subaccount-configurations'
+                name:
+                  type: string
+                verificationPolicy:
+                  description: 'Set or clear the subaccount''s card verification policy. Customers may set any
+
+                    level above LOW (MEDIUM, HIGH, HIGHEST), send a null level to clear the
+
+                    override, and toggle the `sandbox` test flag. LOW is internal-only and is
+
+                    rejected on this endpoint.
+
+                    '
+                  allOf:
+                  - $ref: '#/components/schemas/verification-policy'
+                enrollmentPolicy:
+                  $ref: '#/components/schemas/customer-enrollment-policy'
+      responses:
+        '200':
+          description: Specified subaccount updated successfully
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/subaccount'
+              examples:
+                Example Update Subaccount Response:
+                  $ref: '#/components/examples/subaccount'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+  examples:
+    subaccount:
+      description: Example of Subaccount resource
+      value:
+        _links:
+          self:
+            href: /subaccounts/81e7c267-0927-4234-a2bd-78cef799de54
+        accountId: 073fe1bb-3350-46ad-b3a6-32afb3780994
+        id: 81e7c267-0927-4234-a2bd-78cef799de54
+        name: Subaccount A
+        createdAt: '2024-05-01T17:08:43.810Z'
+        updatedAt: '2024-05-01T17:08:43.810Z'
+        configurations:
+          VISA:
+            countries:
+            - USA
+            - CAN
+            single-enrollment:
+              countries:
+              - USA
+              blockedCardTypes:
+              - CONSUMER
+              blockedFundingCardTypes:
+              - DEBIT
+            bulk-enrollment:
+              countries:
+              - CAN
+              blockedCardTypes:
+              - CONSUMER
+              blockedFundingCardTypes:
+              - DEBIT
+          MASTERCARD:
+            countries:
+            - USA
+            single-enrollment:
+              countries:
+              - USA
+              blockedCardTypes:
+              - CONSUMER
+              blockedFundingCardTypes:
+              - DEBIT
+            bulk-enrollment:
+              countries:
+              - GBR
+              blockedCardTypes:
+              - CONSUMER
+              blockedFundingCardTypes:
+              - DEBIT
+          AMEX:
+            countries:
+            - ITA
+            single-enrollment:
+              countries:
+              - ITA
+              blockedCardTypes:
+              - CONSUMER
+              blockedFundingCardTypes:
+              - DEBIT
+            bulk-enrollment:
+              countries:
+              - SWE
+              blockedCardTypes:
+              - CONSUMER
+              blockedFundingCardTypes:
+              - DEBIT
+  schemas:
+    subaccount-configuration:
+      type: object
+      additionalProperties: false
+      description: Subaccount network and regional configurations which determine the available networks and geographies during card enrollment.
+      properties:
+        VISA:
+          type: object
+          additionalProperties: false
+          properties:
+            countries:
+              type: array
+              description: List of contracted regional areas for Visa
+              uniqueItems: true
+              items:
+                type: string
+                enum:
+                - USA
+                - CAN
+                - IRL
+                - DEU
+                - CZE
+                - SWE
+                - NLD
+                - LTU
+                - GBR
+                - SVN
+                - LUX
+                - POL
+                - SVK
+                - HUN
+                - ITA
+                - ROU
+                - FIN
+                - DNK
+                - MLT
+                - LVA
+                - GRC
+                - AUT
+                - HRV
+                - CHE
+                - NOR
+                - ISL
+                - FRA
+                - ESP
+                - ISR
+                - SMR
+                - VAT
+                - AND
+                - GIB
+                - AUS
+                - NZL
+                - PRT
+                - BEL
+                description: Country Code following ISO 3166 alpha-3
+            single-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                countries:
+                  type: array
+                  description: List of countries supported for Visa single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - USA
+                    - CAN
+                    - IRL
+                    - DEU
+                    - CZE
+                    - SWE
+                    - NLD
+                    - LTU
+                    - GBR
+                    - SVN
+                    - LUX
+                    - POL
+                    - SVK
+                    - HUN
+                    - ITA
+                    - ROU
+                    - FIN
+                    - DNK
+                    - MLT
+                    - LVA
+                    - GRC
+                    - AUT
+                    - HRV
+                    - CHE
+                    - NOR
+                    - ISL
+                    - FRA
+                    - ESP
+                    - ISR
+                    - SMR
+                    - VAT
+                    - AND
+                    - GIB
+                    - PRT
+                    - BEL
+                    description: Country Code following ISO 3166 alpha-3
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Visa single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Visa single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+              required:
+              - countries
+              - blockedCardTypes
+              - blockedFundingCardTypes
+            bulk-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                countries:
+                  type: array
+                  description: List of countries supported for Visa bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - USA
+                    - CAN
+                    - IRL
+                    - DEU
+                    - CZE
+                    - SWE
+                    - NLD
+                    - GBR
+                    - SVN
+                    - LUX
+                    - POL
+                    - SVK
+                    - HUN
+                    - ITA
+                    - ROU
+                    - FIN
+                    - MLT
+                    - AUT
+                    - FRA
+                    - ESP
+                    - NOR
+                    - CHE
+                    - AUS
+                    - NZL
+                    - PRT
+                    - BEL
+                    description: Country Code following ISO 3166 alpha-3
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Visa bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Visa bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+              required:
+              - countries
+              - blockedCardTypes
+              - blockedFundingCardTypes
+          required:
+          - countries
+          - single-enrollment
+          - bulk-enrollment
+        MASTERCARD:
+          type: object
+          additionalProperties: false
+          properties:
+            countries:
+              type: array
+              description: List of contracted regional areas for Mastercard
+              uniqueItems: true
+              items:
+                type: string
+                enum:
+                - USA
+                - CAN
+                - GBR
+                - IRL
+                - SWE
+                - DEU
+                - NLD
+                - DNK
+                - ITA
+                - POL
+                - FIN
+                - BEL
+                - ESP
+                - FRA
+                - PRT
+                - AUT
+                - GRC
+                - MLT
+                - NOR
+                - CHE
+                - ISR
+                - AUS
+                - NZL
+                description: Country Code following ISO 3166 alpha-3
+            single-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                countries:
+                  type: array
+                  description: List of countries supported for Mastercard single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - USA
+                    - CAN
+                    - GBR
+                    - IRL
+                    - SWE
+                    - DEU
+                    - NLD
+                    - DNK
+                    - ITA
+                    - POL
+                    - FIN
+                    - BEL
+                    - ESP
+                    - FRA
+                    - PRT
+                    - AUT
+                    - GRC
+                    - MLT
+                    - NOR
+                    - CHE
+                    - ISR
+                    - AUS
+                    - NZL
+                    description: Country Code following ISO 3166 alpha-3
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Mastercard single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Mastercard single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+              required:
+              - countries
+              - blockedCardTypes
+              - blockedFundingCardTypes
+            bulk-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                countries:
+                  type: array
+                  description: List of countries supported for Mastercard bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - USA
+                    - CAN
+                    - GBR
+                    - IRL
+                    - SWE
+                    - DEU
+                    - NLD
+                    - DNK
+                    - ITA
+                    - POL
+                    - FIN
+                    - BEL
+                    - ESP
+                    - FRA
+                    - AUT
+                    - NOR
+                    - CHE
+                    - ISR
+                    - AUS
+                    - NZL
+                    description: Country Code following ISO 3166 alpha-3
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Mastercard bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Mastercard bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+              required:
+              - countries
+              - blockedCardTypes
+              - blockedFundingCardTypes
+          required:
+          - countries
+          - single-enrollment
+          - bulk-enrollment
+        AMEX:
+          type: object
+          additionalProperties: false
+          properties:
+            countries:
+              type: array
+              description: List of contracted regional areas for American Express
+              uniqueItems: true
+              items:
+                type: string
+                enum:
+                - USA
+                - CAN
+                - GBR
+                - ITA
+                - SWE
+                - AUS
+                - NZL
+                description: Country Code following ISO 3166 alpha-3
+            single-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                countries:
+                  type: array
+                  description: List of countries supported for AMEX single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - USA
+                    - CAN
+                    - GBR
+                    - ITA
+                    - SWE
+                    description: Country Code following ISO 3166 alpha-3
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for AMEX single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for AMEX single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+              required:
+              - countries
+              - blockedCardTypes
+              - blockedFundingCardTypes
+            bulk-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                countries:
+                  type: array
+                  description: List of countries supported for AMEX bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - USA
+                    - CAN
+                    - GBR
+                    - ITA
+                    - SWE
+                    - AUS
+                    - NZL
+                    description: Country Code following ISO 3166 alpha-3
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for AMEX bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for AMEX bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+              required:
+              - countries
+              - blockedCardTypes
+              - blockedFundingCardTypes
+          required:
+          - countries
+          - single-enrollment
+          - bulk-enrollment
+      example:
+        VISA:
+          countries:
+          - USA
+          - CAN
+          single-enrollment:
+            countries:
+            - USA
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+          bulk-enrollment:
+            countries:
+            - CAN
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+        MASTERCARD:
+          countries:
+          - USA
+          single-enrollment:
+            countries:
+            - USA
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+          bulk-enrollment:
+            countries:
+            - GBR
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+        AMEX:
+          countries:
+          - ITA
+          single-enrollment:
+            countries:
+            - ITA
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+          bulk-enrollment:
+            countries:
+            - SWE
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+    enrollment-policy:
+      type: object
+      description: 'Enrollment policy for an account or subaccount. Two groups of fields:
+
+
+        **Unified-SDK rails** (`cardEnrollment`, `bankEnrollment`, `bulkEnrollment`) — which
+
+        enrollment options the unified SDK renders. Customer-writable per subaccount via
+
+        `PATCH /subaccounts/{subaccountId}`; account-level defaults are admin-managed. Rails
+
+        resolve live per field (subaccount value if set, else account) and reads are SPARSE:
+
+        only explicitly-configured rail fields are returned — an absent field means "not
+
+        configured here" and the SDK falls back to the host page''s client configuration, then
+
+        its card-only default.
+
+
+        **Admin fields** (`spinwheelEnabled`, `programBins`) — whether the Spinwheel enrollment
+
+        option is offered, and which card-program BINs identify the customer''s program.
+
+        Managed only on the internal enrollment-policy endpoints.
+
+
+        Fields are optional and nullable; absent fields leave the current value unchanged, explicit
+
+        `null` clears a field.
+
+        '
+      properties:
+        spinwheelEnabled:
+          type: boolean
+          nullable: true
+          description: 'Master gate for offering Spinwheel enrollment. Absent / `null` / `false` → disabled.
+
+
+            Resolution: the account-level value is the master switch. A subaccount''s stored value only
+
+            takes effect while the account''s is also `true` — subaccount GETs return this **effective**
+
+            value, not the stored one. Disabling at the account level is non-destructive: stored
+
+            subaccount values are unchanged, so re-enabling the account automatically restores
+
+            subaccounts whose stored value is `true`.
+
+
+            Setting `true` on a subaccount while the parent account''s gate is off is rejected with
+
+            `400` (no escalation past the account).
+
+            '
+        bulkEnrollmentEnabled:
+          type: boolean
+          nullable: true
+          deprecated: true
+          description: '**Deprecated:** superseded by the `bulkEnrollment` tri-state rail (the SDK maps
+
+            `true` to `suggested`, `false` to `off`, and prefers the tri-state when present).
+
+
+            Whether the unified enrollment SDK offers bulk-enrollment steering (BIN eligibility
+
+            check + bulk feed wizard) for this account/subaccount. `false` = the SDK skips the
+
+            eligibility check entirely and opens the card form directly (American Express cards
+
+            pivot to the bank-linking flow). Absent / `null` = not configured — the SDK falls
+
+            back to the host page''s client configuration, then its card-only default (bulk off).
+
+
+            Resolution: plain override-fallback — a subaccount value overrides the account value
+
+            when set (no master gate; unlike `spinwheelEnabled`). An explicit `bulkEnrollment`
+
+            flag in the SDK''s `open()` config wins over this policy.
+
+            '
+        cardEnrollment:
+          type: boolean
+          nullable: true
+          description: 'Unified-SDK rail: offer manual card enrollment (PAN entry + 3DS verification).
+
+            Resolution: live per-field override-fallback (subaccount value if set, else account).
+
+            '
+        bankEnrollment:
+          type: string
+          nullable: true
+          enum:
+          - 'off'
+          - amex-only
+          - 'on'
+          description: 'Unified-SDK rail: offer bank linking. `on` = first-class (chooser tile, any-order
+
+            linking); `amex-only` = reachable only via the American Express pivot from card
+
+            entry; `off` = disabled. Resolution: live per-field override-fallback.
+
+            '
+        bulkEnrollment:
+          type: string
+          nullable: true
+          enum:
+          - 'off'
+          - suggested
+          - forced
+          description: 'Unified-SDK rail: offer network bulk-feed enrollment for bulk-capable programs.
+
+            `suggested` = bulk wizard with a link-just-this-card escape; `forced` = the wizard
+
+            is the only path for bulk-capable cards; `off` = no bulk routing (direct card
+
+            form). Supersedes the deprecated `bulkEnrollmentEnabled` boolean; when both are
+
+            set, the SDK prefers this field. Resolution: live per-field override-fallback.
+
+            '
+        programBins:
+          type: array
+          nullable: true
+          items:
+            type: string
+            pattern: ^\d{6,8}$
+          description: 'The customer''s card-program BIN prefixes (tier-2 manual registry), used to match cards to
+
+            the program during enrollment-option resolution. 6–8 digit numeric strings — both legacy
+
+            6-digit and ISO 8-digit prefixes are accepted. Managed via customer onboarding; returned
+
+            as stored on the subaccount (not resolved against the account).
+
+            '
+    create-subaccount-configurations:
+      type: object
+      additionalProperties: false
+      description: 'Subaccount network and regional configurations which determine the available networks and geographies during card enrollment.
+
+
+        The `countries` property for each network accepts either:
+
+        - An array of ISO 3166 alpha-3 country codes (e.g. `["USA", "CAN"]`)
+
+        - The string `"*"` to inherit all countries from the parent account''s capabilities for that network
+
+
+        When `"*"` is used, the subaccount automatically reflects the parent account''s current country list. If the parent account''s capabilities change, subaccounts using `"*"` will inherit the updated countries. API responses always return the resolved country list, never the `"*"` literal.
+
+
+        The single and bulk enrollment configurations are not required when creating a subaccount, but if not provided they will default to the same country list as the main countries property for that network. The supported card types for single and bulk enrollment is CONSUMER, while the supported funding card types is DEBIT. If not provided, the block rules for both card types will default to the parent account''s default block rule for that network and enrollment level.
+
+
+        To set the default rule on the parent account, please reach out to your account manager or support.
+
+        '
+      properties:
+        VISA:
+          type: object
+          additionalProperties: false
+          properties:
+            countries:
+              oneOf:
+              - type: array
+                description: List of contracted regional areas for Visa
+                uniqueItems: true
+                items:
+                  type: string
+                  enum:
+                  - USA
+                  - CAN
+                  - IRL
+                  - DEU
+                  - CZE
+                  - SWE
+                  - NLD
+                  - LTU
+                  - GBR
+                  - SVN
+                  - LUX
+                  - POL
+                  - SVK
+                  - HUN
+                  - ITA
+                  - ROU
+                  - FIN
+                  - DNK
+                  - MLT
+                  - LVA
+                  - GRC
+                  - AUT
+                  - HRV
+                  - CHE
+                  - NOR
+                  - ISL
+                  - FRA
+                  - ESP
+                  - ISR
+                  - SMR
+                  - VAT
+                  - AND
+                  - GIB
+                  - AUS
+                  - NZL
+                  - PRT
+                  - BEL
+                  description: Country Code following ISO 3166 alpha-3
+              - type: string
+                enum:
+                - '*'
+                description: 'Wildcard value that inherits all countries from the parent account''s VISA capabilities.
+
+                  '
+            single-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Visa single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Visa single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+            bulk-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Visa bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Visa bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+          required:
+          - countries
+        MASTERCARD:
+          type: object
+          additionalProperties: false
+          properties:
+            countries:
+              oneOf:
+              - type: array
+                description: List of contracted regional areas for Mastercard
+                uniqueItems: true
+                items:
+                  type: string
+                  enum:
+                  - USA
+                  - CAN
+                  - GBR
+                  - IRL
+                  - SWE
+                  - DEU
+                  - NLD
+                  - DNK
+                  - ITA
+                  - POL
+                  - FIN
+                  - BEL
+                  - ESP
+                  - FRA
+                  - PRT
+                  - AUT
+                  - GRC
+                  - MLT
+                  - NOR
+                  - CHE
+                  - ISR
+                  - AUS
+                  - NZL
+                  description: Country Code following ISO 3166 alpha-3
+              - type: string
+                enum:
+                - '*'
+                description: 'Wildcard value that inherits all countries from the parent account''s MASTERCARD capabilities.
+
+                  '
+            single-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Mastercard single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Mastercard single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+            bulk-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for Mastercard bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for Mastercard bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+          required:
+          - countries
+        AMEX:
+          type: object
+          additionalProperties: false
+          properties:
+            countries:
+              oneOf:
+              - type: array
+                description: List of contracted regional areas for American Express
+                uniqueItems: true
+                items:
+                  type: string
+                  enum:
+                  - USA
+                  - CAN
+                  - GBR
+                  - ITA
+                  - SWE
+                  - AUS
+                  - NZL
+                  description: Country Code following ISO 3166 alpha-3
+              - type: string
+                enum:
+                - '*'
+                description: 'Wildcard value that inherits all countries from the parent account''s AMEX capabilities.
+
+                  '
+            single-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for AMEX single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for AMEX single enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+            bulk-enrollment:
+              type: object
+              additionalProperties: false
+              properties:
+                blockedCardTypes:
+                  type: array
+                  description: Card types blocked for AMEX bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - CONSUMER
+                blockedFundingCardTypes:
+                  type: array
+                  description: Funding card types blocked for AMEX bulk enrollment
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum:
+                    - DEBIT
+          required:
+          - countries
+      example:
+        VISA:
+          countries:
+          - USA
+          - CAN
+          single-enrollment:
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+          bulk-enrollment:
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+        MASTERCARD:
+          countries:
+          - USA
+          single-enrollment:
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+          bulk-enrollment:
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+        AMEX:
+          countries:
+          - ITA
+          single-enrollment:
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+          bulk-enrollment:
+            blockedCardTypes:
+            - CONSUMER
+            blockedFundingCardTypes:
+            - DEBIT
+    subaccount:
+      type: object
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+        accountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the account related to this entity.
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this subaccount entity.
+        name:
+          type: string
+          description: The name of this subaccount entity.
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+        configurations:
+          $ref: '#/components/schemas/subaccount-configuration'
+        verificationPolicy:
+          $ref: '#/components/schemas/verification-policy'
+          nullable: true
+          description: Admin-managed card verification policy for this subaccount. Overrides the parent account's policy when set. `null` or absent means no subaccount-level override.
+        enrollmentPolicy:
+          type: object
+          nullable: true
+          description: 'Enrollment policy. On reads, fields are the EFFECTIVE values: `spinwheelEnabled`
+
+            is the stored subaccount value resolved against the parent account''s master switch
+
+            (false when either side is off); the unified-SDK rails (`cardEnrollment`,
+
+            `bankEnrollment`, `bulkEnrollment`) and the deprecated `bulkEnrollmentEnabled`
+
+            resolve as subaccount-overrides-account, and are SPARSE — only
+
+            explicitly-configured fields appear; `programBins` is returned as stored. `null`
+
+            means the subaccount stores no policy and no RAIL is set at the account level
+
+            (account-level admin fields are create-time snapshots, so they do not surface
+
+            through a `null` here).
+
+            '
+          allOf:
+          - $ref: '#/components/schemas/enrollment-policy'
+        bankLinkingPolicy:
+          $ref: '#/components/schemas/bank-linking-policy'
+          nullable: true
+          description: 'Admin-managed bank-linking policy. On reads, fields are the EFFECTIVE values —
+
+            per-field live resolution against the parent account (subaccount field if set,
+
+            else account, else `null`). A whole-`null` policy means neither level has one
+
+            set. The credit-only system default (`accountTypes: [credit]`) is applied
+
+            downstream at bank-link creation, not materialized in this read.
+
+            '
+      required:
+      - _links
+      - accountId
+      - id
+      - name
+      - createdAt
+      - updatedAt
+      - configurations
+    verification-policy:
+      type: object
+      description: 'Admin-managed overrides controlling how card verification is performed for an account or subaccount.
+
+        Fields are optional and nullable; absent fields leave the current value unchanged, explicit `null` clears an override.
+
+        '
+      properties:
+        stripeValidationLevel:
+          type: string
+          nullable: true
+          enum:
+          - HIGHEST
+          - HIGH
+          - MEDIUM
+          - LOW
+          description: "Routes card verifications through Stripe at the specified risk tier when set.\n`null` (or absent) routes through the default TokenEx/IXOPAY (Visa) or TNS (Mastercard) path.\n\nTiers (increasing strictness):\n  * `LOW` — internal-only; 3DS engaged only when risk/regulation requires it; issuer-unsupported\n    soft declines are tolerated. Cannot be self-assigned via this endpoint.\n  * `MEDIUM` — 3DS always requested (challenge preferred); the standard tier to opt into.\n  * `HIGH` — 3DS plus a transient authorization hold (no settled charge) and added fraud signals.\n  * `HIGHEST` — 3DS challenge; if the issuer approves frictionlessly, a two-hold confirmation\n    becomes a mandatory second factor. See the \"HIGHEST Verification\" guide.\n\nNetwork note: Visa uses Stripe at every set tier; Mastercard uses its network 3DS at all tiers and\nengages Stripe only at `HIGHEST` (for the two-hold second factor).\n\nResolution: the subaccount value is operative at request time; the account-level value is the\ninheritance source applied when a subaccount is created, not a live fallback.\n"
+        sandbox:
+          type: boolean
+          nullable: true
+          description: 'Test flag, settable by the customer via `PATCH /subaccounts` (and internally via the
+
+            verification-policy endpoints). When `true`, card verifications on this subaccount route KNOWN
+
+            test PANs through the Stripe/TNS sandbox (real cards still go live), and new bank links are
+
+            created against Plaid Sandbox (Plaid test fixtures only — real bank credentials require the
+
+            flag off), so an integrator can deterministically test against a provisioned subaccount.
+
+            Absent / `null` / `false` → live processing only.
+
+            '
+        failedAttemptLockout:
+          type: boolean
+          nullable: true
+          description: 'When `true`, ENFORCE the cross-network attempt lockout for this tenant: a card with too many recent
+
+            hard verification failures is refused at create (`400` `verification.attempts_locked`) before any
+
+            provider is called. Account-level fallback (set once for all partner subaccounts), overridable per
+
+            subaccount. Absent / `null` / `false` → not enforced (failures are still recorded; only enforcement
+
+            is gated).
+
+            '
+    customer-enrollment-policy:
+      type: object
+      description: 'The customer-writable subset of the enrollment policy: the three unified-SDK
+
+        rails. All other fields (`spinwheelEnabled`, `programBins`, and the
+
+        deprecated `bulkEnrollmentEnabled`) are managed on the internal
+
+        enrollment-policy endpoints and are ignored if sent here.
+
+
+        Fields are optional and nullable; absent fields leave the current value
+
+        unchanged, explicit `null` clears the subaccount-level value. A cleared
+
+        rail falls back to the account-level value when one is set; only when
+
+        neither level sets the rail does it disappear from reads, letting the
+
+        host page''s client configuration and then the SDK''s card-only default
+
+        apply.
+
+        '
+      properties:
+        cardEnrollment:
+          type: boolean
+          nullable: true
+          description: 'Whether the unified SDK offers manual card enrollment (PAN entry + 3DS
+
+            verification).
+
+            '
+        bankEnrollment:
+          type: string
+          nullable: true
+          enum:
+          - 'off'
+          - amex-only
+          - 'on'
+          description: 'Whether the unified SDK offers bank linking. `on` shows the bank option
+
+            first-class (chooser tile, any-order linking); `amex-only` keeps it
+
+            reachable only via the American Express pivot from card entry; `off`
+
+            disables it (American Express cards then can''t enroll unless a bulk
+
+            program qualifies).
+
+            '
+        bulkEnrollment:
+          type: string
+          nullable: true
+          enum:
+          - 'off'
+          - suggested
+          - forced
+          description: 'Whether the unified SDK offers network bulk-feed enrollment for
+
+            bulk-capable programs. `suggested` offers the bulk wizard with a
+
+            link-just-this-card escape; `forced` makes the wizard the only path for
+
+            bulk-capable cards; `off` skips bulk routing entirely (direct card
+
+            form).
+
+            '
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    bank-linking-policy:
+      type: object
+      description: 'Admin-managed policy controlling which account types and institutions are offered when
+
+        linking bank accounts via the hosted (Plaid) flow. Fields are optional and nullable;
+
+        absent fields leave the current value unchanged, explicit `null` clears a field.
+
+
+        Resolution is per-field and LIVE: a subaccount field applies when set; when absent/`null`
+
+        the parent account''s value applies; when neither is set the field reads `null` and the
+
+        system default is applied downstream at bank-link creation
+
+        (`accountTypes: [credit]` — credit-card accounts only, the historical behavior).
+
+        Subaccount GETs return these EFFECTIVE resolved values (nulls included — the default is
+
+        never materialized in reads).
+
+        '
+      properties:
+        accountTypes:
+          type: array
+          nullable: true
+          minItems: 1
+          items:
+            type: string
+            enum:
+            - checking
+            - savings
+            - credit
+          description: 'Account types selectable during bank linking. Enforced by the provider at link-token
+
+            creation (Plaid account_filters: checking/savings → depository subtypes, credit →
+
+            credit card); institutions offering none of the allowed types are hidden from
+
+            institution search. Default: `[credit]`.
+
+            '
+        pinnedInstitutionId:
+          type: string
+          nullable: true
+          pattern: ^ins_[A-Za-z0-9]+$
+          description: 'Provider institution id to pre-select at link creation (e.g. `ins_10` for American
+
+            Express). NOTE: Plaid''s `institution_id` pre-selection is currently rejected on
+
+            production (`INVALID_INSTITUTION`) — this field is stored and forwarded only behind a
+
+            provider capability flag; until the provider supports it, institution limiting is
+
+            achieved with `plaidLinkCustomizationName` plus account-type filtering.
+
+            '
+        plaidLinkCustomizationName:
+          type: string
+          nullable: true
+          maxLength: 256
+          description: 'Name of a Plaid Dashboard Link customization to pin on created link tokens
+
+            (institution shortlist, Account Select mode). The customization must already exist in
+
+            the Plaid Dashboard — unknown names fail link creation outright. Never
+
+            client-suppliable; applied via this policy only.
+
+            '
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

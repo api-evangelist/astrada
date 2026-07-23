@@ -1,0 +1,591 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts bank-subscriptions API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: bank-subscriptions
+  description: Manage bank subscriptions (Plaid connections). A subscription represents an active connection to a financial institution.
+paths:
+  /bank-subscriptions/{bankSubscriptionId}:
+    parameters:
+    - $ref: '#/components/parameters/bank-subscription-id'
+    get:
+      tags:
+      - bank-subscriptions
+      summary: Retrieve bank subscription
+      description: Returns detailed information about a specific bank subscription by its identifier, including the connection state and webhook configuration.
+      operationId: GetBankSubscription
+      security:
+      - main-auth:
+        - banking:admin
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bank-subscription'
+              examples:
+                Example Get Bank Subscription Response:
+                  $ref: '#/components/examples/bank-subscription'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /bank-subscriptions/by-connection/{connectionId}:
+    parameters:
+    - $ref: '#/components/parameters/connection-id'
+    get:
+      tags:
+      - bank-subscriptions
+      summary: Retrieve bank subscription by connection
+      description: 'Returns a bank subscription by its provider connection identifier (e.g. Plaid item ID).
+
+
+        This is useful when you have the provider''s connection ID and need to look up the corresponding subscription.
+
+        '
+      operationId: GetBankSubscriptionByConnection
+      security:
+      - main-auth:
+        - banking:admin
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bank-subscription'
+              examples:
+                Example Get Bank Subscription By Connection Response:
+                  $ref: '#/components/examples/bank-subscription'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /bank-subscriptions:
+    get:
+      tags:
+      - bank-subscriptions
+      summary: List bank subscriptions
+      description: 'Returns a list of bank subscriptions (active connections to financial institutions) under the account.
+
+
+        Bank subscriptions are created automatically when a bank link enrollment is completed. Each subscription represents a connection to a single financial institution.
+
+
+        By default, `GET /bank-subscriptions` returns subscriptions ordered by the latest `createdAt`.
+
+
+        This endpoint supports cursor-based pagination.
+
+        '
+      operationId: ListBankSubscriptions
+      parameters:
+      - $ref: '#/components/parameters/subaccount-id'
+      - name: state
+        in: query
+        description: Filter subscriptions by state
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - error
+          - auth_required
+          - disconnected
+      - name: connectionId
+        in: query
+        description: Filter subscriptions by provider connection identifier
+        required: false
+        schema:
+          type: string
+      - $ref: '#/components/parameters/banking-limit'
+      - $ref: '#/components/parameters/cursor'
+      security:
+      - main-auth:
+        - banking:admin
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - items
+                - pagination
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/bank-subscription'
+                  pagination:
+                    type: object
+                    required:
+                    - hasMore
+                    properties:
+                      cursor:
+                        type: string
+                        description: Cursor to use for the next page of results.
+                      hasMore:
+                        type: boolean
+                        description: Whether there are more results available.
+              examples:
+                Example List Bank Subscriptions Response:
+                  value:
+                    items:
+                    - id: e4b7c9a2-1d3f-4e8a-9c6b-5f2d7a0e8b1c
+                      accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+                      subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+                      connectionId: conn_abc123def456
+                      provider: PLAID
+                      institutionName: Chase
+                      state: active
+                      webhook:
+                        url: https://example.com/webhooks/banking
+                        status: confirmed
+                      syncCursor: null
+                      createdAt: '2025-10-03T10:55:42.000Z'
+                      updatedAt: '2025-10-03T10:55:42.000Z'
+                    pagination:
+                      hasMore: false
+          links:
+            GetFirstBankSubscription:
+              operationId: GetBankSubscription
+              parameters:
+                bankSubscriptionId: $response.body#/items/0/id
+              description: Retrieve the first bank subscription from the list.
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /bank-subscriptions/{bankSubscriptionId}/webhook:
+    parameters:
+    - $ref: '#/components/parameters/bank-subscription-id'
+    patch:
+      tags:
+      - bank-subscriptions
+      summary: Update bank subscription webhook
+      description: 'Updates the webhook URL for a bank subscription. Webhook events for transactions and matches associated with this subscription will be delivered to the specified URL.
+
+
+        After updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.
+
+        '
+      operationId: UpdateBankSubscriptionWebhook
+      security:
+      - main-auth:
+        - banking:admin
+      requestBody:
+        description: Webhook URL update request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhookUrl:
+                  description: The HTTPS URL where webhook events will be delivered.
+                  type: string
+                  format: uri
+              required:
+              - webhookUrl
+            examples:
+              UpdateWebhookExample:
+                value:
+                  webhookUrl: https://example.com/webhooks/banking
+      responses:
+        '200':
+          description: Webhook URL updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - id
+                - webhook
+                - updatedAt
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: The bank subscription identifier.
+                  webhook:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        description: The updated webhook URL.
+                      status:
+                        type: string
+                        description: The webhook status after the update.
+                        enum:
+                        - pending
+                        - confirmed
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: When the subscription was last updated.
+              examples:
+                Example Update Subscription Webhook Response:
+                  value:
+                    id: e4b7c9a2-1d3f-4e8a-9c6b-5f2d7a0e8b1c
+                    webhook:
+                      url: https://example.com/webhooks/banking
+                      status: pending
+                    updatedAt: '2025-10-03T11:00:00.000Z'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    connection-id:
+      in: path
+      name: connectionId
+      required: true
+      schema:
+        type: string
+      example: conn_abc123def456
+    bank-subscription-id:
+      in: path
+      name: bankSubscriptionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: b2c3d4e5-f6a7-8901-bcde-f12345678901
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  examples:
+    bank-subscription:
+      description: Example of a Bank Subscription resource
+      value:
+        id: e4b7c9a2-1d3f-4e8a-9c6b-5f2d7a0e8b1c
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        connectionId: conn_abc123def456
+        provider: PLAID
+        institutionName: Chase
+        state: active
+        webhook:
+          url: https://example.com/webhooks/banking
+          status: confirmed
+        syncCursor: null
+        createdAt: '2025-10-03T10:55:42.000Z'
+        updatedAt: '2025-10-03T10:55:42.000Z'
+  schemas:
+    bank-subscription:
+      type: object
+      required:
+      - id
+      - accountId
+      - subaccountId
+      - connectionId
+      - provider
+      - institutionName
+      - state
+      - webhook
+      - syncCursor
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the bank subscription.
+        accountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the account that owns this subscription.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount associated with this subscription.
+        connectionId:
+          type: string
+          description: The provider's unique connection identifier (e.g. Plaid item ID).
+        provider:
+          type: string
+          description: The banking data provider for this subscription.
+          enum:
+          - PLAID
+        institutionName:
+          type: string
+          description: The name of the connected financial institution.
+        state:
+          type: string
+          description: 'Current state of the subscription.
+
+            - `active`: The connection is functioning normally.
+
+            - `error`: The connection has encountered an error.
+
+            - `auth_required`: The connection requires user re-authentication.
+
+            - `disconnected`: The connection has been disconnected.
+
+            '
+          enum:
+          - active
+          - error
+          - auth_required
+          - disconnected
+        webhook:
+          type: object
+          description: Webhook configuration for this subscription.
+          required:
+          - url
+          - status
+          properties:
+            url:
+              type: string
+              nullable: true
+              description: The URL where webhook events will be delivered.
+            status:
+              type: string
+              description: 'The current status of the webhook configuration.
+
+                - `pending`: The webhook URL has been set but not yet confirmed by the provider.
+
+                - `confirmed`: The provider has acknowledged the webhook URL.
+
+                - `none`: No webhook URL has been configured.
+
+                '
+              enum:
+              - pending
+              - confirmed
+              - none
+        syncCursor:
+          type: string
+          nullable: true
+          description: The current transaction sync cursor for this subscription.
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

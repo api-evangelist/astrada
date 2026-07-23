@@ -1,0 +1,727 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts card API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: card
+  description: Card resource
+paths:
+  /cards/{cardId}:
+    parameters:
+    - $ref: '#/components/parameters/card-id-2'
+    get:
+      tags:
+      - card
+      summary: Retrieve card
+      description: Returns detailed information about a specific card by its identifier.
+      security:
+      - main-auth:
+        - cards:read
+      operationId: GetCard
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/card'
+              examples:
+                Example Get Card Response:
+                  $ref: '#/components/examples/card'
+                Example Get Card Response with cardholder, available only when card has been bulk enrolled:
+                  $ref: '#/components/examples/card-with-cardholder'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /cards/{cardId}/cardholder:
+    parameters:
+    - $ref: '#/components/parameters/card-id-2'
+    get:
+      tags:
+      - card
+      summary: Retrieve cardholder information
+      description: Returns cardholder information, related to a specific cardId, when it's available.
+      security:
+      - main-auth:
+        - cardholder:read
+      operationId: GetCardholder
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/cardholder'
+              examples:
+                Example Get Cardholder Response:
+                  $ref: '#/components/examples/cardholder'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    patch:
+      tags:
+      - card
+      summary: Update cardholder information
+      description: 'Updates cardholder information for a specific card. Use this endpoint to simulate cardholder data that would typically be received through a Network Bulk Feed. This is useful for testing your integration against bulk-enrolled cards without waiting for actual network feed data.
+
+
+        **Note:** This endpoint requires the `cardholder:write` scope and must be directly enabled by Astrada.
+
+        '
+      security:
+      - main-auth:
+        - cardholder:write
+      operationId: UpdateCardholder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              minProperties: 1
+              required:
+              - subaccountId
+              properties:
+                subaccountId:
+                  description: The unique identifier of the subaccount related to the card
+                  type: string
+                  format: uuid
+                firstName:
+                  description: The first name of the cardholder
+                  type: string
+                lastName:
+                  description: The last name of the cardholder
+                  type: string
+                email:
+                  description: Cardholder email address
+                  type: string
+                  format: email
+                postalCode:
+                  description: Cardholder postal code. Format varies by country; no validation or normalization is applied.
+                  type: string
+                corporate:
+                  description: The corporate entity that this cardholder is associated with
+                  type: object
+                  properties:
+                    id:
+                      description: The identifier of the corporate
+                      type: string
+                    employeeId:
+                      description: The unique identifier of the employee
+                      type: string
+                    alternativeEmployeeId:
+                      description: An alternative employee identifier, typically configured for specific enterprise integrations.
+                      type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/cardholder'
+              examples:
+                Example Update Cardholder Response:
+                  $ref: '#/components/examples/cardholder'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+  /cards:
+    parameters:
+    - $ref: '#/components/parameters/country'
+    - $ref: '#/components/parameters/expiry-month'
+    - $ref: '#/components/parameters/expiry-year'
+    - $ref: '#/components/parameters/subaccount-id'
+    - $ref: '#/components/parameters/limit'
+    - $ref: '#/components/parameters/offset'
+    get:
+      tags:
+      - card
+      summary: List cards
+      description: 'Returns a list of all cards linked to the account.
+
+
+        By default, `GET /cards` returns cards ordered by the latest updatedAt. You can combine the different filters as documented.
+
+
+        This endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).
+
+        '
+      security:
+      - main-auth:
+        - cards:read
+      operationId: ListCards
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                type: object
+                required:
+                - _links
+                - _embedded
+                - totalItems
+                properties:
+                  _links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                      first:
+                        $ref: '#/components/schemas/link'
+                      next:
+                        $ref: '#/components/schemas/link'
+                      prev:
+                        $ref: '#/components/schemas/link'
+                      last:
+                        $ref: '#/components/schemas/link'
+                  _embedded:
+                    type: object
+                    required:
+                    - cards
+                    properties:
+                      cards:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/card'
+                  totalItems:
+                    type: integer
+                    description: Total number of cards matching the search criteria
+              examples:
+                Example List Cards Response:
+                  value:
+                    _links:
+                      self:
+                        href: /cards
+                    _embedded:
+                      cards:
+                      - _links:
+                          self:
+                            href: /cards/8309b5f8-d5d8-49bb-9001-38bf1bb0f1e4
+                        id: 8309b5f8-d5d8-49bb-9001-38bf1bb0f1e4
+                        expiryMonth: 12
+                        expiryYear: 2026
+                        network: mastercard
+                        country: USA
+                        createdAt: '2024-02-04T18:41:16.142Z'
+                        updatedAt: '2024-02-04T18:41:16.142Z'
+                        first6digits: '424242'
+                        last4digits: '4242'
+                        subaccountId: da6649a8-f0ea-4af0-b342-c0b5c3e024dd
+                      - _links:
+                          self:
+                            href: /cards/f744b691-bf05-4f2a-ab89-bb1afe4eb840
+                          cardholder:
+                            href: /cards/f744b691-bf05-4f2a-ab89-bb1afe4eb840/cardholder
+                        id: f744b691-bf05-4f2a-ab89-bb1afe4eb840
+                        expiryMonth: 11
+                        expiryYear: 2028
+                        network: mastercard
+                        country: USA
+                        createdAt: '2024-02-04T18:41:16.142Z'
+                        updatedAt: '2024-02-04T18:41:16.142Z'
+                        first6digits: '434343'
+                        last4digits: '4343'
+                        subaccountId: da6649a8-f0ea-4af0-b342-c0b5c3e024dd
+                    totalItems: 2
+                Example no Cards found:
+                  value:
+                    _links:
+                      self:
+                        href: /cards
+                    _embedded:
+                      cards: []
+                    totalItems: 0
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    offset:
+      in: query
+      name: offset
+      description: The offset to use for pagination. Identifies the position of the first item returned in the collection
+      required: false
+      schema:
+        type: number
+        default: 0
+      example: 20
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    country:
+      in: query
+      name: country
+      description: The card country of issuance following ISO 3166 alpha-3
+      required: false
+      schema:
+        type: string
+        enum:
+        - USA
+        - CAN
+        - AUS
+        - NZL
+        - PRT
+        - BEL
+      example: USA
+    expiry-year:
+      in: query
+      name: expiryYear
+      description: The card expiration year
+      required: false
+      schema:
+        type: integer
+      example: 2024
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    expiry-month:
+      in: query
+      name: expiryMonth
+      description: The card expiration month
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 12
+      example: 6
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  examples:
+    cardholder:
+      description: Example of Cardholder resource
+      value:
+        _links:
+          self:
+            href: /cards/f744b691-bf05-4f2a-ab89-bb1afe4eb840/cardholder
+        firstName: John
+        lastName: Doe
+        email: john.doe@example.com
+        postalCode: '94105'
+        corporate:
+          alternativeEmployeeId: ALT-EMP-12345
+          employeeId: bb1afe4eb840
+          id: ABC123456789
+        createdAt: '2024-02-04T18:41:16.142Z'
+        updatedAt: '2024-02-04T18:41:16.142Z'
+    card-with-cardholder:
+      description: Example of Card resource with cardholder link, available only when card has been bulk enrolled
+      value:
+        _links:
+          self:
+            href: /cards/31e63088-48b3-42dd-b6d4-fdd058675ec9
+          cardholder:
+            href: /cards/31e63088-48b3-42dd-b6d4-fdd058675ec9/cardholder
+        id: 31e63088-48b3-42dd-b6d4-fdd058675ec9
+        expiryMonth: 11
+        expiryYear: 2028
+        network: mastercard
+        country: USA
+        createdAt: '2024-02-04T18:41:16.142Z'
+        updatedAt: '2024-02-04T18:41:16.142Z'
+        first6digits: '434343'
+        last4digits: '4343'
+        subaccountId: fd03abe1-5ac3-41ac-96cc-d2a66aafc74f
+    card:
+      description: Example of Card resource
+      value:
+        _links:
+          self:
+            href: /cards/f744b691-bf05-4f2a-ab89-bb1afe4eb840
+        id: f744b691-bf05-4f2a-ab89-bb1afe4eb840
+        expiryMonth: 11
+        expiryYear: 2028
+        network: mastercard
+        country: USA
+        createdAt: '2024-02-04T18:41:16.142Z'
+        updatedAt: '2024-02-04T18:41:16.142Z'
+        first6digits: '434343'
+        last4digits: '4343'
+        subaccountId: da6649a8-f0ea-4af0-b342-c0b5c3e024dd
+  schemas:
+    cardholder:
+      type: object
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+        corporate:
+          type: object
+          description: The corporate entity that this cardholder is associated with
+          properties:
+            alternativeEmployeeId:
+              type: string
+              nullable: true
+              description: An alternative employee identifier, typically configured for specific enterprise integrations.
+            employeeId:
+              type: string
+              nullable: true
+              description: The unique identifier of the employee
+            id:
+              type: string
+              nullable: true
+              description: The identifier of the corporate
+        firstName:
+          type: string
+          nullable: true
+          description: The first name of the cardholder
+        lastName:
+          nullable: true
+          type: string
+          description: The last name of the cardholder
+        email:
+          type: string
+          format: email
+          nullable: true
+          description: Cardholder email address
+        postalCode:
+          type: string
+          nullable: true
+          description: Cardholder postal code as provided by the card network. Format varies by country; no validation or normalization is applied.
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+      required:
+      - _links
+      - corporate
+      - createdAt
+      - updatedAt
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    card:
+      type: object
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            cardholder:
+              $ref: '#/components/schemas/link'
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this card entity.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount related to this entity.
+        expiryMonth:
+          type: integer
+          minimum: 1
+          maximum: 12
+          description: The month that the card will expire in MM format.
+        expiryYear:
+          type: integer
+          description: The year that the card will expire in YYYY format.
+        first6digits:
+          type: string
+          nullable: true
+          description: 'The first 6 digits of the card number (PAN). Nullable for bank-derived cards
+
+            (created from a bank connection, where the full PAN is never seen) — populated when
+
+            known (e.g. the SDK captured the BIN before pivoting to the bank flow) and attached
+
+            when the card is later PAN-enrolled (upgrade-in-place keeps the same card id).
+
+            '
+        last4digits:
+          type: string
+          description: The last 4 digits of the card number (PAN).
+        network:
+          type: string
+          nullable: true
+          enum:
+          - visa
+          - mastercard
+          - amex
+          description: 'The card network that processes payments for this card. `amex` and `null` occur only
+
+            on bank-derived cards: Amex-institution connections mint `amex`; other institutions
+
+            cannot reveal the network from bank data, so it stays `null` until the card is
+
+            PAN-enrolled (upgrade-in-place).
+
+            '
+        country:
+          type: string
+          enum:
+          - USA
+          - CAN
+          - GBR
+          - SWE
+          - ITA
+          - AUS
+          - NZL
+          - PRT
+          - BEL
+          description: The country of issuance for this card following ISO 3166 alpha-3.
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+      required:
+      - _links
+      - id
+      - subaccountId
+      - expiryMonth
+      - expiryYear
+      - last4digits
+      - country
+      - createdAt
+      - updatedAt
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

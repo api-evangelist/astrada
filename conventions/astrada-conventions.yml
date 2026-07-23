@@ -1,0 +1,81 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/reference/api-basics
+docs:
+  api_basics: https://docs.astrada.co/reference/api-basics
+  authentication: https://docs.astrada.co/reference/authentication
+  responses: https://docs.astrada.co/reference/base-api-responses
+  pagination: https://docs.astrada.co/reference/pagination
+summary: >-
+  Cross-cutting request/response semantics for the Astrada API, captured from the
+  developer documentation and the reconstructed OpenAPI. REST over HTTPS, JSON
+  request bodies, HAL (application/hal+json) success envelopes, and RFC 7807
+  (application/problem+json) error envelopes.
+base_url: https://api.astrada.co
+media_types:
+  request: application/json
+  success_response: application/hal+json
+  error_response: application/problem+json
+authentication:
+  style: oauth2
+  grant: client_credentials
+  token_endpoint: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+  header: 'Authorization: Bearer <access_token>'
+  token_lifetime_seconds: 300
+  notes: >-
+    Client ID / Client Secret / Account ID are provisioned by Astrada support. Access
+    tokens expire (expires_in ~300s) and must be refreshed. See authentication/ and
+    scopes/ artifacts.
+idempotency:
+  supported: false
+  notes: >-
+    Astrada does not document an idempotency-key header, and none is present in the
+    OpenAPI. POST creation is not advertised as idempotent. 201 downgrades to 200 when
+    a resource already exists (per API Responses doc), but this is not a client-supplied
+    idempotency-key contract.
+pagination:
+  hypermedia: HAL
+  styles:
+    - style: cursor
+      params: [cursor, limit]
+      used_by: [subaccounts]
+    - style: offset
+      params: [offset, limit]
+      response_fields: [totalItems]
+      used_by: [cards]
+  limit: {min: 1, max: 100}
+  links: [self, next, first, last, prev]
+  embedded_key: _embedded
+  notes: >-
+    Both cursor and offset collections always provide self and next _links; first/last/prev
+    are offset-only. Consumers are encouraged to follow _links rather than construct URLs.
+error_envelope:
+  format: rfc7807
+  fields: [title, detail]
+  optional: [errors, type, instance]
+  validation_errors: errors[] array, each entry a nested Problem Detail (title/detail)
+  guidance: title/detail are human-readable; do not parse them to branch on error type.
+forward_compatibility:
+  additive_fields_non_breaking: true
+  guidance: >-
+    Addition of new fields to API responses and webhook payloads is not a breaking change;
+    consumers should not perform strict validation that rejects unknown fields.
+null_semantics: >-
+  Known attributes are preserved with a null value when the value is unknown, rather than
+  omitted from the response.
+rate_limiting:
+  signal: HTTP 429 Too Many Requests
+  headers_documented: false
+  notes: A 429 status is returned when limits are exceeded; no rate-limit headers are documented.
+request_tracing:
+  note: No request-id response header is documented for the REST API.
+webhooks:
+  cross_reference: asyncapi/astrada-events-asyncapi.yml
+  delivery_headers: [webhook-id, webhook-timestamp, webhook-signature, webhook-event-type, webhook-subaccount-id]
+  signing: HMAC-SHA256 over "{webhook-id}.{webhook-timestamp}.{body}" with base64 signing secret
+cross_links:
+  errors: errors/astrada-problem-types.yml
+  decline_codes: errors/astrada-decline-codes.yml
+  authentication: authentication/astrada-authentication.yml
+  scopes: scopes/astrada-scopes.yml
+  lifecycle: lifecycle/astrada-lifecycle.yml

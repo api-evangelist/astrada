@@ -1,0 +1,685 @@
+openapi: 3.0.3
+info:
+  title: Astrada bank-accounts card-subscription API
+  version: '2024-02-28'
+  contact:
+    email: developer@astrada.co
+  description: 'Welcome to our API Reference. 👋
+
+    '
+servers:
+- url: https://api.astrada.co
+security: null
+tags:
+- name: card-subscription
+  description: Card Subscription resource
+paths:
+  /card-subscriptions/{subscriptionId}:
+    parameters:
+    - $ref: '#/components/parameters/subscription-id'
+    get:
+      tags:
+      - card-subscription
+      summary: Retrieve card subscription
+      description: Returns detailed information about a specific card subscription by its identifier, including its data-sharing state.
+      security:
+      - main-auth:
+        - card-subscriptions:read
+      operationId: GetCardSubscription
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/card-subscription'
+              examples:
+                Example Get Card Subscription Response:
+                  $ref: '#/components/examples/card-subscription'
+                Example Get Card Subscription Response with Network Bulk Feed:
+                  $ref: '#/components/examples/card-subscription-with-network-bulk-feed-reference'
+                Example Get Card Subscription Response with Bank Feed:
+                  $ref: '#/components/examples/card-subscription-with-bank-feed'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '500':
+          $ref: '#/components/responses/server-error'
+    patch:
+      tags:
+      - card-subscription
+      summary: Update card subscription
+      description: 'Updates an existing card subscription, allowing changes to its data-sharing state. Subscriptions that were enrolled in bulk, and where `enrollmentType = ''network-bulk''` cannot be updated.
+
+
+        **Note:** setting a card subscription to a `deactivated` state is a final action that cannot be undone.
+
+        '
+      security:
+      - main-auth:
+        - card-subscriptions:write
+      operationId: UpdateCardSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              minProperties: 1
+              properties:
+                state:
+                  type: string
+                  enum:
+                  - deactivated
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/card-subscription'
+              examples:
+                Example Update Card Subscription Response:
+                  $ref: '#/components/examples/card-subscription'
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '409':
+          description: Request conflict with the current state of the target resource
+          content:
+            application/problem+json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/conflict'
+                - example:
+                    title: Conflict
+                    detail: The resource state does not allow this operation
+                    currentValue: expired
+                    requestedValue: deactivated
+        '422':
+          description: The request is well formatted but it fails some business logic validation
+          content:
+            application/problem+json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/unprocessable-entity'
+                - example:
+                    title: Unprocessable Entity
+                    detail: The state of a bulk enrolled subscription cannot be changed
+        '500':
+          $ref: '#/components/responses/server-error'
+  /card-subscriptions:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/subaccount-id'
+      - $ref: '#/components/parameters/card-id'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      tags:
+      - card-subscription
+      summary: List card subscriptions
+      description: 'Returns all card subscriptions under the account.
+
+
+        By default, `GET /card-subscriptions` returns card subscriptions ordered by the latest `updatedAt`. The `cardId` and `subaccountId` filters are mutual exclusive. The `cardId` takes precedence over `subaccountId`.
+
+
+        This endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).
+
+        '
+      security:
+      - main-auth:
+        - card-subscriptions:read
+      operationId: ListCardSubscriptions
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/hal+json:
+              schema:
+                type: object
+                required:
+                - _links
+                - _embedded
+                - totalItems
+                properties:
+                  _links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                      first:
+                        $ref: '#/components/schemas/link'
+                      next:
+                        $ref: '#/components/schemas/link'
+                      prev:
+                        $ref: '#/components/schemas/link'
+                      last:
+                        $ref: '#/components/schemas/link'
+                  _embedded:
+                    type: object
+                    required:
+                    - cardSubscriptions
+                    properties:
+                      cardSubscriptions:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/card-subscription'
+                  totalItems:
+                    type: integer
+                    description: Total number of card subscriptions matching the search criteria
+              examples:
+                Example List Card Subscriptions Response:
+                  value:
+                    _links:
+                      self:
+                        href: /card-subscriptions
+                    _embedded:
+                      cardSubscriptions:
+                      - _links:
+                          self:
+                            href: /card-subscriptions/75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+                          card:
+                            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
+                          networkBulkFeed:
+                            href: /network-bulk-feeds/7b3e4f12-9a8c-4d5e-b6f1-2c3d4e5f6a7b
+                        id: 75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+                        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+                        cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+                        customerReferenceId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+                        networkBulkFeedId: 7b3e4f12-9a8c-4d5e-b6f1-2c3d4e5f6a7b
+                        enrollmentType: network-bulk
+                        state: active
+                        effectiveDate: '2024-12-20T14:45:00Z'
+                        expirationDate: '2025-06-19T14:45:00Z'
+                        createdAt: '2024-12-19T14:45:00Z'
+                        updatedAt: '2024-12-19T14:45:00Z'
+                      - _links:
+                          self:
+                            href: /card-subscriptions/c73f2da7-aa1f-4775-ad38-864b1b6f3162
+                          card:
+                            href: /cards/0457c83a-8eb7-4526-b05a-dc9fb1854fe8
+                        id: c73f2da7-aa1f-4775-ad38-864b1b6f3162
+                        subaccountId: 29cb4277-b812-4137-b008-e0befa8c6a47
+                        cardId: 0457c83a-8eb7-4526-b05a-dc9fb1854fe8
+                        customerReferenceId: 0457c83a-8eb7-4526-b05a-dc9fb1854fe8
+                        networkBulkFeedId: d4e5f6a7-b8c9-4d0e-a1b2-c3d4e5f6a7b8
+                        enrollmentType: cardholder-single
+                        state: active
+                        effectiveDate: '2024-10-20T14:45:00Z'
+                        expirationDate: '2025-05-19T14:45:00Z'
+                        createdAt: '2024-10-19T14:45:00Z'
+                        updatedAt: '2024-10-19T14:45:00Z'
+                      - _links:
+                          self:
+                            href: /card-subscriptions/5f8e6832-97d3-4ab5-8144-9fbbbcd2b285
+                          card:
+                            href: /cards/24595efb-4fe5-4c76-a7d3-8bd9d44a96cc
+                          networkBulkFeed:
+                            href: /network-bulk-feeds/0a20c636-b445-4a95-a3ea-621306ed685c
+                        id: 5f8e6832-97d3-4ab5-8144-9fbbbcd2b285
+                        subaccountId: 29cb4277-b812-4137-b008-e0befa8c6a47
+                        cardId: 24595efb-4fe5-4c76-a7d3-8bd9d44a96cc
+                        customerReferenceId: 0457c83a-8eb7-4526-b05a-dc9fb1854fe8
+                        networkBulkFeedId: 0a20c636-b445-4a95-a3ea-621306ed685c
+                        enrollmentType: network-bulk
+                        state: active
+                        effectiveDate: '2025-03-20T14:45:00Z'
+                        expirationDate: '2029-05-19T14:45:00Z'
+                        createdAt: '2025-03-19T14:45:00Z'
+                        updatedAt: '2025-03-19T14:45:00Z'
+                    totalItems: 3
+                No Card subscriptions found:
+                  value:
+                    _links:
+                      self:
+                        href: /card-subscriptions
+                    _embedded:
+                      cardSubscriptions: []
+                    totalItems: 0
+        '400':
+          $ref: '#/components/responses/bad-request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '500':
+          $ref: '#/components/responses/server-error'
+components:
+  parameters:
+    offset:
+      in: query
+      name: offset
+      description: The offset to use for pagination. Identifies the position of the first item returned in the collection
+      required: false
+      schema:
+        type: number
+        default: 0
+      example: 20
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    card-id:
+      in: query
+      name: cardId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
+    subscription-id:
+      in: path
+      name: subscriptionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3
+  examples:
+    card-subscription:
+      description: Example of Card Subscription resource
+      value:
+        _links:
+          self:
+            href: /card-subscriptions/75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+          card:
+            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
+        id: 75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        customerReferenceId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        networkBulkFeedId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        enrollmentType: cardholder-single
+        state: active
+        effectiveDate: '2024-12-20T14:45:00Z'
+        expirationDate: '2025-06-19T14:45:00Z'
+        createdAt: '2024-12-19T14:45:00Z'
+        updatedAt: '2024-12-19T14:45:00Z'
+    card-subscription-with-bank-feed:
+      description: Example of a bank-feed Card Subscription resource — a card materialized from a connected bank account at bank-link completion (e.g. American Express via the hosted bank-linking flow). `bankAccountId` back-references the source account and the `bankAccount` link is present; the subscription is born `active`.
+      value:
+        _links:
+          self:
+            href: /card-subscriptions/1b671a64-40d5-491e-99b0-da01ff1f3341
+          card:
+            href: /cards/9e107d9d-372b-4d1a-9f4a-654321abcdef
+          bankAccount:
+            href: /bank-accounts/059d5e6a-cfb1-46e6-ab84-6586582b6b58
+        id: 1b671a64-40d5-491e-99b0-da01ff1f3341
+        subaccountId: 6103874b-248d-4825-af88-a0d24dd9b123
+        cardId: 9e107d9d-372b-4d1a-9f4a-654321abcdef
+        customerReferenceId: null
+        bankAccountId: 059d5e6a-cfb1-46e6-ab84-6586582b6b58
+        networkBulkFeedId: null
+        enrollmentType: bank-feed
+        state: active
+        effectiveDate: '2026-07-14T12:00:00.000Z'
+        expirationDate: '2099-12-31T23:59:59.999Z'
+        createdAt: '2026-07-14T12:00:00.000Z'
+        updatedAt: '2026-07-14T12:00:00.000Z'
+    card-subscription-with-network-bulk-feed-reference:
+      description: Example of Card Subscription resource
+      value:
+        _links:
+          self:
+            href: /card-subscriptions/75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+          card:
+            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
+          networkBulkFeed:
+            href: /network-bulk-feeds/5ccc9922-e763-4492-b693-b6a922d96049
+        id: 75ea3c99-6bf5-4b16-8f68-0cdc43d75806
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        customerReferenceId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        networkBulkFeedId: 5ccc9922-e763-4492-b693-b6a922d96049
+        enrollmentType: network-bulk
+        state: active
+        effectiveDate: '2024-12-20T14:45:00Z'
+        expirationDate: '2025-06-19T14:45:00Z'
+        createdAt: '2024-12-19T14:45:00Z'
+        updatedAt: '2024-12-19T14:45:00Z'
+  responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+  schemas:
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
+    unprocessable-entity:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Unprocessable Entity
+      required:
+      - detail
+      - title
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
+    card-subscription:
+      type: object
+      required:
+      - _links
+      - id
+      - subaccountId
+      - cardId
+      - enrollmentType
+      - state
+      - effectiveDate
+      - expirationDate
+      - createdAt
+      - updatedAt
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          - card
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            card:
+              $ref: '#/components/schemas/link'
+            verifications:
+              $ref: '#/components/schemas/link'
+              description: 'The link to this card''s 3-D Secure verifications (`/card-verifications/3ds?cardId=`). Useful when a subscription is stuck at `reqSCA` to inspect why verification failed.
+
+                '
+            networkBulkFeed:
+              $ref: '#/components/schemas/link'
+              description: 'The link to the network bulk feed associated with this card subscription, if applicable. This link may be present when the `enrollmentType` is `network-bulk`. It will not be present for subscriptions created through the `cardholder-single` flow.
+
+                '
+            bankAccount:
+              $ref: '#/components/schemas/link'
+              description: 'The link to the bank account this subscription''s card was materialized from (`/bank-accounts/{bankAccountId}`). Present only when the `enrollmentType` is `bank-feed` — the bank-connected analog of `networkBulkFeed`. Not present for `cardholder-single` or `network-bulk` subscriptions.
+
+                '
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this subscription entity.
+        accountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the account related to this entity.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount related to this entity.
+        cardId:
+          type: string
+          format: uuid
+          description: The unique identifier of the card related to this entity.
+        customerReferenceId:
+          type: string
+          format: uuid
+          nullable: true
+          description: An optional id in UUID format passed by the customer to associate a context with the subscription.
+        state:
+          type: string
+          description: State of the subscription.
+          enum:
+          - active
+          - deactivated
+          - expired
+          - reqSCA
+          - failed-to-create
+        effectiveDate:
+          description: Date and time when this card subscription will be activated and start receiving data, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        expirationDate:
+          description: Date and time when this card subscription will become expired and stop receiving data, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        networkBulkFeedId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the network bulk feed associated with this card subscription. Present when the `enrollmentType` is `network-bulk`, null otherwise.
+        bankAccountId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The bank account this subscription's card was originally materialized from — present only when `enrollmentType` is `bank-feed` (the analog of `networkBulkFeedId` for bank-connected enrollments). This is provenance and does not re-point if a re-link later attaches the card to a successor account; the current link surface is the bank account's `cardIds`.
+        enrollmentType:
+          type: string
+          description: The flow that led to the creation of the card subscription. `cardholder-single` refers to enrollments where cardholders themselves are responsible for inputting card data and where a single card is attempted at a time. `network-bulk` refers to enrollments where card data will be captured by Astrada using network data sources (eg Mastercard Smart Data) and where many cards may be attempted at once. `bank-feed` refers to cards materialized from a bank connection (e.g. American Express via the hosted bank-linking flow) — the bank-side analog of `network-bulk`, with `bankAccountId` as the back-reference.
+          enum:
+          - cardholder-single
+          - network-bulk
+          - bank-feed
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+  securitySchemes:
+    main-auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          refreshUrl: https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token
+          scopes:
+            accounts:write: Accounts write resource
+            accounts:read: Accounts read resource
+            subaccounts:write: Subaccounts write resource
+            subaccounts:read: Subaccounts read resource
+            card-connector-data-links:write: card-connector-data-link resource
+            card-connector-consents:read: Card Consent read resource
+            card-connector-consents:write: Card Consent write resource
+            webhooks:read: Read Webhook resources
+            webhooks:write: Write Webhook resources
+            card-subscriptions:write: Create card subscription
+            card-subscriptions:read: Read card subscription
+            card-verifications:write: Create card verification
+            card-verifications:read: Read Card verification
+            cards:read: Read Card resources
+            cardholder:read: Read Cardholder resources
+            cardholder:write: Write Cardholder resources
+            transactions:read: Read Transaction resources
+            transaction-messages:read: Read Transaction Message resources
+            network-bulk-feeds:read: Read network bulk feed
+            network-bulk-feeds:write: Write network bulk feed
+            network-links:write: Write network link
+            enrollment-methods:write: Write enrollment methods
+            simulation:write: Write sandbox simulations
+            banking:read: Read banking resources
+            banking:write: Write banking resources
+            banking:admin: Admin banking operations
+            appstore:enrollment:write: Enroll cards via the appstore B2C flow
+            appstore:cards:read: View enrolled cards in the appstore
+            appstore:transactions:read: View synced transactions in the appstore
+            appstore:transactions:sync: Trigger transaction sync in the appstore
+            appstore:sessions:read: Read appstore session state
+            appstore:sessions:write: Write or delete appstore session state
+            appstore:tokens:read: Read appstore stored tokens and connections
+            appstore:tokens:write: Write appstore stored tokens and connections
+externalDocs:
+  description: Find out more about Astrada API.
+  url: https://docs.astrada.co/reference

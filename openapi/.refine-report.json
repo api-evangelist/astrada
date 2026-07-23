@@ -1,0 +1,42 @@
+{
+  "provider": "astrada",
+  "sources": [
+    "astrada-bank-accounts-api-openapi.yml",
+    "astrada-bank-links-api-openapi.yml",
+    "astrada-bank-subscriptions-api-openapi.yml",
+    "astrada-bank-transactions-api-openapi.yml",
+    "astrada-bin-lookup-api-openapi.yml",
+    "astrada-card-api-openapi.yml",
+    "astrada-card-subscription-api-openapi.yml",
+    "astrada-card-verification-api-openapi.yml",
+    "astrada-enrollment-methods-api-openapi.yml",
+    "astrada-network-bulk-feeds-api-openapi.yml",
+    "astrada-subaccounts-api-openapi.yml",
+    "astrada-transaction-matches-api-openapi.yml",
+    "astrada-transaction-messages-api-openapi.yml",
+    "astrada-transactions-api-openapi.yml",
+    "astrada-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "astrada-bank-accounts-api-openapi.yml",
+    "astrada-bank-links-api-openapi.yml",
+    "astrada-bank-subscriptions-api-openapi.yml",
+    "astrada-bank-transactions-api-openapi.yml",
+    "astrada-bin-lookup-api-openapi.yml",
+    "astrada-card-api-openapi.yml",
+    "astrada-card-subscription-api-openapi.yml",
+    "astrada-card-verification-api-openapi.yml",
+    "astrada-enrollment-methods-api-openapi.yml",
+    "astrada-network-bulk-feeds-api-openapi.yml",
+    "astrada-subaccounts-api-openapi.yml",
+    "astrada-transaction-matches-api-openapi.yml",
+    "astrada-transaction-messages-api-openapi.yml",
+    "astrada-transactions-api-openapi.yml",
+    "astrada-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

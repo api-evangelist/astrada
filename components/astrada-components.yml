@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/docs/web-sdk
+note: >-
+  Client-side / embeddable UI surface (distinct from server-side SDKs). Astrada ships a
+  hosted, pre-built Card Enrollment SDK loaded via a script tag; there is no first-party
+  server SDK package on npm/PyPI.
+families:
+  - family: Card Enrollment SDK
+    kind: hosted-web-component
+    description: >-
+      Pre-built cardholder card-enrollment and verification experience (3DS). Renders an
+      enrollment form and drives the verification flow client-side.
+    loader: https://sdk.astrada.co/v1/cardEnrollmentSdk.js
+    global: CardEnrollmentSdk
+    methods:
+      - name: CardEnrollmentSdk.openForm(config)
+        description: Launches the enrollment form and initiates card verification.
+      - name: CardEnrollmentSdk.closeForm()
+        description: Closes the enrollment form.
+    key_config:
+      - companyName
+      - subaccountId
+      - terms.text
+      - terms.privacyUrl
+      - terms.termsUrl
+    docs:
+      installation: https://docs.astrada.co/docs/web-sdk
+      overview: https://docs.astrada.co/docs/card-enrollment-sdk
+      customization: https://docs.astrada.co/docs/sdk-customization

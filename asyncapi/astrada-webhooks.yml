@@ -1,0 +1,57 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.astrada.co/docs/webhooks-1
+event_types_docs: https://docs.astrada.co/reference/event-types
+asyncapi: asyncapi/astrada-events-asyncapi.yml
+note: >-
+  Astrada webhook delivery contract. Events are pushed via HTTP POST to consumer-registered
+  HTTPS endpoints (managed through the /webhooks API). See asyncapi/astrada-events-asyncapi.yml
+  for the channel/message catalog.
+management:
+  api_managed: true
+  create_operation: createWebhook
+  list_operation: listWebhooks
+  delete_operation: deleteWebhook
+  update_operation: updateWebhook
+  max_subscriptions_per_subaccount: 2500
+delivery:
+  method: POST
+  content_type: application/json
+  ack: Return HTTP 200 to confirm receipt.
+  semantics: at-least-once
+  headers:
+    - webhook-event-type
+    - webhook-subaccount-id
+    - webhook-id
+    - webhook-timestamp
+    - webhook-signature
+  retries:
+    - {attempt: 2, delay: 5s}
+    - {attempt: 3, delay: 5m}
+    - {attempt: 4, delay: 30m}
+    - {attempt: 5, delay: 2h}
+    - {attempt: 6, delay: 5h}
+    - {attempt: 7, delay: 10h}
+    - {attempt: 8, delay: 10h}
+signing:
+  algorithm: HMAC-SHA256
+  signed_content: '{webhook-id}.{webhook-timestamp}.{body}'
+  secret: Base64 signing secret returned only at webhook creation; store securely.
+  header: webhook-signature
+  prefix: 'v1,'
+source_ips:
+  - {region: EU, ip: 52.215.16.239}
+  - {region: EU, ip: 54.216.8.72}
+  - {region: EU, ip: 63.33.109.123}
+event_types:
+  - transactionmessage.created
+  - transaction.created
+  - transaction.updated
+  - transaction.match.created
+  - transaction.match.deleted
+  - banklink.completed
+  - banktransaction.created
+  - banktransaction.deleted
+  - cardsubscription.created
+  - cardsubscription.updated
+  - enrichment.merchant.created
