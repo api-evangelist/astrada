@@ -1,0 +1,1352 @@
+{
+  "info": {
+    "_postman_id": "8693e475-f2fe-4a21-a202-9b77002085d0",
+    "name": "Astrada bank-accounts card-subscription API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:12.000Z",
+    "updatedAt": "2026-07-28T01:05:12.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8693e475-f2fe-4a21-a202-9b77002085d0"
+  },
+  "item": [
+    {
+      "name": "card-subscriptions",
+      "item": [
+        {
+          "name": "{subscriptionId}",
+          "item": [
+            {
+              "name": "Retrieve card subscription",
+              "id": "4606a918-7b1d-4b30-86db-68e647c92620",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6b7f3883-e5a9-4d3e-8d50-1783331fdd31",
+                      "key": "subscriptionId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns detailed information about a specific card subscription by its identifier, including its data-sharing state."
+              },
+              "response": [
+                {
+                  "id": "54e0444f-57c3-4774-bdc3-8c0e7471f164",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"card\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"verifications\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"networkBulkFeed\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"bankAccount\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"id\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"cardId\": \"<uuid>\",\n  \"enrollmentType\": \"network-bulk\",\n  \"state\": \"reqSCA\",\n  \"effectiveDate\": \"<dateTime>\",\n  \"expirationDate\": \"<dateTime>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"accountId\": \"<uuid>\",\n  \"customerReferenceId\": \"<uuid>\",\n  \"networkBulkFeedId\": \"<uuid>\",\n  \"bankAccountId\": \"<uuid>\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-54e0444f-57c3-4774-bdc3-8c0e7471f164"
+                },
+                {
+                  "id": "cde1f34a-3b67-410f-97bb-4376ac94974a",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-cde1f34a-3b67-410f-97bb-4376ac94974a"
+                },
+                {
+                  "id": "33e76ab5-4349-4fe8-bcaa-73bff3572a12",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-33e76ab5-4349-4fe8-bcaa-73bff3572a12"
+                },
+                {
+                  "id": "900f7b97-4889-4c55-9243-cf3bfd76cd82",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-900f7b97-4889-4c55-9243-cf3bfd76cd82"
+                },
+                {
+                  "id": "c48cd826-cfdc-4dde-96b1-c6abe3547ad5",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-c48cd826-cfdc-4dde-96b1-c6abe3547ad5"
+                },
+                {
+                  "id": "bac5fe07-4fcf-4565-997d-982715a107e1",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-bac5fe07-4fcf-4565-997d-982715a107e1"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-4606a918-7b1d-4b30-86db-68e647c92620"
+            },
+            {
+              "name": "Update card subscription",
+              "id": "f307d07a-3cd0-423f-867c-0f6c7be1ad72",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"deactivated\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "2ea55612-2e62-47d5-97e9-c014ecb8c487",
+                      "key": "subscriptionId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Updates an existing card subscription, allowing changes to its data-sharing state. Subscriptions that were enrolled in bulk, and where `enrollmentType = 'network-bulk'` cannot be updated.\n\n**Note:** setting a card subscription to a `deactivated` state is a final action that cannot be undone.\n"
+              },
+              "response": [
+                {
+                  "id": "7e00ac81-5b0b-46c1-a195-3f7d07b07fbb",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"card\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"verifications\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"networkBulkFeed\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"bankAccount\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"id\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"cardId\": \"<uuid>\",\n  \"enrollmentType\": \"network-bulk\",\n  \"state\": \"reqSCA\",\n  \"effectiveDate\": \"<dateTime>\",\n  \"expirationDate\": \"<dateTime>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"accountId\": \"<uuid>\",\n  \"customerReferenceId\": \"<uuid>\",\n  \"networkBulkFeedId\": \"<uuid>\",\n  \"bankAccountId\": \"<uuid>\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-7e00ac81-5b0b-46c1-a195-3f7d07b07fbb"
+                },
+                {
+                  "id": "afcd82db-ec83-404d-ab65-e2439a18d8a3",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-afcd82db-ec83-404d-ab65-e2439a18d8a3"
+                },
+                {
+                  "id": "c4bebc39-944d-4710-862a-ee819c50848e",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-c4bebc39-944d-4710-862a-ee819c50848e"
+                },
+                {
+                  "id": "9defd0fa-f07a-4082-9fd0-e6cd4ef2c2c3",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-9defd0fa-f07a-4082-9fd0-e6cd4ef2c2c3"
+                },
+                {
+                  "id": "80a2029c-a68e-4f11-a4af-248785329c51",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-80a2029c-a68e-4f11-a4af-248785329c51"
+                },
+                {
+                  "id": "58500f4f-fcec-4a20-a524-951368589e31",
+                  "name": "Request conflict with the current state of the target resource",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Conflict\",\n  \"currentValue\": \"<string>\",\n  \"requestedValue\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-58500f4f-fcec-4a20-a524-951368589e31"
+                },
+                {
+                  "id": "91fc771c-0527-4443-820d-afc64af012fe",
+                  "name": "The request is well formatted but it fails some business logic validation",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unprocessable Entity\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-91fc771c-0527-4443-820d-afc64af012fe"
+                },
+                {
+                  "id": "55ff37a0-39f3-4bc3-adf8-cc5506d6ac01",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"state\": \"deactivated\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:12.000Z",
+                  "updatedAt": "2026-07-28T01:05:12.000Z",
+                  "uid": "35240-55ff37a0-39f3-4bc3-adf8-cc5506d6ac01"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-f307d07a-3cd0-423f-867c-0f6c7be1ad72"
+            }
+          ],
+          "id": "47df3da2-176d-4fa5-bc92-bee24d2d0b21",
+          "createdAt": "2026-07-28T01:05:12.000Z",
+          "updatedAt": "2026-07-28T01:05:12.000Z",
+          "uid": "35240-47df3da2-176d-4fa5-bc92-bee24d2d0b21"
+        },
+        {
+          "name": "List card subscriptions",
+          "id": "51ceb4ef-d1b9-4b17-83fe-8820d0b23174",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/card-subscriptions?subaccountId=<uuid>&cardId=<uuid>&limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "card-subscriptions"
+              ],
+              "query": [
+                {
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "key": "cardId",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "Maximum number of items to return",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Returns all card subscriptions under the account.\n\nBy default, `GET /card-subscriptions` returns card subscriptions ordered by the latest `updatedAt`. The `cardId` and `subaccountId` filters are mutual exclusive. The `cardId` takes precedence over `subaccountId`.\n\nThis endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).\n"
+          },
+          "response": [
+            {
+              "id": "7f882de0-f9a4-4a4b-be8b-a6c1254f2b42",
+              "name": "Successful operation",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions?subaccountId=<uuid>&cardId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"first\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"next\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"prev\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"last\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"_embedded\": {\n    \"cardSubscriptions\": [\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"card\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"verifications\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"networkBulkFeed\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"bankAccount\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"id\": \"<uuid>\",\n        \"subaccountId\": \"<uuid>\",\n        \"cardId\": \"<uuid>\",\n        \"enrollmentType\": \"network-bulk\",\n        \"state\": \"active\",\n        \"effectiveDate\": \"<dateTime>\",\n        \"expirationDate\": \"<dateTime>\",\n        \"createdAt\": \"<dateTime>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"accountId\": \"<uuid>\",\n        \"customerReferenceId\": \"<uuid>\",\n        \"networkBulkFeedId\": \"<uuid>\",\n        \"bankAccountId\": \"<uuid>\"\n      },\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"card\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"verifications\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"networkBulkFeed\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"bankAccount\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"id\": \"<uuid>\",\n        \"subaccountId\": \"<uuid>\",\n        \"cardId\": \"<uuid>\",\n        \"enrollmentType\": \"network-bulk\",\n        \"state\": \"expired\",\n        \"effectiveDate\": \"<dateTime>\",\n        \"expirationDate\": \"<dateTime>\",\n        \"createdAt\": \"<dateTime>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"accountId\": \"<uuid>\",\n        \"customerReferenceId\": \"<uuid>\",\n        \"networkBulkFeedId\": \"<uuid>\",\n        \"bankAccountId\": \"<uuid>\"\n      }\n    ]\n  },\n  \"totalItems\": \"<integer>\"\n}",
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-7f882de0-f9a4-4a4b-be8b-a6c1254f2b42"
+            },
+            {
+              "id": "749aa3a1-d1f3-4ed1-a48a-329eb668104e",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions?subaccountId=<uuid>&cardId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-749aa3a1-d1f3-4ed1-a48a-329eb668104e"
+            },
+            {
+              "id": "8bd5fc50-18cb-454b-becd-d9f47474cd9e",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions?subaccountId=<uuid>&cardId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-8bd5fc50-18cb-454b-becd-d9f47474cd9e"
+            },
+            {
+              "id": "ddc7eead-6a8f-4d92-a4f3-0e06773911e7",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions?subaccountId=<uuid>&cardId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-ddc7eead-6a8f-4d92-a4f3-0e06773911e7"
+            },
+            {
+              "id": "e413fcd0-5f21-47a6-abef-58bcc08ce4ca",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-subscriptions?subaccountId=<uuid>&cardId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+              "createdAt": "2026-07-28T01:05:12.000Z",
+              "updatedAt": "2026-07-28T01:05:12.000Z",
+              "uid": "35240-e413fcd0-5f21-47a6-abef-58bcc08ce4ca"
+            }
+          ],
+          "createdAt": "2026-07-28T01:05:12.000Z",
+          "updatedAt": "2026-07-28T01:05:12.000Z",
+          "uid": "35240-51ceb4ef-d1b9-4b17-83fe-8820d0b23174"
+        }
+      ],
+      "id": "5efcbac2-138a-4999-8dd4-047d9b0dbcbf",
+      "createdAt": "2026-07-28T01:05:12.000Z",
+      "updatedAt": "2026-07-28T01:05:12.000Z",
+      "uid": "35240-5efcbac2-138a-4999-8dd4-047d9b0dbcbf"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

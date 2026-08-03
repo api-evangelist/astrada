@@ -1,0 +1,1670 @@
+{
+  "info": {
+    "_postman_id": "18d8341c-4791-45bf-9213-4c8a8278a445",
+    "name": "Astrada bank-accounts card API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:11.000Z",
+    "updatedAt": "2026-07-28T01:05:11.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-18d8341c-4791-45bf-9213-4c8a8278a445"
+  },
+  "item": [
+    {
+      "name": "cards",
+      "item": [
+        {
+          "name": "{cardId}",
+          "item": [
+            {
+              "name": "cardholder",
+              "item": [
+                {
+                  "name": "Retrieve cardholder information",
+                  "id": "031cfa9f-ad11-4e71-873b-2659cfd6295a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId",
+                        "cardholder"
+                      ],
+                      "variable": [
+                        {
+                          "id": "468d329d-cc16-491b-a068-a54b257bc88c",
+                          "key": "cardId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns cardholder information, related to a specific cardId, when it's available."
+                  },
+                  "response": [
+                    {
+                      "id": "930f589e-0628-463c-99cf-72f58cc505be",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/hal+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/hal+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"corporate\": {\n    \"alternativeEmployeeId\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-930f589e-0628-463c-99cf-72f58cc505be"
+                    },
+                    {
+                      "id": "9e71d6d3-2fc6-4cc3-bb67-c29acb2632a0",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-9e71d6d3-2fc6-4cc3-bb67-c29acb2632a0"
+                    },
+                    {
+                      "id": "8f238d5d-a05f-4feb-b7d0-acaea5276d0d",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-8f238d5d-a05f-4feb-b7d0-acaea5276d0d"
+                    },
+                    {
+                      "id": "84847abc-fae2-4187-8c7e-367d8d8b6f70",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-84847abc-fae2-4187-8c7e-367d8d8b6f70"
+                    },
+                    {
+                      "id": "cc625bc8-68ad-4f24-a648-f397a030ed42",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-cc625bc8-68ad-4f24-a648-f397a030ed42"
+                    },
+                    {
+                      "id": "6e7c0a1e-cbc6-4593-9997-c90451fb654d",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-6e7c0a1e-cbc6-4593-9997-c90451fb654d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-031cfa9f-ad11-4e71-873b-2659cfd6295a"
+                },
+                {
+                  "name": "Update cardholder information",
+                  "id": "dbaa229b-4c90-42f0-8b82-39868f009d1b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId",
+                        "cardholder"
+                      ],
+                      "variable": [
+                        {
+                          "id": "ad80d562-99a9-41a8-939d-be967ee7ed5b",
+                          "key": "cardId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Updates cardholder information for a specific card. Use this endpoint to simulate cardholder data that would typically be received through a Network Bulk Feed. This is useful for testing your integration against bulk-enrolled cards without waiting for actual network feed data.\n\n**Note:** This endpoint requires the `cardholder:write` scope and must be directly enabled by Astrada.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "5c4c58b2-ed4b-4883-9605-1e237832ab1a",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/hal+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/hal+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"corporate\": {\n    \"alternativeEmployeeId\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-5c4c58b2-ed4b-4883-9605-1e237832ab1a"
+                    },
+                    {
+                      "id": "7003f611-b98d-4e16-a694-28d18056f81d",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-7003f611-b98d-4e16-a694-28d18056f81d"
+                    },
+                    {
+                      "id": "f666b724-ac01-4ef4-a7c1-ca2ff07a33bd",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-f666b724-ac01-4ef4-a7c1-ca2ff07a33bd"
+                    },
+                    {
+                      "id": "c305216f-d65d-4446-b8e5-1b51473215eb",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-c305216f-d65d-4446-b8e5-1b51473215eb"
+                    },
+                    {
+                      "id": "f33e9f86-8ddc-493c-aac4-c95b5aedee49",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-f33e9f86-8ddc-493c-aac4-c95b5aedee49"
+                    },
+                    {
+                      "id": "de61730d-da54-442a-91bf-cf707a960b14",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"subaccountId\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"email\": \"<email>\",\n  \"postalCode\": \"<string>\",\n  \"corporate\": {\n    \"id\": \"<string>\",\n    \"employeeId\": \"<string>\",\n    \"alternativeEmployeeId\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cards/:cardId/cardholder",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cards",
+                            ":cardId",
+                            "cardholder"
+                          ],
+                          "variable": [
+                            {
+                              "key": "cardId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:11.000Z",
+                      "updatedAt": "2026-07-28T01:05:11.000Z",
+                      "uid": "35240-de61730d-da54-442a-91bf-cf707a960b14"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-dbaa229b-4c90-42f0-8b82-39868f009d1b"
+                }
+              ],
+              "id": "23b782b1-79ea-4cf4-afaa-38aa0862ba83",
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-23b782b1-79ea-4cf4-afaa-38aa0862ba83"
+            },
+            {
+              "name": "Retrieve card",
+              "id": "5a3e504f-18d5-419b-9955-7f25fa334e11",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cards/:cardId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cards",
+                    ":cardId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "315028c3-d166-44e4-9975-6e14be3d7e9a",
+                      "key": "cardId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns detailed information about a specific card by its identifier."
+              },
+              "response": [
+                {
+                  "id": "e44557a8-4d97-47fb-92dd-c745e6655944",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cardId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"cardholder\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"id\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"expiryMonth\": \"<integer>\",\n  \"expiryYear\": \"<integer>\",\n  \"last4digits\": \"<string>\",\n  \"country\": \"BEL\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"first6digits\": \"<string>\",\n  \"network\": \"visa\"\n}",
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-e44557a8-4d97-47fb-92dd-c745e6655944"
+                },
+                {
+                  "id": "c450457f-232a-449a-ab93-8a230f1cdc44",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cardId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-c450457f-232a-449a-ab93-8a230f1cdc44"
+                },
+                {
+                  "id": "cc1507b0-5bc9-49ad-8635-974ce57492b8",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cardId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-cc1507b0-5bc9-49ad-8635-974ce57492b8"
+                },
+                {
+                  "id": "15c4b0fb-c028-475c-aaf0-fd1de7bb8378",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cardId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-15c4b0fb-c028-475c-aaf0-fd1de7bb8378"
+                },
+                {
+                  "id": "affa8cd3-885e-41e9-84a2-94cbb6b147d9",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cardId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-affa8cd3-885e-41e9-84a2-94cbb6b147d9"
+                },
+                {
+                  "id": "40601309-110e-4216-9cac-61b13124fb34",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cards/:cardId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cards",
+                        ":cardId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "cardId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:11.000Z",
+                  "updatedAt": "2026-07-28T01:05:11.000Z",
+                  "uid": "35240-40601309-110e-4216-9cac-61b13124fb34"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-5a3e504f-18d5-419b-9955-7f25fa334e11"
+            }
+          ],
+          "id": "70672df4-9fdb-4376-b5ce-79c32e961cd5",
+          "createdAt": "2026-07-28T01:05:11.000Z",
+          "updatedAt": "2026-07-28T01:05:11.000Z",
+          "uid": "35240-70672df4-9fdb-4376-b5ce-79c32e961cd5"
+        },
+        {
+          "name": "List cards",
+          "id": "33ca3405-2eb4-453a-92bc-ddba4a9d88be",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cards?country=PRT&expiryMonth=<integer>&expiryYear=<integer>&subaccountId=<uuid>&limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cards"
+              ],
+              "query": [
+                {
+                  "description": "The card country of issuance following ISO 3166 alpha-3",
+                  "key": "country",
+                  "value": "PRT"
+                },
+                {
+                  "description": "The card expiration month",
+                  "key": "expiryMonth",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "The card expiration year",
+                  "key": "expiryYear",
+                  "value": "<integer>"
+                },
+                {
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "Maximum number of items to return",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Returns a list of all cards linked to the account.\n\nBy default, `GET /cards` returns cards ordered by the latest updatedAt. You can combine the different filters as documented.\n\nThis endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).\n"
+          },
+          "response": [
+            {
+              "id": "9ba87db9-9cb7-45ed-a7ab-5882f5cea948",
+              "name": "Successful operation",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cards?country=PRT&expiryMonth=<integer>&expiryYear=<integer>&subaccountId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cards"
+                  ],
+                  "query": [
+                    {
+                      "description": "The card country of issuance following ISO 3166 alpha-3",
+                      "key": "country",
+                      "value": "PRT"
+                    },
+                    {
+                      "description": "The card expiration month",
+                      "key": "expiryMonth",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The card expiration year",
+                      "key": "expiryYear",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"first\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"next\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"prev\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"last\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"_embedded\": {\n    \"cards\": [\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"cardholder\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"id\": \"<uuid>\",\n        \"subaccountId\": \"<uuid>\",\n        \"expiryMonth\": \"<integer>\",\n        \"expiryYear\": \"<integer>\",\n        \"last4digits\": \"<string>\",\n        \"country\": \"GBR\",\n        \"createdAt\": \"<dateTime>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"first6digits\": \"<string>\",\n        \"network\": \"mastercard\"\n      },\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"cardholder\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"id\": \"<uuid>\",\n        \"subaccountId\": \"<uuid>\",\n        \"expiryMonth\": \"<integer>\",\n        \"expiryYear\": \"<integer>\",\n        \"last4digits\": \"<string>\",\n        \"country\": \"NZL\",\n        \"createdAt\": \"<dateTime>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"first6digits\": \"<string>\",\n        \"network\": \"amex\"\n      }\n    ]\n  },\n  \"totalItems\": \"<integer>\"\n}",
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-9ba87db9-9cb7-45ed-a7ab-5882f5cea948"
+            },
+            {
+              "id": "e17162c5-a609-4e6e-8ca4-1f3d5f233c73",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cards?country=PRT&expiryMonth=<integer>&expiryYear=<integer>&subaccountId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cards"
+                  ],
+                  "query": [
+                    {
+                      "description": "The card country of issuance following ISO 3166 alpha-3",
+                      "key": "country",
+                      "value": "PRT"
+                    },
+                    {
+                      "description": "The card expiration month",
+                      "key": "expiryMonth",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The card expiration year",
+                      "key": "expiryYear",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-e17162c5-a609-4e6e-8ca4-1f3d5f233c73"
+            },
+            {
+              "id": "af048ef7-5e44-4d49-b14c-3156d298e19d",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cards?country=PRT&expiryMonth=<integer>&expiryYear=<integer>&subaccountId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cards"
+                  ],
+                  "query": [
+                    {
+                      "description": "The card country of issuance following ISO 3166 alpha-3",
+                      "key": "country",
+                      "value": "PRT"
+                    },
+                    {
+                      "description": "The card expiration month",
+                      "key": "expiryMonth",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The card expiration year",
+                      "key": "expiryYear",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-af048ef7-5e44-4d49-b14c-3156d298e19d"
+            },
+            {
+              "id": "d2134e2b-4f43-4f70-9e9f-b5f315a8cf08",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cards?country=PRT&expiryMonth=<integer>&expiryYear=<integer>&subaccountId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cards"
+                  ],
+                  "query": [
+                    {
+                      "description": "The card country of issuance following ISO 3166 alpha-3",
+                      "key": "country",
+                      "value": "PRT"
+                    },
+                    {
+                      "description": "The card expiration month",
+                      "key": "expiryMonth",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The card expiration year",
+                      "key": "expiryYear",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-d2134e2b-4f43-4f70-9e9f-b5f315a8cf08"
+            },
+            {
+              "id": "c68f203b-e6b2-45fb-9fd1-3b0b2e1a9b47",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cards?country=PRT&expiryMonth=<integer>&expiryYear=<integer>&subaccountId=<uuid>&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cards"
+                  ],
+                  "query": [
+                    {
+                      "description": "The card country of issuance following ISO 3166 alpha-3",
+                      "key": "country",
+                      "value": "PRT"
+                    },
+                    {
+                      "description": "The card expiration month",
+                      "key": "expiryMonth",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The card expiration year",
+                      "key": "expiryYear",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+              "createdAt": "2026-07-28T01:05:11.000Z",
+              "updatedAt": "2026-07-28T01:05:11.000Z",
+              "uid": "35240-c68f203b-e6b2-45fb-9fd1-3b0b2e1a9b47"
+            }
+          ],
+          "createdAt": "2026-07-28T01:05:11.000Z",
+          "updatedAt": "2026-07-28T01:05:11.000Z",
+          "uid": "35240-33ca3405-2eb4-453a-92bc-ddba4a9d88be"
+        }
+      ],
+      "id": "e80ee63d-a82b-4954-bd8b-d7c3e21dc210",
+      "createdAt": "2026-07-28T01:05:11.000Z",
+      "updatedAt": "2026-07-28T01:05:11.000Z",
+      "uid": "35240-e80ee63d-a82b-4954-bd8b-d7c3e21dc210"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

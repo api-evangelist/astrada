@@ -1,0 +1,852 @@
+{
+  "info": {
+    "_postman_id": "57c10d3d-72dc-457f-9c5d-f122ef49edd9",
+    "name": "Astrada bank-accounts transaction-matches API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:39.000Z",
+    "updatedAt": "2026-07-28T01:05:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-57c10d3d-72dc-457f-9c5d-f122ef49edd9"
+  },
+  "item": [
+    {
+      "name": "transaction-matches",
+      "item": [
+        {
+          "name": "{subaccountId}",
+          "item": [
+            {
+              "name": "{transactionMatchId}",
+              "item": [
+                {
+                  "name": "Retrieve transaction match",
+                  "id": "56736f04-46c5-4db1-81ad-6752128cf52a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-matches/:subaccountId/:transactionMatchId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-matches",
+                        ":subaccountId",
+                        ":transactionMatchId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "cb301b24-7ec1-4bdc-b493-f43da3b9ef82",
+                          "key": "subaccountId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        },
+                        {
+                          "id": "3ddc48dd-dc05-4095-aebe-37e47da8d582",
+                          "key": "transactionMatchId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns detailed information about a specific transaction match, including the confidence level, numeric score, and a breakdown of the scoring factors."
+                  },
+                  "response": [
+                    {
+                      "id": "40ece4e5-31ae-4e44-b3c4-c34945f501b6",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-matches/:subaccountId/:transactionMatchId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-matches",
+                            ":subaccountId",
+                            ":transactionMatchId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionMatchId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"cardTransaction\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"bankTransaction\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"card\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"id\": \"<uuid>\",\n  \"accountId\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"cardTransactionId\": \"<uuid>\",\n  \"bankTransactionId\": \"<uuid>\",\n  \"confidence\": \"LOW\",\n  \"score\": \"<number>\",\n  \"cardTransaction\": {\n    \"cardId\": \"<uuid>\",\n    \"date\": \"<string>\",\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"bankTransaction\": {\n    \"date\": \"<string>\",\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\",\n    \"description\": \"<string>\",\n    \"merchantName\": \"<string>\"\n  },\n  \"reasons\": [\n    {\n      \"type\": \"PreAuth\",\n      \"score\": \"<number>\",\n      \"cardValue\": \"<string>\",\n      \"bankValue\": \"<string>\",\n      \"diff\": \"<number>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"type\": \"Amount\",\n      \"score\": \"<number>\",\n      \"cardValue\": \"<string>\",\n      \"bankValue\": \"<string>\",\n      \"diff\": \"<number>\",\n      \"message\": \"<string>\"\n    }\n  ],\n  \"createdAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T01:05:40.000Z",
+                      "updatedAt": "2026-07-28T01:05:40.000Z",
+                      "uid": "35240-40ece4e5-31ae-4e44-b3c4-c34945f501b6"
+                    },
+                    {
+                      "id": "1df42c6a-15b0-4f5f-94fc-a4b18bbc0fa2",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-matches/:subaccountId/:transactionMatchId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-matches",
+                            ":subaccountId",
+                            ":transactionMatchId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionMatchId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:40.000Z",
+                      "updatedAt": "2026-07-28T01:05:40.000Z",
+                      "uid": "35240-1df42c6a-15b0-4f5f-94fc-a4b18bbc0fa2"
+                    },
+                    {
+                      "id": "bb30741b-e0c9-4211-95df-a3fc8f68c48f",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-matches/:subaccountId/:transactionMatchId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-matches",
+                            ":subaccountId",
+                            ":transactionMatchId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionMatchId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:40.000Z",
+                      "updatedAt": "2026-07-28T01:05:40.000Z",
+                      "uid": "35240-bb30741b-e0c9-4211-95df-a3fc8f68c48f"
+                    },
+                    {
+                      "id": "b1a966d7-2363-4007-af47-30bdb6c38aca",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-matches/:subaccountId/:transactionMatchId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-matches",
+                            ":subaccountId",
+                            ":transactionMatchId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionMatchId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:40.000Z",
+                      "updatedAt": "2026-07-28T01:05:40.000Z",
+                      "uid": "35240-b1a966d7-2363-4007-af47-30bdb6c38aca"
+                    },
+                    {
+                      "id": "180cab61-2c80-4f61-b3ee-0598214e831c",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-matches/:subaccountId/:transactionMatchId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-matches",
+                            ":subaccountId",
+                            ":transactionMatchId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionMatchId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:40.000Z",
+                      "updatedAt": "2026-07-28T01:05:40.000Z",
+                      "uid": "35240-180cab61-2c80-4f61-b3ee-0598214e831c"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:40.000Z",
+                  "updatedAt": "2026-07-28T01:05:40.000Z",
+                  "uid": "35240-56736f04-46c5-4db1-81ad-6752128cf52a"
+                }
+              ],
+              "id": "29c3ca58-5ba6-44fe-acaf-d29cfe2bf423",
+              "createdAt": "2026-07-28T01:05:40.000Z",
+              "updatedAt": "2026-07-28T01:05:40.000Z",
+              "uid": "35240-29c3ca58-5ba6-44fe-acaf-d29cfe2bf423"
+            },
+            {
+              "name": "List transaction matches",
+              "id": "0ebe2af4-0f1b-4279-b430-066406330b32",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transaction-matches/:subaccountId?bankAccountId=<uuid>&bankTransactionId=<uuid>&cardTransactionId=<uuid>&minConfidence=MEDIUM&startDate=<date>&endDate=<date>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transaction-matches",
+                    ":subaccountId"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by bank account identifier",
+                      "key": "bankAccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter by bank transaction identifier",
+                      "key": "bankTransactionId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter by card transaction identifier",
+                      "key": "cardTransactionId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.",
+                      "key": "minConfidence",
+                      "value": "MEDIUM"
+                    },
+                    {
+                      "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "7ce83831-d95f-4896-937b-6efe82593231",
+                      "key": "subaccountId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    },
+                    {
+                      "id": "ee37a012-cb9b-4349-ae1c-b3fa23884497",
+                      "key": "cardId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns a list of transaction matches for a subaccount. Each match represents a link between a bank transaction and a card transaction, along with a confidence score and the reasoning behind the match.\n\nBy default, matches are filtered to `MEDIUM` confidence and above. Use the `minConfidence` parameter to adjust the threshold.\n\nBy default, `GET /transaction-matches/{subaccountId}` returns matches ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+              },
+              "response": [
+                {
+                  "id": "8763a90f-5607-4360-932b-8377ebebf67c",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-matches/:subaccountId?bankAccountId=<uuid>&bankTransactionId=<uuid>&cardTransactionId=<uuid>&minConfidence=MEDIUM&startDate=<date>&endDate=<date>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-matches",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by bank transaction identifier",
+                          "key": "bankTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by card transaction identifier",
+                          "key": "cardTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.",
+                          "key": "minConfidence",
+                          "value": "MEDIUM"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"items\": [\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"cardTransaction\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"bankTransaction\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"card\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        }\n      },\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"cardTransactionId\": \"<uuid>\",\n      \"bankTransactionId\": \"<uuid>\",\n      \"confidence\": \"LOW\",\n      \"score\": \"<number>\",\n      \"cardTransaction\": {\n        \"cardId\": \"<uuid>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"descriptor\": \"<string>\"\n      },\n      \"bankTransaction\": {\n        \"date\": \"<string>\",\n        \"amount\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"description\": \"<string>\",\n        \"merchantName\": \"<string>\"\n      },\n      \"reasons\": [\n        {\n          \"type\": \"Amount\",\n          \"score\": \"<number>\",\n          \"cardValue\": \"<string>\",\n          \"bankValue\": \"<string>\",\n          \"diff\": \"<number>\",\n          \"message\": \"<string>\"\n        },\n        {\n          \"type\": \"Amount\",\n          \"score\": \"<number>\",\n          \"cardValue\": \"<string>\",\n          \"bankValue\": \"<string>\",\n          \"diff\": \"<number>\",\n          \"message\": \"<string>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"cardTransaction\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"bankTransaction\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"card\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        }\n      },\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"cardTransactionId\": \"<uuid>\",\n      \"bankTransactionId\": \"<uuid>\",\n      \"confidence\": \"MEDIUM\",\n      \"score\": \"<number>\",\n      \"cardTransaction\": {\n        \"cardId\": \"<uuid>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"descriptor\": \"<string>\"\n      },\n      \"bankTransaction\": {\n        \"date\": \"<string>\",\n        \"amount\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"description\": \"<string>\",\n        \"merchantName\": \"<string>\"\n      },\n      \"reasons\": [\n        {\n          \"type\": \"PreAuth\",\n          \"score\": \"<number>\",\n          \"cardValue\": \"<string>\",\n          \"bankValue\": \"<string>\",\n          \"diff\": \"<number>\",\n          \"message\": \"<string>\"\n        },\n        {\n          \"type\": \"PreAuth\",\n          \"score\": \"<number>\",\n          \"cardValue\": \"<string>\",\n          \"bankValue\": \"<string>\",\n          \"diff\": \"<number>\",\n          \"message\": \"<string>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": \"<boolean>\",\n    \"cursor\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:05:40.000Z",
+                  "updatedAt": "2026-07-28T01:05:40.000Z",
+                  "uid": "35240-8763a90f-5607-4360-932b-8377ebebf67c"
+                },
+                {
+                  "id": "69cd67c4-5ec3-426f-bc93-1b6e1bcfb4cf",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-matches/:subaccountId?bankAccountId=<uuid>&bankTransactionId=<uuid>&cardTransactionId=<uuid>&minConfidence=MEDIUM&startDate=<date>&endDate=<date>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-matches",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by bank transaction identifier",
+                          "key": "bankTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by card transaction identifier",
+                          "key": "cardTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.",
+                          "key": "minConfidence",
+                          "value": "MEDIUM"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:40.000Z",
+                  "updatedAt": "2026-07-28T01:05:40.000Z",
+                  "uid": "35240-69cd67c4-5ec3-426f-bc93-1b6e1bcfb4cf"
+                },
+                {
+                  "id": "46a40eb3-24c3-4635-88d6-f4d74a4397c3",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-matches/:subaccountId?bankAccountId=<uuid>&bankTransactionId=<uuid>&cardTransactionId=<uuid>&minConfidence=MEDIUM&startDate=<date>&endDate=<date>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-matches",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by bank transaction identifier",
+                          "key": "bankTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by card transaction identifier",
+                          "key": "cardTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.",
+                          "key": "minConfidence",
+                          "value": "MEDIUM"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:40.000Z",
+                  "updatedAt": "2026-07-28T01:05:40.000Z",
+                  "uid": "35240-46a40eb3-24c3-4635-88d6-f4d74a4397c3"
+                },
+                {
+                  "id": "6748093b-5187-43f7-ac7e-ae9b072c95da",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-matches/:subaccountId?bankAccountId=<uuid>&bankTransactionId=<uuid>&cardTransactionId=<uuid>&minConfidence=MEDIUM&startDate=<date>&endDate=<date>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-matches",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by bank transaction identifier",
+                          "key": "bankTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter by card transaction identifier",
+                          "key": "cardTransactionId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.",
+                          "key": "minConfidence",
+                          "value": "MEDIUM"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:40.000Z",
+                  "updatedAt": "2026-07-28T01:05:40.000Z",
+                  "uid": "35240-6748093b-5187-43f7-ac7e-ae9b072c95da"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:40.000Z",
+              "updatedAt": "2026-07-28T01:05:40.000Z",
+              "uid": "35240-0ebe2af4-0f1b-4279-b430-066406330b32"
+            }
+          ],
+          "id": "a937b0a5-1a72-4cd3-9266-ee3ed2151cbb",
+          "createdAt": "2026-07-28T01:05:40.000Z",
+          "updatedAt": "2026-07-28T01:05:40.000Z",
+          "uid": "35240-a937b0a5-1a72-4cd3-9266-ee3ed2151cbb"
+        }
+      ],
+      "id": "e58bfee6-5495-4ebb-9f3f-cb4fbe558beb",
+      "createdAt": "2026-07-28T01:05:40.000Z",
+      "updatedAt": "2026-07-28T01:05:40.000Z",
+      "uid": "35240-e58bfee6-5495-4ebb-9f3f-cb4fbe558beb"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

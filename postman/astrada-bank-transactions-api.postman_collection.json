@@ -1,0 +1,1436 @@
+{
+  "info": {
+    "_postman_id": "14eb1791-706e-44cc-b259-dfc6b1b88c3a",
+    "name": "Astrada bank-accounts bank-transactions API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:09.000Z",
+    "updatedAt": "2026-07-28T01:05:09.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-14eb1791-706e-44cc-b259-dfc6b1b88c3a"
+  },
+  "item": [
+    {
+      "name": "bank-transactions",
+      "item": [
+        {
+          "name": "{subaccountId}",
+          "item": [
+            {
+              "name": "{transactionId}",
+              "item": [
+                {
+                  "name": "Retrieve bank transaction",
+                  "id": "cf822000-1752-4ea4-8699-957871ac74d9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f49ec1bc-d90b-4014-bbe0-9a3a3c5e88f4",
+                          "key": "subaccountId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        },
+                        {
+                          "id": "97a7d7f0-3161-48c6-a041-0dca19ffd780",
+                          "key": "transactionId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns detailed information about a specific bank transaction by its identifier, including match status and transaction metadata."
+                  },
+                  "response": [
+                    {
+                      "id": "9ada9307-f9cd-478b-99c7-aeb6d068369a",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/:transactionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            ":transactionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"bankAccount\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"card\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"match\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"id\": \"<uuid>\",\n  \"accountId\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"bankAccountId\": \"<uuid>\",\n  \"cardId\": \"<uuid>\",\n  \"matchId\": \"<uuid>\",\n  \"date\": \"<date>\",\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"description\": \"<string>\",\n  \"merchantName\": \"<string>\",\n  \"category\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"transactionType\": \"credit\",\n  \"source\": \"UPLOAD\",\n  \"status\": \"early_cleared\",\n  \"settlement\": {\n    \"state\": \"early_cleared\",\n    \"emissionType\": \"bank_only\",\n    \"emittedAt\": \"<dateTime>\",\n    \"supersededAt\": \"<dateTime>\"\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"statementId\": \"<uuid>\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-9ada9307-f9cd-478b-99c7-aeb6d068369a"
+                    },
+                    {
+                      "id": "3dd07b1f-5154-440c-94f9-730d275c347d",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/:transactionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            ":transactionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-3dd07b1f-5154-440c-94f9-730d275c347d"
+                    },
+                    {
+                      "id": "bb62f888-7423-430b-aefe-f5d8cd62f4aa",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/:transactionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            ":transactionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-bb62f888-7423-430b-aefe-f5d8cd62f4aa"
+                    },
+                    {
+                      "id": "4b850145-db4e-4b16-b785-c03bd7943501",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/:transactionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            ":transactionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-4b850145-db4e-4b16-b785-c03bd7943501"
+                    },
+                    {
+                      "id": "8e00bc5c-fec4-4a9d-84f1-63afd89f9e0c",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/:transactionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            ":transactionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            },
+                            {
+                              "key": "transactionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-8e00bc5c-fec4-4a9d-84f1-63afd89f9e0c"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-cf822000-1752-4ea4-8699-957871ac74d9"
+                }
+              ],
+              "id": "fd958e16-6f6d-41dc-8483-fb8ae7323632",
+              "createdAt": "2026-07-28T01:05:09.000Z",
+              "updatedAt": "2026-07-28T01:05:09.000Z",
+              "uid": "35240-fd958e16-6f6d-41dc-8483-fb8ae7323632"
+            },
+            {
+              "name": "webhooks",
+              "item": [
+                {
+                  "name": "Trigger bank transaction webhooks",
+                  "id": "3dc5e43a-d58b-4920-b6b9-54ac844824a4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"banktransaction.created\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId/webhooks",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId",
+                        "webhooks"
+                      ],
+                      "variable": [
+                        {
+                          "id": "390ac2ff-80f8-4107-b4e0-aadf0e38e2ab",
+                          "key": "subaccountId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Manually triggers webhook delivery for specified bank transactions. This can be used to re-emit webhooks that may have been missed or to force re-matching of transactions.\n\nYou can specify which webhook event types to emit: `banktransaction.created` for transaction data or `transaction.match.created` for match results.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "b84646ea-df34-44bb-96b7-55ca6270a671",
+                      "name": "Webhooks triggered",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"banktransaction.created\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            "webhooks"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"emitted\": \"<integer>\",\n  \"resent\": \"<integer>\",\n  \"matched\": \"<integer>\",\n  \"skipped\": \"<integer>\",\n  \"failed\": [\n    {\n      \"id\": \"<string>\",\n      \"error\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"error\": \"<string>\"\n    }\n  ],\n  \"dispatched\": \"<integer>\",\n  \"dispatchError\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-b84646ea-df34-44bb-96b7-55ca6270a671"
+                    },
+                    {
+                      "id": "71301790-9a8e-4098-a265-b78abe3203c5",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"banktransaction.created\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            "webhooks"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-71301790-9a8e-4098-a265-b78abe3203c5"
+                    },
+                    {
+                      "id": "9a885817-ab76-43e6-bd41-fdb801994276",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"banktransaction.created\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            "webhooks"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-9a885817-ab76-43e6-bd41-fdb801994276"
+                    },
+                    {
+                      "id": "444acb82-a8e3-4bd1-b304-94bfd7fbccf3",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"banktransaction.created\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            "webhooks"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-444acb82-a8e3-4bd1-b304-94bfd7fbccf3"
+                    },
+                    {
+                      "id": "0bb334ea-c1c9-47c9-9ed2-b4bfd409d751",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"banktransaction.created\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-transactions/:subaccountId/webhooks",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-transactions",
+                            ":subaccountId",
+                            "webhooks"
+                          ],
+                          "variable": [
+                            {
+                              "key": "subaccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:09.000Z",
+                      "updatedAt": "2026-07-28T01:05:09.000Z",
+                      "uid": "35240-0bb334ea-c1c9-47c9-9ed2-b4bfd409d751"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-3dc5e43a-d58b-4920-b6b9-54ac844824a4"
+                }
+              ],
+              "id": "f443993f-ee7d-4a44-95c5-fd9fc25c3616",
+              "createdAt": "2026-07-28T01:05:09.000Z",
+              "updatedAt": "2026-07-28T01:05:09.000Z",
+              "uid": "35240-f443993f-ee7d-4a44-95c5-fd9fc25c3616"
+            },
+            {
+              "name": "List bank transactions",
+              "id": "9b223b5e-b89e-486c-8ef6-a1f2652a35ad",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-transactions/:subaccountId?bankAccountId=<uuid>&startDate=<date>&endDate=<date>&minAmount=<number>&maxAmount=<number>&transactionType=credit&matched=false&source=UPLOAD&statementId=<uuid>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by bank account identifier",
+                      "key": "bankAccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter transactions with an amount greater than or equal to this value",
+                      "key": "minAmount",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Filter transactions with an amount less than or equal to this value",
+                      "key": "maxAmount",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Filter bank transactions by transaction type",
+                      "key": "transactionType",
+                      "value": "credit"
+                    },
+                    {
+                      "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.",
+                      "key": "matched",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Filter transactions by source.",
+                      "key": "source",
+                      "value": "UPLOAD"
+                    },
+                    {
+                      "description": "Filter transactions by the statement they were imported from.",
+                      "key": "statementId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "01cb8256-bf4b-4ca1-b70c-3d20d302a843",
+                      "key": "subaccountId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    },
+                    {
+                      "id": "f65f3207-9357-4c00-bec6-11af8f092198",
+                      "key": "cardId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns a list of bank transactions for a subaccount. Bank transactions are synced from connected financial institutions. A movement may briefly appear as its pending posting until the posted transaction replaces it (the pending row is then removed from the feed).\n\nBy default, `GET /bank-transactions/{subaccountId}` returns transactions ordered by the latest `date`.\n\nThis endpoint supports cursor-based pagination and various filters including date range, amount range, and match status.\n"
+              },
+              "response": [
+                {
+                  "id": "a9d6b374-d995-4d6f-a068-38629967f48e",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId?bankAccountId=<uuid>&startDate=<date>&endDate=<date>&minAmount=<number>&maxAmount=<number>&transactionType=credit&matched=false&source=UPLOAD&statementId=<uuid>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount greater than or equal to this value",
+                          "key": "minAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount less than or equal to this value",
+                          "key": "maxAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter bank transactions by transaction type",
+                          "key": "transactionType",
+                          "value": "credit"
+                        },
+                        {
+                          "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.",
+                          "key": "matched",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Filter transactions by source.",
+                          "key": "source",
+                          "value": "UPLOAD"
+                        },
+                        {
+                          "description": "Filter transactions by the statement they were imported from.",
+                          "key": "statementId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"items\": [\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"bankAccount\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"card\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"match\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        }\n      },\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"bankAccountId\": \"<uuid>\",\n      \"cardId\": \"<uuid>\",\n      \"matchId\": \"<uuid>\",\n      \"date\": \"<date>\",\n      \"amount\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"description\": \"<string>\",\n      \"merchantName\": \"<string>\",\n      \"category\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"transactionType\": \"debit\",\n      \"source\": \"UPLOAD\",\n      \"status\": \"posted\",\n      \"settlement\": {\n        \"state\": \"superseded\",\n        \"emissionType\": \"early_clearing\",\n        \"emittedAt\": \"<dateTime>\",\n        \"supersededAt\": \"<dateTime>\"\n      },\n      \"createdAt\": \"<dateTime>\",\n      \"statementId\": \"<uuid>\"\n    },\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"bankAccount\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"card\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"match\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        }\n      },\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"bankAccountId\": \"<uuid>\",\n      \"cardId\": \"<uuid>\",\n      \"matchId\": \"<uuid>\",\n      \"date\": \"<date>\",\n      \"amount\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"description\": \"<string>\",\n      \"merchantName\": \"<string>\",\n      \"category\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"transactionType\": \"credit\",\n      \"source\": \"PLAID\",\n      \"status\": \"settled\",\n      \"settlement\": {\n        \"state\": \"early_cleared\",\n        \"emissionType\": \"early_clearing\",\n        \"emittedAt\": \"<dateTime>\",\n        \"supersededAt\": \"<dateTime>\"\n      },\n      \"createdAt\": \"<dateTime>\",\n      \"statementId\": \"<uuid>\"\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": \"<boolean>\",\n    \"cursor\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-a9d6b374-d995-4d6f-a068-38629967f48e"
+                },
+                {
+                  "id": "bd1b4f61-4ea4-4d28-94a8-14dd69aa00b2",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId?bankAccountId=<uuid>&startDate=<date>&endDate=<date>&minAmount=<number>&maxAmount=<number>&transactionType=credit&matched=false&source=UPLOAD&statementId=<uuid>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount greater than or equal to this value",
+                          "key": "minAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount less than or equal to this value",
+                          "key": "maxAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter bank transactions by transaction type",
+                          "key": "transactionType",
+                          "value": "credit"
+                        },
+                        {
+                          "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.",
+                          "key": "matched",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Filter transactions by source.",
+                          "key": "source",
+                          "value": "UPLOAD"
+                        },
+                        {
+                          "description": "Filter transactions by the statement they were imported from.",
+                          "key": "statementId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-bd1b4f61-4ea4-4d28-94a8-14dd69aa00b2"
+                },
+                {
+                  "id": "617b9845-0385-426b-806f-b08430878a37",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId?bankAccountId=<uuid>&startDate=<date>&endDate=<date>&minAmount=<number>&maxAmount=<number>&transactionType=credit&matched=false&source=UPLOAD&statementId=<uuid>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount greater than or equal to this value",
+                          "key": "minAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount less than or equal to this value",
+                          "key": "maxAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter bank transactions by transaction type",
+                          "key": "transactionType",
+                          "value": "credit"
+                        },
+                        {
+                          "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.",
+                          "key": "matched",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Filter transactions by source.",
+                          "key": "source",
+                          "value": "UPLOAD"
+                        },
+                        {
+                          "description": "Filter transactions by the statement they were imported from.",
+                          "key": "statementId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-617b9845-0385-426b-806f-b08430878a37"
+                },
+                {
+                  "id": "d0a6f844-a80a-4724-99f3-20bd4e1813cc",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId?bankAccountId=<uuid>&startDate=<date>&endDate=<date>&minAmount=<number>&maxAmount=<number>&transactionType=credit&matched=false&source=UPLOAD&statementId=<uuid>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount greater than or equal to this value",
+                          "key": "minAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount less than or equal to this value",
+                          "key": "maxAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter bank transactions by transaction type",
+                          "key": "transactionType",
+                          "value": "credit"
+                        },
+                        {
+                          "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.",
+                          "key": "matched",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Filter transactions by source.",
+                          "key": "source",
+                          "value": "UPLOAD"
+                        },
+                        {
+                          "description": "Filter transactions by the statement they were imported from.",
+                          "key": "statementId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-d0a6f844-a80a-4724-99f3-20bd4e1813cc"
+                },
+                {
+                  "id": "24f70fea-69f1-43a9-b144-9d41d63b17a6",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-transactions/:subaccountId?bankAccountId=<uuid>&startDate=<date>&endDate=<date>&minAmount=<number>&maxAmount=<number>&transactionType=credit&matched=false&source=UPLOAD&statementId=<uuid>&limit=250&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-transactions",
+                        ":subaccountId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by bank account identifier",
+                          "key": "bankAccountId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Filter results from this date (inclusive), in YYYY-MM-DD format",
+                          "key": "startDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format",
+                          "key": "endDate",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount greater than or equal to this value",
+                          "key": "minAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter transactions with an amount less than or equal to this value",
+                          "key": "maxAmount",
+                          "value": "<number>"
+                        },
+                        {
+                          "description": "Filter bank transactions by transaction type",
+                          "key": "transactionType",
+                          "value": "credit"
+                        },
+                        {
+                          "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.",
+                          "key": "matched",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Filter transactions by source.",
+                          "key": "source",
+                          "value": "UPLOAD"
+                        },
+                        {
+                          "description": "Filter transactions by the statement they were imported from.",
+                          "key": "statementId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return",
+                          "key": "limit",
+                          "value": "250"
+                        },
+                        {
+                          "description": "The cursor to use for pagination. Identifies your place on the list",
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "subaccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:09.000Z",
+                  "updatedAt": "2026-07-28T01:05:09.000Z",
+                  "uid": "35240-24f70fea-69f1-43a9-b144-9d41d63b17a6"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:09.000Z",
+              "updatedAt": "2026-07-28T01:05:09.000Z",
+              "uid": "35240-9b223b5e-b89e-486c-8ef6-a1f2652a35ad"
+            }
+          ],
+          "id": "6ec75339-c37a-4f1d-a550-9b524c3a45ba",
+          "createdAt": "2026-07-28T01:05:09.000Z",
+          "updatedAt": "2026-07-28T01:05:09.000Z",
+          "uid": "35240-6ec75339-c37a-4f1d-a550-9b524c3a45ba"
+        }
+      ],
+      "id": "268de414-d6ac-4b5b-8656-e85a7df827f9",
+      "createdAt": "2026-07-28T01:05:09.000Z",
+      "updatedAt": "2026-07-28T01:05:09.000Z",
+      "uid": "35240-268de414-d6ac-4b5b-8656-e85a7df827f9"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

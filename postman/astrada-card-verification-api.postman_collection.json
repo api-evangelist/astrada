@@ -1,0 +1,1061 @@
+{
+  "info": {
+    "_postman_id": "ef7bfba4-3ab8-4be6-9569-46a0c179d30c",
+    "name": "Astrada bank-accounts card-verification API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:33.000Z",
+    "updatedAt": "2026-07-28T01:05:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ef7bfba4-3ab8-4be6-9569-46a0c179d30c"
+  },
+  "item": [
+    {
+      "name": "card-verifications",
+      "item": [
+        {
+          "name": "unlock",
+          "item": [
+            {
+              "name": "Unlock a card's verification attempt lockout",
+              "id": "cf59e847-07c5-4044-8d1a-57a47ed41246",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/card-verifications/unlock",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-verifications",
+                    "unlock"
+                  ]
+                },
+                "description": "Clear the cross-network verification **attempt lockout** for a card,\nidentified by its `cardId`. This re-enables verification attempts for the\ncard after it has been throttled by too many recent hard failures \u2014 the\naccount-scoped, cross-network throttle that protects the non-HIGHEST tiers\n(Visa/Stripe, Mastercard/TNS). Idempotent: unlocking a card that has no\nactive lock succeeds and clears nothing. The HIGHEST per-fingerprint lockout\nis **not** affected by this endpoint.\n"
+              },
+              "response": [
+                {
+                  "id": "39c28dc1-1299-4aae-8bba-3dab1ff61f9a",
+                  "name": "The card's attempt lockout was cleared, or the card had no active lock\n(idempotent).\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/unlock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "unlock"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"unlocked\": true,\n  \"vaultCardFingerprint\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-39c28dc1-1299-4aae-8bba-3dab1ff61f9a"
+                },
+                {
+                  "id": "5e942ee7-333f-42d1-a4cf-2c7ed9d92b55",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/unlock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "unlock"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-5e942ee7-333f-42d1-a4cf-2c7ed9d92b55"
+                },
+                {
+                  "id": "482c81b8-48c9-4bf6-89a7-0e505ee75f3d",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/unlock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "unlock"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-482c81b8-48c9-4bf6-89a7-0e505ee75f3d"
+                },
+                {
+                  "id": "3157ee68-9140-4e79-8a0e-bc1c25ea62cd",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/unlock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "unlock"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-3157ee68-9140-4e79-8a0e-bc1c25ea62cd"
+                },
+                {
+                  "id": "f345eef0-0c8d-4db4-84a3-e6a1d00a8d9e",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/unlock",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "unlock"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-f345eef0-0c8d-4db4-84a3-e6a1d00a8d9e"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:34.000Z",
+              "updatedAt": "2026-07-28T01:05:34.000Z",
+              "uid": "35240-cf59e847-07c5-4044-8d1a-57a47ed41246"
+            }
+          ],
+          "id": "2e3dfcfa-e923-4aa1-8e9b-de1cc72fcc2a",
+          "createdAt": "2026-07-28T01:05:34.000Z",
+          "updatedAt": "2026-07-28T01:05:34.000Z",
+          "uid": "35240-2e3dfcfa-e923-4aa1-8e9b-de1cc72fcc2a"
+        },
+        {
+          "name": "3ds",
+          "item": [
+            {
+              "name": "{verificationId}",
+              "item": [
+                {
+                  "name": "Retrieve 3DS verification",
+                  "id": "07fbe7e1-fec5-4321-aec3-1b004223aa86",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "3ds",
+                        ":verificationId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "bafcb1b5-35e8-45b9-8a41-252ff419413c",
+                          "key": "verificationId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns the current status and detailed information of a specific 3DS verification by its identifier."
+                  },
+                  "response": [
+                    {
+                      "id": "d1ce4054-6893-47e7-9514-d1dfce8b45a2",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/hal+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "card-verifications",
+                            "3ds",
+                            ":verificationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "verificationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/hal+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"cardId\": \"<uuid>\",\n  \"type\": \"3DS\",\n  \"state\": \"failed\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"steps\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"currentStep\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"currentStepId\": null,\n  \"clientSecret\": \"<string>\",\n  \"stripePublishableKey\": \"<string>\",\n  \"authenticationFlow\": null,\n  \"failureReason\": {\n    \"category\": \"contact_issuer\",\n    \"description\": \"<string>\",\n    \"retryable\": \"<boolean>\",\n    \"issuerMessage\": \"<string>\",\n    \"code\": \"<string>\",\n    \"providerMessage\": \"<string>\",\n    \"adviceCode\": \"<string>\",\n    \"acsReferences\": {\n      \"acsTransactionId\": \"<string>\",\n      \"acsReferenceNumber\": \"<string>\",\n      \"dsTransactionId\": \"<string>\"\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T01:05:34.000Z",
+                      "updatedAt": "2026-07-28T01:05:34.000Z",
+                      "uid": "35240-d1ce4054-6893-47e7-9514-d1dfce8b45a2"
+                    },
+                    {
+                      "id": "af8827c9-5bb8-418b-9e4f-c409e19ef4f0",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "card-verifications",
+                            "3ds",
+                            ":verificationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "verificationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:34.000Z",
+                      "updatedAt": "2026-07-28T01:05:34.000Z",
+                      "uid": "35240-af8827c9-5bb8-418b-9e4f-c409e19ef4f0"
+                    },
+                    {
+                      "id": "469ee8fa-5e5f-4725-bac8-fe0ef03b951a",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "card-verifications",
+                            "3ds",
+                            ":verificationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "verificationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:34.000Z",
+                      "updatedAt": "2026-07-28T01:05:34.000Z",
+                      "uid": "35240-469ee8fa-5e5f-4725-bac8-fe0ef03b951a"
+                    },
+                    {
+                      "id": "73c27985-1dc7-475d-b330-64e76c05a17a",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "card-verifications",
+                            "3ds",
+                            ":verificationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "verificationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:34.000Z",
+                      "updatedAt": "2026-07-28T01:05:34.000Z",
+                      "uid": "35240-73c27985-1dc7-475d-b330-64e76c05a17a"
+                    },
+                    {
+                      "id": "79af3405-2626-45a4-8d6e-d297682eeaee",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "card-verifications",
+                            "3ds",
+                            ":verificationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "verificationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:34.000Z",
+                      "updatedAt": "2026-07-28T01:05:34.000Z",
+                      "uid": "35240-79af3405-2626-45a4-8d6e-d297682eeaee"
+                    },
+                    {
+                      "id": "34be5e9f-cd14-4ebb-8138-a0ef791b4ff5",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/card-verifications/3ds/:verificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "card-verifications",
+                            "3ds",
+                            ":verificationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "verificationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:34.000Z",
+                      "updatedAt": "2026-07-28T01:05:34.000Z",
+                      "uid": "35240-34be5e9f-cd14-4ebb-8138-a0ef791b4ff5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-07fbe7e1-fec5-4321-aec3-1b004223aa86"
+                }
+              ],
+              "id": "2aa28482-8bfc-4a1d-88f4-50be1c1cb193",
+              "createdAt": "2026-07-28T01:05:34.000Z",
+              "updatedAt": "2026-07-28T01:05:34.000Z",
+              "uid": "35240-2aa28482-8bfc-4a1d-88f4-50be1c1cb193"
+            },
+            {
+              "name": "List a card's 3DS verifications",
+              "id": "2d738ae1-5ed0-48a3-a77b-f58205c6e3cb",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/card-verifications/3ds?cardId=<uuid>&state=in-progress",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "card-verifications",
+                    "3ds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Optional filter to retrieve only verifications in the given state.",
+                      "key": "state",
+                      "value": "in-progress"
+                    }
+                  ]
+                },
+                "description": "List the 3DS verifications for a card, most recent first. Use the optional `state`\nfilter (e.g. `state=failed`) to retrieve only failed verifications \u2014 each failed\nverification carries a `failureReason` explaining why it failed. This includes\ncards declined synchronously at creation (the `POST` returned `400`): those\nattempts are persisted as failed verifications with `currentStepId: null`.\n"
+              },
+              "response": [
+                {
+                  "id": "8c259a6f-4314-4929-97ae-f0f29d049cf8",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/3ds?cardId=<uuid>&state=in-progress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "3ds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "cardId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Optional filter to retrieve only verifications in the given state.",
+                          "key": "state",
+                          "value": "in-progress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"_embedded\": {\n    \"cardVerifications\": [\n      {\n        \"id\": \"<uuid>\",\n        \"subaccountId\": \"<uuid>\",\n        \"cardId\": \"<uuid>\",\n        \"type\": \"3DS\",\n        \"state\": \"in-progress\",\n        \"createdAt\": \"<dateTime>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"steps\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"currentStep\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"currentStepId\": null,\n        \"clientSecret\": \"<string>\",\n        \"stripePublishableKey\": \"<string>\",\n        \"authenticationFlow\": \"frictionless\",\n        \"failureReason\": {\n          \"category\": \"too_many_attempts\",\n          \"description\": \"<string>\",\n          \"retryable\": \"<boolean>\",\n          \"issuerMessage\": \"<string>\",\n          \"code\": \"<string>\",\n          \"providerMessage\": \"<string>\",\n          \"adviceCode\": \"<string>\",\n          \"acsReferences\": {\n            \"acsTransactionId\": \"<string>\",\n            \"acsReferenceNumber\": \"<string>\",\n            \"dsTransactionId\": \"<string>\"\n          }\n        }\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"subaccountId\": \"<uuid>\",\n        \"cardId\": \"<uuid>\",\n        \"type\": \"3DS\",\n        \"state\": \"in-progress\",\n        \"createdAt\": \"<dateTime>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"steps\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"currentStep\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"currentStepId\": \"stripe-3ds\",\n        \"clientSecret\": \"<string>\",\n        \"stripePublishableKey\": \"<string>\",\n        \"authenticationFlow\": null,\n        \"failureReason\": {\n          \"category\": \"too_many_attempts\",\n          \"description\": \"<string>\",\n          \"retryable\": \"<boolean>\",\n          \"issuerMessage\": \"<string>\",\n          \"code\": \"<string>\",\n          \"providerMessage\": \"<string>\",\n          \"adviceCode\": \"<string>\",\n          \"acsReferences\": {\n            \"acsTransactionId\": \"<string>\",\n            \"acsReferenceNumber\": \"<string>\",\n            \"dsTransactionId\": \"<string>\"\n          }\n        }\n      }\n    ]\n  },\n  \"totalItems\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-8c259a6f-4314-4929-97ae-f0f29d049cf8"
+                },
+                {
+                  "id": "8b4dbbe0-eee5-4b67-87fb-dfde8325b245",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/3ds?cardId=<uuid>&state=in-progress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "3ds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "cardId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Optional filter to retrieve only verifications in the given state.",
+                          "key": "state",
+                          "value": "in-progress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-8b4dbbe0-eee5-4b67-87fb-dfde8325b245"
+                },
+                {
+                  "id": "142b773d-7bee-4f08-bafa-68f7ecc186eb",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/3ds?cardId=<uuid>&state=in-progress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "3ds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "cardId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Optional filter to retrieve only verifications in the given state.",
+                          "key": "state",
+                          "value": "in-progress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-142b773d-7bee-4f08-bafa-68f7ecc186eb"
+                },
+                {
+                  "id": "7c7a6f87-34c5-47fa-965b-1ef5f70f51db",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/card-verifications/3ds?cardId=<uuid>&state=in-progress",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "card-verifications",
+                        "3ds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "cardId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Optional filter to retrieve only verifications in the given state.",
+                          "key": "state",
+                          "value": "in-progress"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:34.000Z",
+                  "updatedAt": "2026-07-28T01:05:34.000Z",
+                  "uid": "35240-7c7a6f87-34c5-47fa-965b-1ef5f70f51db"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:34.000Z",
+              "updatedAt": "2026-07-28T01:05:34.000Z",
+              "uid": "35240-2d738ae1-5ed0-48a3-a77b-f58205c6e3cb"
+            }
+          ],
+          "id": "7e6bce3a-abc4-47de-9d15-6cb9172d0552",
+          "createdAt": "2026-07-28T01:05:34.000Z",
+          "updatedAt": "2026-07-28T01:05:34.000Z",
+          "uid": "35240-7e6bce3a-abc4-47de-9d15-6cb9172d0552"
+        }
+      ],
+      "id": "e306f269-5bec-4e9c-9030-846960f07070",
+      "createdAt": "2026-07-28T01:05:34.000Z",
+      "updatedAt": "2026-07-28T01:05:34.000Z",
+      "uid": "35240-e306f269-5bec-4e9c-9030-846960f07070"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

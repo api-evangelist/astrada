@@ -1,0 +1,1658 @@
+{
+  "info": {
+    "_postman_id": "9fa0f397-ab66-4e63-b7e3-ec7befb96cba",
+    "name": "Astrada bank-accounts bank-subscriptions API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:07.000Z",
+    "updatedAt": "2026-07-28T01:05:08.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9fa0f397-ab66-4e63-b7e3-ec7befb96cba"
+  },
+  "item": [
+    {
+      "name": "bank-subscriptions",
+      "item": [
+        {
+          "name": "{bankSubscriptionId}",
+          "item": [
+            {
+              "name": "webhook",
+              "item": [
+                {
+                  "name": "Update bank subscription webhook",
+                  "id": "449159ad-1f04-42ce-a8a1-d3d7181fc593",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId",
+                        "webhook"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d18be8d9-2373-40a1-8b09-056ade2e8d8d",
+                          "key": "bankSubscriptionId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Updates the webhook URL for a bank subscription. Webhook events for transactions and matches associated with this subscription will be delivered to the specified URL.\n\nAfter updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "374e8f84-b90c-4083-9645-d99dc71afd68",
+                      "name": "Webhook URL updated",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            ":bankSubscriptionId",
+                            "webhook"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankSubscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"webhook\": {\n    \"url\": \"<string>\",\n    \"status\": \"pending\"\n  },\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-374e8f84-b90c-4083-9645-d99dc71afd68"
+                    },
+                    {
+                      "id": "5ba62711-fc20-44e5-8385-801cb66b1ada",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            ":bankSubscriptionId",
+                            "webhook"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankSubscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-5ba62711-fc20-44e5-8385-801cb66b1ada"
+                    },
+                    {
+                      "id": "e25d5b73-44ed-4ca9-a0f9-239ca8b3c785",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            ":bankSubscriptionId",
+                            "webhook"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankSubscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-e25d5b73-44ed-4ca9-a0f9-239ca8b3c785"
+                    },
+                    {
+                      "id": "c8911acd-ee3c-4eed-80e8-bfa5ce5388df",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            ":bankSubscriptionId",
+                            "webhook"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankSubscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-c8911acd-ee3c-4eed-80e8-bfa5ce5388df"
+                    },
+                    {
+                      "id": "ed3c0ffc-697e-41bd-85b2-93ab2f37f1c4",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            ":bankSubscriptionId",
+                            "webhook"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankSubscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-ed3c0ffc-697e-41bd-85b2-93ab2f37f1c4"
+                    },
+                    {
+                      "id": "0ee40f4e-7199-417d-bf3f-3668b6f0e7a1",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId/webhook",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            ":bankSubscriptionId",
+                            "webhook"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankSubscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-0ee40f4e-7199-417d-bf3f-3668b6f0e7a1"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-449159ad-1f04-42ce-a8a1-d3d7181fc593"
+                }
+              ],
+              "id": "3d1685fa-20dc-4979-8fd1-248475dd4861",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-3d1685fa-20dc-4979-8fd1-248475dd4861"
+            },
+            {
+              "name": "Retrieve bank subscription",
+              "id": "d418ad74-260d-4388-86f3-51a9fffe64d7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-subscriptions",
+                    ":bankSubscriptionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "18b708bd-6d7f-4d36-a0b9-b3e06b4403da",
+                      "key": "bankSubscriptionId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns detailed information about a specific bank subscription by its identifier, including the connection state and webhook configuration."
+              },
+              "response": [
+                {
+                  "id": "919e6111-c44b-45e7-a967-3d14ac29464b",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankSubscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"accountId\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"connectionId\": \"<string>\",\n  \"provider\": \"PLAID\",\n  \"institutionName\": \"<string>\",\n  \"state\": \"error\",\n  \"webhook\": {\n    \"url\": \"<string>\",\n    \"status\": \"none\"\n  },\n  \"syncCursor\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-919e6111-c44b-45e7-a967-3d14ac29464b"
+                },
+                {
+                  "id": "75946b61-1217-4eb4-b163-36dd3c486249",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankSubscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-75946b61-1217-4eb4-b163-36dd3c486249"
+                },
+                {
+                  "id": "4fa74c49-56ce-454c-aa75-548f0e2e9296",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankSubscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-4fa74c49-56ce-454c-aa75-548f0e2e9296"
+                },
+                {
+                  "id": "4c68e7be-aefa-4178-b77a-78cd81545cef",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankSubscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-4c68e7be-aefa-4178-b77a-78cd81545cef"
+                },
+                {
+                  "id": "e7fa9d83-90a7-45bc-8509-cbe02a98ffdf",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankSubscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-e7fa9d83-90a7-45bc-8509-cbe02a98ffdf"
+                },
+                {
+                  "id": "ad90dc86-5965-4bdc-961c-75c0efaa3d8b",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/:bankSubscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        ":bankSubscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankSubscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-ad90dc86-5965-4bdc-961c-75c0efaa3d8b"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-d418ad74-260d-4388-86f3-51a9fffe64d7"
+            }
+          ],
+          "id": "4261ac6f-234a-4bb3-974e-5d4bcea3ddb0",
+          "createdAt": "2026-07-28T01:05:08.000Z",
+          "updatedAt": "2026-07-28T01:05:08.000Z",
+          "uid": "35240-4261ac6f-234a-4bb3-974e-5d4bcea3ddb0"
+        },
+        {
+          "name": "by-connection",
+          "item": [
+            {
+              "name": "{connectionId}",
+              "item": [
+                {
+                  "name": "Retrieve bank subscription by connection",
+                  "id": "be4fa75d-812f-4e8a-a0e4-5c9c68659e5a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-subscriptions",
+                        "by-connection",
+                        ":connectionId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "684480a8-aafd-4862-a670-37eb082a68eb",
+                          "key": "connectionId",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Returns a bank subscription by its provider connection identifier (e.g. Plaid item ID).\n\nThis is useful when you have the provider's connection ID and need to look up the corresponding subscription.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "88e89336-ca3f-42b2-8c24-5c8ac4fa71ed",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            "by-connection",
+                            ":connectionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "connectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"accountId\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"connectionId\": \"<string>\",\n  \"provider\": \"PLAID\",\n  \"institutionName\": \"<string>\",\n  \"state\": \"error\",\n  \"webhook\": {\n    \"url\": \"<string>\",\n    \"status\": \"none\"\n  },\n  \"syncCursor\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-88e89336-ca3f-42b2-8c24-5c8ac4fa71ed"
+                    },
+                    {
+                      "id": "d571ac12-5be0-4fce-ae99-15407700d37a",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            "by-connection",
+                            ":connectionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "connectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-d571ac12-5be0-4fce-ae99-15407700d37a"
+                    },
+                    {
+                      "id": "43c288f5-407a-4abb-b21f-5f192ba83fd7",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            "by-connection",
+                            ":connectionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "connectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-43c288f5-407a-4abb-b21f-5f192ba83fd7"
+                    },
+                    {
+                      "id": "540314e0-537e-445a-9759-ee11077fb1fb",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            "by-connection",
+                            ":connectionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "connectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-540314e0-537e-445a-9759-ee11077fb1fb"
+                    },
+                    {
+                      "id": "cf40a6cc-3eee-4b24-b505-ff27dce460e9",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            "by-connection",
+                            ":connectionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "connectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-cf40a6cc-3eee-4b24-b505-ff27dce460e9"
+                    },
+                    {
+                      "id": "a0e1f8cf-a40a-49ea-a9c6-a869fed99660",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-subscriptions/by-connection/:connectionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-subscriptions",
+                            "by-connection",
+                            ":connectionId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "connectionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:08.000Z",
+                      "updatedAt": "2026-07-28T01:05:08.000Z",
+                      "uid": "35240-a0e1f8cf-a40a-49ea-a9c6-a869fed99660"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:08.000Z",
+                  "updatedAt": "2026-07-28T01:05:08.000Z",
+                  "uid": "35240-be4fa75d-812f-4e8a-a0e4-5c9c68659e5a"
+                }
+              ],
+              "id": "5e65eb00-7aa5-4235-85a7-51a05a8e296d",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-5e65eb00-7aa5-4235-85a7-51a05a8e296d"
+            }
+          ],
+          "id": "9aebddab-1069-469c-a518-1829a770840a",
+          "createdAt": "2026-07-28T01:05:08.000Z",
+          "updatedAt": "2026-07-28T01:05:08.000Z",
+          "uid": "35240-9aebddab-1069-469c-a518-1829a770840a"
+        },
+        {
+          "name": "List bank subscriptions",
+          "id": "f73f90f6-b769-4dc6-98d3-8507d23f3b0b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bank-subscriptions?subaccountId=<uuid>&state=active&connectionId=<string>&limit=250&cursor=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bank-subscriptions"
+              ],
+              "query": [
+                {
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "Filter subscriptions by state",
+                  "key": "state",
+                  "value": "active"
+                },
+                {
+                  "description": "Filter subscriptions by provider connection identifier",
+                  "key": "connectionId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Maximum number of items to return",
+                  "key": "limit",
+                  "value": "250"
+                },
+                {
+                  "description": "The cursor to use for pagination. Identifies your place on the list",
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a list of bank subscriptions (active connections to financial institutions) under the account.\n\nBank subscriptions are created automatically when a bank link enrollment is completed. Each subscription represents a connection to a single financial institution.\n\nBy default, `GET /bank-subscriptions` returns subscriptions ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+          },
+          "response": [
+            {
+              "id": "2d8fdd56-5793-476e-bb19-11154a0e65b6",
+              "name": "Successful operation",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-subscriptions?subaccountId=<uuid>&state=active&connectionId=<string>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter subscriptions by state",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Filter subscriptions by provider connection identifier",
+                      "key": "connectionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"connectionId\": \"<string>\",\n      \"provider\": \"PLAID\",\n      \"institutionName\": \"<string>\",\n      \"state\": \"auth_required\",\n      \"webhook\": {\n        \"url\": \"<string>\",\n        \"status\": \"confirmed\"\n      },\n      \"syncCursor\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"connectionId\": \"<string>\",\n      \"provider\": \"PLAID\",\n      \"institutionName\": \"<string>\",\n      \"state\": \"error\",\n      \"webhook\": {\n        \"url\": \"<string>\",\n        \"status\": \"pending\"\n      },\n      \"syncCursor\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": \"<boolean>\",\n    \"cursor\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-2d8fdd56-5793-476e-bb19-11154a0e65b6"
+            },
+            {
+              "id": "a2940ea9-2a1c-4621-943d-bac15908585b",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-subscriptions?subaccountId=<uuid>&state=active&connectionId=<string>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter subscriptions by state",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Filter subscriptions by provider connection identifier",
+                      "key": "connectionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-a2940ea9-2a1c-4621-943d-bac15908585b"
+            },
+            {
+              "id": "a98a4e2c-be9d-44c9-8a6c-9fd2c7250c2b",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-subscriptions?subaccountId=<uuid>&state=active&connectionId=<string>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter subscriptions by state",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Filter subscriptions by provider connection identifier",
+                      "key": "connectionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-a98a4e2c-be9d-44c9-8a6c-9fd2c7250c2b"
+            },
+            {
+              "id": "caaa9113-5617-4820-8d86-f773c6b99f75",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-subscriptions?subaccountId=<uuid>&state=active&connectionId=<string>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter subscriptions by state",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Filter subscriptions by provider connection identifier",
+                      "key": "connectionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-caaa9113-5617-4820-8d86-f773c6b99f75"
+            },
+            {
+              "id": "8ef4851e-8a86-4d51-8e8d-82f86f3eb7f2",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-subscriptions?subaccountId=<uuid>&state=active&connectionId=<string>&limit=250&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter subscriptions by state",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Filter subscriptions by provider connection identifier",
+                      "key": "connectionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+              "createdAt": "2026-07-28T01:05:08.000Z",
+              "updatedAt": "2026-07-28T01:05:08.000Z",
+              "uid": "35240-8ef4851e-8a86-4d51-8e8d-82f86f3eb7f2"
+            }
+          ],
+          "createdAt": "2026-07-28T01:05:08.000Z",
+          "updatedAt": "2026-07-28T01:05:08.000Z",
+          "uid": "35240-f73f90f6-b769-4dc6-98d3-8507d23f3b0b"
+        }
+      ],
+      "id": "a357549d-e826-41b3-a3dd-57d06b3f9b4d",
+      "createdAt": "2026-07-28T01:05:08.000Z",
+      "updatedAt": "2026-07-28T01:05:08.000Z",
+      "uid": "35240-a357549d-e826-41b3-a3dd-57d06b3f9b4d"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

@@ -1,0 +1,800 @@
+{
+  "info": {
+    "_postman_id": "41c8939a-fbf4-4ca6-94bd-4f312c843795",
+    "name": "Astrada bank-accounts transaction-messages API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:40.000Z",
+    "updatedAt": "2026-07-28T01:05:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-41c8939a-fbf4-4ca6-94bd-4f312c843795"
+  },
+  "item": [
+    {
+      "name": "transaction-messages",
+      "item": [
+        {
+          "name": "{transactionMessageId}",
+          "item": [
+            {
+              "name": "raw",
+              "item": [
+                {
+                  "name": "Retrieve the raw transaction message",
+                  "id": "27c6f39f-bec7-445d-b735-b5f6eff8e31a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId",
+                        "raw"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9f5e75e0-2e34-4357-8b1d-329b9acc19c0",
+                          "key": "transactionMessageId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Return a raw transaction message by the transaction message unique identifier."
+                  },
+                  "response": [
+                    {
+                      "id": "b0e92cfa-eafc-4e90-9165-c734cbc8ba5f",
+                      "name": "Raw transaction message retrieved successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/hal+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/hal+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"_links\": {\n    \"message\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"raw\": {}\n}",
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-b0e92cfa-eafc-4e90-9165-c734cbc8ba5f"
+                    },
+                    {
+                      "id": "22aa0dd6-b82e-43a0-ba72-be3f65e4ef20",
+                      "name": "The request has been successfully processed and there is no content to return",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-22aa0dd6-b82e-43a0-ba72-be3f65e4ef20"
+                    },
+                    {
+                      "id": "38fbbdf0-c0c3-4b17-a67d-002c2973359c",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-38fbbdf0-c0c3-4b17-a67d-002c2973359c"
+                    },
+                    {
+                      "id": "41194658-99c6-40e9-b5b1-2e6c7e42fc9c",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-41194658-99c6-40e9-b5b1-2e6c7e42fc9c"
+                    },
+                    {
+                      "id": "92e0c907-d854-4669-9f63-ba652799add9",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-92e0c907-d854-4669-9f63-ba652799add9"
+                    },
+                    {
+                      "id": "a1caa485-3b84-43a1-bf0e-a3757d7fdbff",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-a1caa485-3b84-43a1-bf0e-a3757d7fdbff"
+                    },
+                    {
+                      "id": "c59de8dc-cb71-451d-a74d-c9f29d188979",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId/raw",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transaction-messages",
+                            ":transactionMessageId",
+                            "raw"
+                          ],
+                          "variable": [
+                            {
+                              "key": "transactionMessageId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:41.000Z",
+                      "updatedAt": "2026-07-28T01:05:41.000Z",
+                      "uid": "35240-c59de8dc-cb71-451d-a74d-c9f29d188979"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-27c6f39f-bec7-445d-b735-b5f6eff8e31a"
+                }
+              ],
+              "id": "d7335d35-6957-4231-b2ed-02a571ef44ec",
+              "createdAt": "2026-07-28T01:05:41.000Z",
+              "updatedAt": "2026-07-28T01:05:41.000Z",
+              "uid": "35240-d7335d35-6957-4231-b2ed-02a571ef44ec"
+            },
+            {
+              "name": "Retrieve transaction message",
+              "id": "257930b6-7923-4b21-aa05-a916e6f5f4e4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transaction-messages",
+                    ":transactionMessageId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "4c92345c-c81e-4349-a217-029c64ae1b10",
+                      "key": "transactionMessageId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Return a transaction message by its unique identifier, including details about the transaction's type and relevant transactional data."
+              },
+              "response": [
+                {
+                  "id": "bc0de0e8-b193-4072-8e95-ad0ad1343fd5",
+                  "name": "Transaction message retrieved successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionMessageId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"raw\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"acceptor\": {\n    \"acquirerId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"city\": \"<string>\",\n    \"mcc\": \"<string>\",\n    \"name\": \"<string>\",\n    \"state\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"cardId\": \"<uuid>\",\n  \"cardholderBillingAmount\": \"<number>\",\n  \"cardholderBillingCurrency\": \"<string>\",\n  \"createdDateTime\": \"<dateTime>\",\n  \"dateTime\": \"<dateTime>\",\n  \"id\": \"<uuid>\",\n  \"messageType\": \"FINL_ADVC\",\n  \"network\": \"AMEX\",\n  \"result\": \"APPROVED\",\n  \"subaccountId\": \"<uuid>\",\n  \"transactionAmount\": \"<number>\",\n  \"transactionCurrency\": \"<string>\",\n  \"transactionReference\": \"<string>\",\n  \"transactionType\": \"INQUIRY_01\",\n  \"transmissionDateTime\": \"<dateTime>\",\n  \"approvalCode\": \"<string>\",\n  \"bankData\": {\n    \"provider\": \"plaid\",\n    \"bankTransactionId\": \"<uuid>\",\n    \"personalFinanceCategory\": {\n      \"primary\": \"<string>\",\n      \"detailed\": \"<string>\"\n    }\n  },\n  \"cardType\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-bc0de0e8-b193-4072-8e95-ad0ad1343fd5"
+                },
+                {
+                  "id": "fad46f6d-8fb5-4b23-8f59-d596750988dd",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionMessageId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-fad46f6d-8fb5-4b23-8f59-d596750988dd"
+                },
+                {
+                  "id": "fefb8ace-5ba3-43b4-bcd3-8f1abfa8a43f",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionMessageId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-fefb8ace-5ba3-43b4-bcd3-8f1abfa8a43f"
+                },
+                {
+                  "id": "e9122e2e-026a-4ca2-bcf3-509723c7c05f",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionMessageId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-e9122e2e-026a-4ca2-bcf3-509723c7c05f"
+                },
+                {
+                  "id": "9671a7cf-388a-4c45-aa7f-d53528149cf0",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionMessageId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-9671a7cf-388a-4c45-aa7f-d53528149cf0"
+                },
+                {
+                  "id": "32a218de-b9f3-4ed7-b3ea-836748b293ee",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transaction-messages/:transactionMessageId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transaction-messages",
+                        ":transactionMessageId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionMessageId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:41.000Z",
+                  "updatedAt": "2026-07-28T01:05:41.000Z",
+                  "uid": "35240-32a218de-b9f3-4ed7-b3ea-836748b293ee"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:41.000Z",
+              "updatedAt": "2026-07-28T01:05:41.000Z",
+              "uid": "35240-257930b6-7923-4b21-aa05-a916e6f5f4e4"
+            }
+          ],
+          "id": "00b79dc7-0277-4f0e-a0c0-ad4a89078c61",
+          "createdAt": "2026-07-28T01:05:41.000Z",
+          "updatedAt": "2026-07-28T01:05:41.000Z",
+          "uid": "35240-00b79dc7-0277-4f0e-a0c0-ad4a89078c61"
+        }
+      ],
+      "id": "e44e514b-2c53-447b-84a6-5c8ca647ae9e",
+      "createdAt": "2026-07-28T01:05:41.000Z",
+      "updatedAt": "2026-07-28T01:05:41.000Z",
+      "uid": "35240-e44e514b-2c53-447b-84a6-5c8ca647ae9e"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

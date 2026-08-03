@@ -1,0 +1,386 @@
+{
+  "info": {
+    "_postman_id": "6329dace-8d1a-4e1b-b1c7-9683ad772f56",
+    "name": "Astrada bank-accounts bin-lookup API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:10.000Z",
+    "updatedAt": "2026-07-28T01:05:10.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6329dace-8d1a-4e1b-b1c7-9683ad772f56"
+  },
+  "item": [
+    {
+      "name": "bin-lookup",
+      "item": [
+        {
+          "name": "Lookup card information by BIN",
+          "id": "2702f9c7-bff0-4f4e-883e-a8548801e932",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bin-lookup"
+              ],
+              "query": [
+                {
+                  "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                  "key": "bin",
+                  "value": "56462140"
+                }
+              ]
+            },
+            "description": "Retrieve card information such as network, type, and issuing bank by providing the card's BIN (Bank Identification Number)."
+          },
+          "response": [
+            {
+              "id": "c6f9579c-ab3b-4669-bf5b-3f8e74a3660b",
+              "name": "Successful operation",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bin-lookup"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                      "key": "bin",
+                      "value": "56462140"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"bin\": \"<string>\",\n  \"network\": \"<string>\",\n  \"fundingType\": \"CREDIT\",\n  \"type\": \"COMMERCIAL\",\n  \"issuerName\": \"<string>\",\n  \"issuerCountry\": \"<string>\",\n  \"issuerRegion\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:05:10.000Z",
+              "updatedAt": "2026-07-28T01:05:10.000Z",
+              "uid": "35240-c6f9579c-ab3b-4669-bf5b-3f8e74a3660b"
+            },
+            {
+              "id": "07df9498-5f96-47c0-a35f-a72628abba9f",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bin-lookup"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                      "key": "bin",
+                      "value": "56462140"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:05:10.000Z",
+              "updatedAt": "2026-07-28T01:05:10.000Z",
+              "uid": "35240-07df9498-5f96-47c0-a35f-a72628abba9f"
+            },
+            {
+              "id": "435eee02-0ec0-4637-bd0f-860992a71cb8",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bin-lookup"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                      "key": "bin",
+                      "value": "56462140"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+              "createdAt": "2026-07-28T01:05:10.000Z",
+              "updatedAt": "2026-07-28T01:05:10.000Z",
+              "uid": "35240-435eee02-0ec0-4637-bd0f-860992a71cb8"
+            },
+            {
+              "id": "c27c7d23-55a7-4069-835b-8676df17243a",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bin-lookup"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                      "key": "bin",
+                      "value": "56462140"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+              "createdAt": "2026-07-28T01:05:10.000Z",
+              "updatedAt": "2026-07-28T01:05:10.000Z",
+              "uid": "35240-c27c7d23-55a7-4069-835b-8676df17243a"
+            },
+            {
+              "id": "2ad04971-8b2a-4589-b745-bb1ba8d135cb",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bin-lookup"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                      "key": "bin",
+                      "value": "56462140"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:05:10.000Z",
+              "updatedAt": "2026-07-28T01:05:10.000Z",
+              "uid": "35240-2ad04971-8b2a-4589-b745-bb1ba8d135cb"
+            },
+            {
+              "id": "484f25a0-7b76-4dc3-a3a2-b6e9ba8ff06b",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bin-lookup?bin=56462140",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bin-lookup"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.",
+                      "key": "bin",
+                      "value": "56462140"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+              "createdAt": "2026-07-28T01:05:10.000Z",
+              "updatedAt": "2026-07-28T01:05:10.000Z",
+              "uid": "35240-484f25a0-7b76-4dc3-a3a2-b6e9ba8ff06b"
+            }
+          ],
+          "createdAt": "2026-07-28T01:05:10.000Z",
+          "updatedAt": "2026-07-28T01:05:10.000Z",
+          "uid": "35240-2702f9c7-bff0-4f4e-883e-a8548801e932"
+        }
+      ],
+      "id": "7180ed6c-f5bd-4e52-92f6-2b14026b6bc2",
+      "createdAt": "2026-07-28T01:05:10.000Z",
+      "updatedAt": "2026-07-28T01:05:10.000Z",
+      "uid": "35240-7180ed6c-f5bd-4e52-92f6-2b14026b6bc2"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

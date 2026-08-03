@@ -1,0 +1,2364 @@
+{
+  "info": {
+    "_postman_id": "69444177-55bf-44d0-a164-c0e83b0b5f26",
+    "name": "Astrada bank-accounts API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:04.000Z",
+    "updatedAt": "2026-07-28T01:05:05.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-69444177-55bf-44d0-a164-c0e83b0b5f26"
+  },
+  "item": [
+    {
+      "name": "bank-accounts",
+      "item": [
+        {
+          "name": "{bankAccountId}",
+          "item": [
+            {
+              "name": "refresh",
+              "item": [
+                {
+                  "name": "Refresh bank account",
+                  "id": "63d0194d-7db6-467c-a1b6-3c4b82cab779",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                          "type": "string"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "implicit",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId",
+                        "refresh"
+                      ],
+                      "variable": [
+                        {
+                          "id": "a48b17fa-164d-40b5-b920-adfe9db22e4c",
+                          "key": "bankAccountId",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Triggers a refresh of bank account data from the financial institution. If the account requires re-authentication, the response will include a new hosted link URL for the user to complete re-authentication.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "d7d0461b-d1dd-44c1-9903-fbbcf64b1495",
+                      "name": "Refresh triggered",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-accounts",
+                            ":bankAccountId",
+                            "refresh"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankAccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"hostedLink\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-07-28T01:05:05.000Z",
+                      "updatedAt": "2026-07-28T01:05:05.000Z",
+                      "uid": "35240-d7d0461b-d1dd-44c1-9903-fbbcf64b1495"
+                    },
+                    {
+                      "id": "72cb4ed0-f971-42ba-971c-8fcb29c7e4a6",
+                      "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-accounts",
+                            ":bankAccountId",
+                            "refresh"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankAccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:05:05.000Z",
+                      "updatedAt": "2026-07-28T01:05:05.000Z",
+                      "uid": "35240-72cb4ed0-f971-42ba-971c-8fcb29c7e4a6"
+                    },
+                    {
+                      "id": "1750bfa7-e78e-4058-b7b3-520986d9cb7a",
+                      "name": "Authentication credentials were either missing or incorrect",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-accounts",
+                            ":bankAccountId",
+                            "refresh"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankAccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                      "createdAt": "2026-07-28T01:05:05.000Z",
+                      "updatedAt": "2026-07-28T01:05:05.000Z",
+                      "uid": "35240-1750bfa7-e78e-4058-b7b3-520986d9cb7a"
+                    },
+                    {
+                      "id": "c6258ef8-50ac-4c33-b40c-ea73cf3360f2",
+                      "name": "Authentication credentials used do not have have permissions to perform the request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-accounts",
+                            ":bankAccountId",
+                            "refresh"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankAccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                      "createdAt": "2026-07-28T01:05:05.000Z",
+                      "updatedAt": "2026-07-28T01:05:05.000Z",
+                      "uid": "35240-c6258ef8-50ac-4c33-b40c-ea73cf3360f2"
+                    },
+                    {
+                      "id": "ff57db36-f838-4ee2-9e80-3ddcbe53ecb8",
+                      "name": "The requested resource was not found on the server",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-accounts",
+                            ":bankAccountId",
+                            "refresh"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankAccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:05:05.000Z",
+                      "updatedAt": "2026-07-28T01:05:05.000Z",
+                      "uid": "35240-ff57db36-f838-4ee2-9e80-3ddcbe53ecb8"
+                    },
+                    {
+                      "id": "4436e586-1c66-4781-bb48-16a89e0bca2d",
+                      "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/bank-accounts/:bankAccountId/refresh",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "bank-accounts",
+                            ":bankAccountId",
+                            "refresh"
+                          ],
+                          "variable": [
+                            {
+                              "key": "bankAccountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                      "createdAt": "2026-07-28T01:05:05.000Z",
+                      "updatedAt": "2026-07-28T01:05:05.000Z",
+                      "uid": "35240-4436e586-1c66-4781-bb48-16a89e0bca2d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-63d0194d-7db6-467c-a1b6-3c4b82cab779"
+                }
+              ],
+              "id": "1ef69100-40fa-46e8-964e-7f3a417e2d39",
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-1ef69100-40fa-46e8-964e-7f3a417e2d39"
+            },
+            {
+              "name": "Delete bank account",
+              "id": "d3600f99-d52c-483f-9556-1238225bba96",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts",
+                    ":bankAccountId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ccd1dc8c-a667-446e-8450-769cb4b64184",
+                      "key": "bankAccountId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Deletes a bank account and all associated bank transactions and transaction matches.\n\n**Note:** This action is irreversible.\n"
+              },
+              "response": [
+                {
+                  "id": "1adfc7b0-2fd8-47cd-9463-4d0f8ac541d8",
+                  "name": "Bank account deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-1adfc7b0-2fd8-47cd-9463-4d0f8ac541d8"
+                },
+                {
+                  "id": "137902b4-6437-43e0-9f0d-623922a56f93",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-137902b4-6437-43e0-9f0d-623922a56f93"
+                },
+                {
+                  "id": "9914a629-fbac-44b1-8f39-17523104f1ae",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-9914a629-fbac-44b1-8f39-17523104f1ae"
+                },
+                {
+                  "id": "f68e155d-ff84-4453-ae6f-0bca7ec99649",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-f68e155d-ff84-4453-ae6f-0bca7ec99649"
+                },
+                {
+                  "id": "1eb5136c-e799-45cf-b470-37962b341987",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-1eb5136c-e799-45cf-b470-37962b341987"
+                },
+                {
+                  "id": "c9074aa0-3dc5-4d9b-8b0b-09d5f4bcc5bd",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-c9074aa0-3dc5-4d9b-8b0b-09d5f4bcc5bd"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-d3600f99-d52c-483f-9556-1238225bba96"
+            },
+            {
+              "name": "Retrieve bank account",
+              "id": "c10d7c52-19e9-4859-8847-e16be3ffc151",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts",
+                    ":bankAccountId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "cf2e679c-f22a-4654-b282-7d4beb04a7c4",
+                      "key": "bankAccountId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns detailed information about a specific bank account by its identifier."
+              },
+              "response": [
+                {
+                  "id": "0cf2f1e4-84ce-4295-9b9b-e8cf9635ab3e",
+                  "name": "Successful operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"transactions\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"statements\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"bankLink\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"id\": \"<uuid>\",\n  \"accountId\": \"<uuid>\",\n  \"subaccountId\": \"<uuid>\",\n  \"externalId\": \"<string>\",\n  \"institutionName\": \"<string>\",\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"virtual\": \"<boolean>\",\n  \"name\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"type\": \"credit\",\n  \"state\": \"active\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"bankLinkId\": \"<string>\",\n  \"cards\": [\n    {\n      \"id\": \"<uuid>\",\n      \"subscriptionId\": \"<uuid>\",\n      \"last4digits\": \"7430\",\n      \"network\": \"<string>\",\n      \"enrollmentType\": \"bank-feed\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"subscriptionId\": \"<uuid>\",\n      \"last4digits\": \"7941\",\n      \"network\": \"<string>\",\n      \"enrollmentType\": \"bank-feed\"\n    }\n  ],\n  \"institutionId\": \"<string>\",\n  \"mask\": \"<string>\",\n  \"subtype\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-0cf2f1e4-84ce-4295-9b9b-e8cf9635ab3e"
+                },
+                {
+                  "id": "94eb40c9-0cd8-48b6-af32-cca2fffa419a",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-94eb40c9-0cd8-48b6-af32-cca2fffa419a"
+                },
+                {
+                  "id": "90d76354-b00a-40eb-82f2-96ebb782e813",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-90d76354-b00a-40eb-82f2-96ebb782e813"
+                },
+                {
+                  "id": "b2a94228-393a-4d05-93f4-f2d865c0584a",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-b2a94228-393a-4d05-93f4-f2d865c0584a"
+                },
+                {
+                  "id": "bd0c5022-5211-4867-9f39-9478a068446f",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-bd0c5022-5211-4867-9f39-9478a068446f"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-c10d7c52-19e9-4859-8847-e16be3ffc151"
+            },
+            {
+              "name": "Update bank account",
+              "id": "dd13c37e-df72-460e-ba29-25acb049e0d0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts",
+                    ":bankAccountId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "25bc91dd-2b35-4a77-bc25-0dad60b20470",
+                      "key": "bankAccountId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Updates a bank account. Card links are detected automatically \u2014 the first time a card's transactions produce a high-confidence match against this account's feed, the card is linked without any API call. This endpoint is the manual override: use it to pre-link cards before any spend exists, correct an assignment, or import history.\n\nEach card in `cardIds` must belong to the same subaccount as the bank account. A card can only be linked to one bank account at a time \u2014 attempting to link a card that is already associated with another bank account will return a `409 Conflict` error.\n\n`cardIds` is a full replacement. Send `cardIds: []` to clear explicit links (automatic detection can re-link a card on its next high-confidence match). Virtual bank accounts declare their cards explicitly and must always have at least one.\n\nOptionally include a `backfill` object with `startDate` and/or `endDate` to trigger a backfill of historical bank transactions for the specified date range. An automatically detected link re-matches the account's already-synced unmatched transactions around the new card's activity on its own; IMPORTING bank history from before the link (pulling older transactions from the provider) still happens only through this endpoint's `backfill`.\n\nThe current card set is always readable at `GET /bank-accounts/{bankAccountId}` (`cardIds`), and `GET /bank-accounts?cardId=` finds the account a card is linked to.\n"
+              },
+              "response": [
+                {
+                  "id": "12aeaf9a-e834-43e4-9734-78918e33aa6b",
+                  "name": "Bank account updated",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"state\": \"<string>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"backfill\": {\n    \"transactionsProcessed\": \"<integer>\",\n    \"matchesFound\": \"<integer>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-12aeaf9a-e834-43e4-9734-78918e33aa6b"
+                },
+                {
+                  "id": "92d35709-f278-43d6-91c2-c01c4e469189",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-92d35709-f278-43d6-91c2-c01c4e469189"
+                },
+                {
+                  "id": "ade5ffbe-3e20-4186-9e9b-62ae2eee1858",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-ade5ffbe-3e20-4186-9e9b-62ae2eee1858"
+                },
+                {
+                  "id": "f6a93476-b779-4108-afa5-646d765cacb2",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-f6a93476-b779-4108-afa5-646d765cacb2"
+                },
+                {
+                  "id": "dbaedcbd-30be-44cc-af37-361c2549b0ae",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-dbaedcbd-30be-44cc-af37-361c2549b0ae"
+                },
+                {
+                  "id": "9307b7fa-d86a-4187-adca-711d1a21adf9",
+                  "name": "Request conflict with the current state of the target resource",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Conflict\",\n  \"currentValue\": \"<string>\",\n  \"requestedValue\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-9307b7fa-d86a-4187-adca-711d1a21adf9"
+                },
+                {
+                  "id": "1d960089-0d76-48a4-8aa0-31b3b96b2676",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cardIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"backfill\": {\n    \"startDate\": \"<date>\",\n    \"endDate\": \"<date>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/:bankAccountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        ":bankAccountId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "bankAccountId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-1d960089-0d76-48a4-8aa0-31b3b96b2676"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-dd13c37e-df72-460e-ba29-25acb049e0d0"
+            }
+          ],
+          "id": "880093a0-3d91-4efd-b55d-03c725405cc8",
+          "createdAt": "2026-07-28T01:05:05.000Z",
+          "updatedAt": "2026-07-28T01:05:05.000Z",
+          "uid": "35240-880093a0-3d91-4efd-b55d-03c725405cc8"
+        },
+        {
+          "name": "link-enrolled-cards",
+          "item": [
+            {
+              "name": "Link enrolled cards to bank accounts (admin backfill)",
+              "id": "780b2fb0-e8c6-4266-a178-995dcc6dca41",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subaccountId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts/link-enrolled-cards",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts",
+                    "link-enrolled-cards"
+                  ]
+                },
+                "description": "Admin backfill/retry for immediate mask-linking: matches the subaccount's\nENROLLED cards against its credit bank accounts by mask (an enrolled\ncard's last 4 digits) and links each exact match. The same\nexactly-one-or-skip rules as completion-time linking apply \u2014 a mask\nmatching multiple cards, or multiple accounts claiming a mask, links\nnothing (transaction-based discovery remains the backstop). Idempotent:\nalready-linked pairs are skipped. Intended for onboarding backfills\n(cards enrolled before the bank link) and recovery after a transient\ndirectory failure at completion. Emits no webhook \u2014 linked cardIds\nappear on subsequent bank-account reads.\n"
+              },
+              "response": [
+                {
+                  "id": "c7db4f5e-10cd-46b3-89a4-86b67d65d9b4",
+                  "name": "Backfill executed. Maps each bank account that gained links to the card ids linked in this run (empty object when nothing matched).",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subaccountId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/link-enrolled-cards",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        "link-enrolled-cards"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"linked\": {\n    \"mollit277\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-c7db4f5e-10cd-46b3-89a4-86b67d65d9b4"
+                },
+                {
+                  "id": "4dbcd2ab-4fe2-40cd-97f2-610dd9c80707",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subaccountId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/link-enrolled-cards",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        "link-enrolled-cards"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-4dbcd2ab-4fe2-40cd-97f2-610dd9c80707"
+                },
+                {
+                  "id": "bdc0b472-7bfe-43c0-a065-38f4e682a4fc",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subaccountId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/link-enrolled-cards",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        "link-enrolled-cards"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-bdc0b472-7bfe-43c0-a065-38f4e682a4fc"
+                },
+                {
+                  "id": "3a3f5039-e2cb-4cd1-a8c5-3ae39671bddc",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subaccountId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/link-enrolled-cards",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        "link-enrolled-cards"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-3a3f5039-e2cb-4cd1-a8c5-3ae39671bddc"
+                },
+                {
+                  "id": "5c56ba4c-c2e7-4ef1-9b6a-1b32436a510c",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subaccountId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/bank-accounts/link-enrolled-cards",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "bank-accounts",
+                        "link-enrolled-cards"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:05.000Z",
+                  "updatedAt": "2026-07-28T01:05:05.000Z",
+                  "uid": "35240-5c56ba4c-c2e7-4ef1-9b6a-1b32436a510c"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-780b2fb0-e8c6-4266-a178-995dcc6dca41"
+            }
+          ],
+          "id": "6d87b1ad-c045-44f3-bd39-3beb159ee72d",
+          "createdAt": "2026-07-28T01:05:05.000Z",
+          "updatedAt": "2026-07-28T01:05:05.000Z",
+          "uid": "35240-6d87b1ad-c045-44f3-bd39-3beb159ee72d"
+        },
+        {
+          "name": "List bank accounts",
+          "id": "3996cb3c-5ab8-44d7-8d14-93a2e0bd4fec",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bank-accounts?subaccountId=<uuid>&state=auth_required&limit=250&cursor=<string>&virtual=<boolean>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bank-accounts"
+              ],
+              "query": [
+                {
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "Filter bank accounts by state",
+                  "key": "state",
+                  "value": "auth_required"
+                },
+                {
+                  "description": "Maximum number of items to return",
+                  "key": "limit",
+                  "value": "250"
+                },
+                {
+                  "description": "The cursor to use for pagination. Identifies your place on the list",
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter by virtual account status.",
+                  "key": "virtual",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "id": "e05413a2-fab6-4b29-a58b-a885d7861b1e",
+                  "key": "cardId",
+                  "value": "<uuid>",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "description": "Returns a list of bank accounts under the account. Bank accounts are created automatically when a bank link enrollment is completed.\n\nBy default, `GET /bank-accounts` returns bank accounts ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+          },
+          "response": [
+            {
+              "id": "3bd19230-8b11-4a9a-8757-4d122da32669",
+              "name": "Successful operation",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts?subaccountId=<uuid>&state=auth_required&limit=250&cursor=<string>&virtual=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter bank accounts by state",
+                      "key": "state",
+                      "value": "auth_required"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by virtual account status.",
+                      "key": "virtual",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"items\": [\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"transactions\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"statements\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"bankLink\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        }\n      },\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"externalId\": \"<string>\",\n      \"institutionName\": \"<string>\",\n      \"cardIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ],\n      \"virtual\": \"<boolean>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"type\": \"investment\",\n      \"state\": \"disconnected\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"bankLinkId\": \"<string>\",\n      \"cards\": [\n        {\n          \"id\": \"<uuid>\",\n          \"subscriptionId\": \"<uuid>\",\n          \"last4digits\": \"5326\",\n          \"network\": \"<string>\",\n          \"enrollmentType\": \"bank-feed\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"subscriptionId\": \"<uuid>\",\n          \"last4digits\": \"7127\",\n          \"network\": \"<string>\",\n          \"enrollmentType\": \"bank-feed\"\n        }\n      ],\n      \"institutionId\": \"<string>\",\n      \"mask\": \"<string>\",\n      \"subtype\": \"<string>\"\n    },\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"transactions\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"statements\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        },\n        \"bankLink\": {\n          \"href\": \"<string>\",\n          \"templated\": \"<boolean>\",\n          \"type\": \"<string>\",\n          \"deprecation\": \"<string>\",\n          \"name\": \"<string>\",\n          \"profile\": \"<string>\",\n          \"title\": \"<string>\",\n          \"hreflang\": \"<string>\"\n        }\n      },\n      \"id\": \"<uuid>\",\n      \"accountId\": \"<uuid>\",\n      \"subaccountId\": \"<uuid>\",\n      \"externalId\": \"<string>\",\n      \"institutionName\": \"<string>\",\n      \"cardIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ],\n      \"virtual\": \"<boolean>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"type\": \"other\",\n      \"state\": \"disconnected\",\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\",\n      \"bankLinkId\": \"<string>\",\n      \"cards\": [\n        {\n          \"id\": \"<uuid>\",\n          \"subscriptionId\": \"<uuid>\",\n          \"last4digits\": \"0329\",\n          \"network\": \"<string>\",\n          \"enrollmentType\": \"bank-feed\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"subscriptionId\": \"<uuid>\",\n          \"last4digits\": \"5493\",\n          \"network\": \"<string>\",\n          \"enrollmentType\": \"bank-feed\"\n        }\n      ],\n      \"institutionId\": \"<string>\",\n      \"mask\": \"<string>\",\n      \"subtype\": \"<string>\"\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": \"<boolean>\",\n    \"cursor\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-3bd19230-8b11-4a9a-8757-4d122da32669"
+            },
+            {
+              "id": "7c024f5c-170a-48c4-9571-f16df129f557",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts?subaccountId=<uuid>&state=auth_required&limit=250&cursor=<string>&virtual=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter bank accounts by state",
+                      "key": "state",
+                      "value": "auth_required"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by virtual account status.",
+                      "key": "virtual",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-7c024f5c-170a-48c4-9571-f16df129f557"
+            },
+            {
+              "id": "ead89a61-f879-4f9a-8f8b-dd42335b9990",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts?subaccountId=<uuid>&state=auth_required&limit=250&cursor=<string>&virtual=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter bank accounts by state",
+                      "key": "state",
+                      "value": "auth_required"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by virtual account status.",
+                      "key": "virtual",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-ead89a61-f879-4f9a-8f8b-dd42335b9990"
+            },
+            {
+              "id": "646addcd-b541-44fc-99ea-2c745efd6002",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts?subaccountId=<uuid>&state=auth_required&limit=250&cursor=<string>&virtual=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter bank accounts by state",
+                      "key": "state",
+                      "value": "auth_required"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by virtual account status.",
+                      "key": "virtual",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-646addcd-b541-44fc-99ea-2c745efd6002"
+            },
+            {
+              "id": "7478c495-1cff-4a91-9d54-e5f060e5c8ba",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/bank-accounts?subaccountId=<uuid>&state=auth_required&limit=250&cursor=<string>&virtual=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "bank-accounts"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Filter bank accounts by state",
+                      "key": "state",
+                      "value": "auth_required"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by virtual account status.",
+                      "key": "virtual",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+              "createdAt": "2026-07-28T01:05:05.000Z",
+              "updatedAt": "2026-07-28T01:05:05.000Z",
+              "uid": "35240-7478c495-1cff-4a91-9d54-e5f060e5c8ba"
+            }
+          ],
+          "createdAt": "2026-07-28T01:05:05.000Z",
+          "updatedAt": "2026-07-28T01:05:05.000Z",
+          "uid": "35240-3996cb3c-5ab8-44d7-8d14-93a2e0bd4fec"
+        }
+      ],
+      "id": "f134dcc2-cc18-4b9a-b4a0-b3a72e17ae57",
+      "createdAt": "2026-07-28T01:05:05.000Z",
+      "updatedAt": "2026-07-28T01:05:05.000Z",
+      "uid": "35240-f134dcc2-cc18-4b9a-b4a0-b3a72e17ae57"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}

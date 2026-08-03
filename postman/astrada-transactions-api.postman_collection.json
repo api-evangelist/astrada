@@ -1,0 +1,895 @@
+{
+  "info": {
+    "_postman_id": "7cfc8a2d-080d-4972-82c9-e727d836f957",
+    "name": "Astrada bank-accounts transactions API",
+    "description": "Welcome to our API Reference. \ud83d\udc4b\n\n\nContact Support:\n Email: developer@astrada.co",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:05:41.000Z",
+    "updatedAt": "2026-07-28T01:05:41.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7cfc8a2d-080d-4972-82c9-e727d836f957"
+  },
+  "item": [
+    {
+      "name": "transactions",
+      "item": [
+        {
+          "name": "{transactionId}",
+          "item": [
+            {
+              "name": "Retrieve transaction",
+              "id": "8817c98a-2fd0-42c9-819c-507cc6f82084",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                      "type": "string"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "implicit",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions/:transactionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    ":transactionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6e9ebb6d-ca4f-492b-8dbf-69ccd9ec362e",
+                      "key": "transactionId",
+                      "value": "<uuid>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Returns a transaction by its unique identifier, including details about the transaction's state and relevant transactional data.\n"
+              },
+              "response": [
+                {
+                  "id": "4378216f-8e3e-42b4-8c86-af74d9f5e173",
+                  "name": "Transaction retrieved successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/hal+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/hal+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_links\": {\n    \"messages\": [\n      {\n        \"href\": \"<string>\",\n        \"templated\": \"<boolean>\",\n        \"type\": \"<string>\",\n        \"deprecation\": \"<string>\",\n        \"name\": \"<string>\",\n        \"profile\": \"<string>\",\n        \"title\": \"<string>\",\n        \"hreflang\": \"<string>\"\n      },\n      {\n        \"href\": \"<string>\",\n        \"templated\": \"<boolean>\",\n        \"type\": \"<string>\",\n        \"deprecation\": \"<string>\",\n        \"name\": \"<string>\",\n        \"profile\": \"<string>\",\n        \"title\": \"<string>\",\n        \"hreflang\": \"<string>\"\n      }\n    ],\n    \"card\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"subaccount\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"acceptor\": {\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"mcc\": \"<string>\",\n    \"state\": \"<string>\"\n  },\n  \"cardId\": \"<uuid>\",\n  \"cardholderBillingCurrency\": \"<string>\",\n  \"cardholderBillingHoldAmount\": \"<double>\",\n  \"cardholderBillingSettledAmount\": \"<double>\",\n  \"createdAt\": \"<dateTime>\",\n  \"descriptor\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"network\": \"<string>\",\n  \"subaccountId\": \"<uuid>\",\n  \"status\": \"VOIDED\",\n  \"transactionCurrency\": \"<string>\",\n  \"transactionHoldAmount\": \"<double>\",\n  \"transactionOccurrenceDate\": \"<date>\",\n  \"transactionSettledAmount\": \"<double>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"supersededMessageIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:42.000Z",
+                  "updatedAt": "2026-07-28T01:05:42.000Z",
+                  "uid": "35240-4378216f-8e3e-42b4-8c86-af74d9f5e173"
+                },
+                {
+                  "id": "1bbddd0a-0edd-4256-9b44-0cf2cf7299d7",
+                  "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:05:42.000Z",
+                  "updatedAt": "2026-07-28T01:05:42.000Z",
+                  "uid": "35240-1bbddd0a-0edd-4256-9b44-0cf2cf7299d7"
+                },
+                {
+                  "id": "2a741c18-bf07-443e-a528-69250caa9a32",
+                  "name": "Authentication credentials were either missing or incorrect",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+                  "createdAt": "2026-07-28T01:05:42.000Z",
+                  "updatedAt": "2026-07-28T01:05:42.000Z",
+                  "uid": "35240-2a741c18-bf07-443e-a528-69250caa9a32"
+                },
+                {
+                  "id": "54742a8f-9ac1-4d75-8ad8-2f5a888e3fd4",
+                  "name": "Authentication credentials used do not have have permissions to perform the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+                  "createdAt": "2026-07-28T01:05:42.000Z",
+                  "updatedAt": "2026-07-28T01:05:42.000Z",
+                  "uid": "35240-54742a8f-9ac1-4d75-8ad8-2f5a888e3fd4"
+                },
+                {
+                  "id": "85e72088-c7cf-4ea1-910a-620cb58d149c",
+                  "name": "The requested resource was not found on the server",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:05:42.000Z",
+                  "updatedAt": "2026-07-28T01:05:42.000Z",
+                  "uid": "35240-85e72088-c7cf-4ea1-910a-620cb58d149c"
+                },
+                {
+                  "id": "d537f3d8-5898-4e1c-a42a-61c3cf29c1bb",
+                  "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/:transactionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        ":transactionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "transactionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+                  "createdAt": "2026-07-28T01:05:42.000Z",
+                  "updatedAt": "2026-07-28T01:05:42.000Z",
+                  "uid": "35240-d537f3d8-5898-4e1c-a42a-61c3cf29c1bb"
+                }
+              ],
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-8817c98a-2fd0-42c9-819c-507cc6f82084"
+            }
+          ],
+          "id": "d020cfbd-3326-4430-947c-22214989f488",
+          "createdAt": "2026-07-28T01:05:42.000Z",
+          "updatedAt": "2026-07-28T01:05:42.000Z",
+          "uid": "35240-d020cfbd-3326-4430-947c-22214989f488"
+        },
+        {
+          "name": "List transactions",
+          "id": "b27ca090-74ef-4493-b2c7-279e1b88b71f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "transactionMessageId",
+                  "value": "<uuid>"
+                },
+                {
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "The cursor to use for pagination. Identifies your place on the list",
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "key": "cardId",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "Maximum number of items to return",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "key": "order",
+                  "value": "desc"
+                }
+              ]
+            },
+            "description": "Returns a list of all transactions under the account.\n\nBy default, `GET /transactions` returns transactions ordered by the latest `createdAt`. You can combine the different filters as documented.\n\nThis endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).\n"
+          },
+          "response": [
+            {
+              "id": "677a5f7b-a92d-4190-b9f4-3c51736d0594",
+              "name": "Transactions retrieved successfully",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionMessageId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    },\n    \"next\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"name\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"title\": \"<string>\",\n      \"hreflang\": \"<string>\"\n    }\n  },\n  \"_embedded\": {\n    \"transactions\": [\n      {\n        \"_links\": {\n          \"messages\": [\n            {\n              \"href\": \"<string>\",\n              \"templated\": \"<boolean>\",\n              \"type\": \"<string>\",\n              \"deprecation\": \"<string>\",\n              \"name\": \"<string>\",\n              \"profile\": \"<string>\",\n              \"title\": \"<string>\",\n              \"hreflang\": \"<string>\"\n            },\n            {\n              \"href\": \"<string>\",\n              \"templated\": \"<boolean>\",\n              \"type\": \"<string>\",\n              \"deprecation\": \"<string>\",\n              \"name\": \"<string>\",\n              \"profile\": \"<string>\",\n              \"title\": \"<string>\",\n              \"hreflang\": \"<string>\"\n            }\n          ],\n          \"card\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"subaccount\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"acceptor\": {\n          \"city\": \"<string>\",\n          \"country\": \"<string>\",\n          \"mcc\": \"<string>\",\n          \"state\": \"<string>\"\n        },\n        \"cardId\": \"<uuid>\",\n        \"cardholderBillingCurrency\": \"<string>\",\n        \"cardholderBillingHoldAmount\": \"<double>\",\n        \"cardholderBillingSettledAmount\": \"<double>\",\n        \"createdAt\": \"<dateTime>\",\n        \"descriptor\": \"<string>\",\n        \"id\": \"<uuid>\",\n        \"network\": \"<string>\",\n        \"subaccountId\": \"<uuid>\",\n        \"status\": \"VOIDED\",\n        \"transactionCurrency\": \"<string>\",\n        \"transactionHoldAmount\": \"<double>\",\n        \"transactionOccurrenceDate\": \"<date>\",\n        \"transactionSettledAmount\": \"<double>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"supersededMessageIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      },\n      {\n        \"_links\": {\n          \"messages\": [\n            {\n              \"href\": \"<string>\",\n              \"templated\": \"<boolean>\",\n              \"type\": \"<string>\",\n              \"deprecation\": \"<string>\",\n              \"name\": \"<string>\",\n              \"profile\": \"<string>\",\n              \"title\": \"<string>\",\n              \"hreflang\": \"<string>\"\n            },\n            {\n              \"href\": \"<string>\",\n              \"templated\": \"<boolean>\",\n              \"type\": \"<string>\",\n              \"deprecation\": \"<string>\",\n              \"name\": \"<string>\",\n              \"profile\": \"<string>\",\n              \"title\": \"<string>\",\n              \"hreflang\": \"<string>\"\n            }\n          ],\n          \"card\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"self\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          },\n          \"subaccount\": {\n            \"href\": \"<string>\",\n            \"templated\": \"<boolean>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"name\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"title\": \"<string>\",\n            \"hreflang\": \"<string>\"\n          }\n        },\n        \"acceptor\": {\n          \"city\": \"<string>\",\n          \"country\": \"<string>\",\n          \"mcc\": \"<string>\",\n          \"state\": \"<string>\"\n        },\n        \"cardId\": \"<uuid>\",\n        \"cardholderBillingCurrency\": \"<string>\",\n        \"cardholderBillingHoldAmount\": \"<double>\",\n        \"cardholderBillingSettledAmount\": \"<double>\",\n        \"createdAt\": \"<dateTime>\",\n        \"descriptor\": \"<string>\",\n        \"id\": \"<uuid>\",\n        \"network\": \"<string>\",\n        \"subaccountId\": \"<uuid>\",\n        \"status\": \"DECLINED\",\n        \"transactionCurrency\": \"<string>\",\n        \"transactionHoldAmount\": \"<double>\",\n        \"transactionOccurrenceDate\": \"<date>\",\n        \"transactionSettledAmount\": \"<double>\",\n        \"updatedAt\": \"<dateTime>\",\n        \"supersededMessageIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-677a5f7b-a92d-4190-b9f4-3c51736d0594"
+            },
+            {
+              "id": "bac3f611-ce0a-4a8b-a71a-1ca701ee32d1",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionMessageId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Bad Request\",\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-bac3f611-ce0a-4a8b-a71a-1ca701ee32d1"
+            },
+            {
+              "id": "fcf6c557-4df3-4598-a6ad-1761502c57f2",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionMessageId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Unauthorized\"\n}",
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-fcf6c557-4df3-4598-a6ad-1761502c57f2"
+            },
+            {
+              "id": "f6020888-6879-4eda-852c-7694dc5668cb",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionMessageId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Forbidden\"\n}",
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-f6020888-6879-4eda-852c-7694dc5668cb"
+            },
+            {
+              "id": "9199d876-9282-41b6-981f-482ea6e66c24",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionMessageId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Not Found\",\n  \"type\": \"<string>\",\n  \"instance\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-9199d876-9282-41b6-981f-482ea6e66c24"
+            },
+            {
+              "id": "bf9f9ad7-0829-409e-b40e-8b2186822300",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions?transactionMessageId=<uuid>&subaccountId=<uuid>&cursor=<string>&cardId=<uuid>&limit=25&order=desc",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "transactionMessageId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "The cursor to use for pagination. Identifies your place on the list",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"detail\": \"<string>\",\n  \"title\": \"Internal Server Error\"\n}",
+              "createdAt": "2026-07-28T01:05:42.000Z",
+              "updatedAt": "2026-07-28T01:05:42.000Z",
+              "uid": "35240-bf9f9ad7-0829-409e-b40e-8b2186822300"
+            }
+          ],
+          "createdAt": "2026-07-28T01:05:42.000Z",
+          "updatedAt": "2026-07-28T01:05:42.000Z",
+          "uid": "35240-b27ca090-74ef-4493-b2c7-279e1b88b71f"
+        }
+      ],
+      "id": "fb8c9d79-2546-4298-bfc9-af492daa9549",
+      "createdAt": "2026-07-28T01:05:42.000Z",
+      "updatedAt": "2026-07-28T01:05:42.000Z",
+      "uid": "35240-fb8c9d79-2546-4298-bfc9-af492daa9549"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.astrada.co"
+    }
+  ]
+}
