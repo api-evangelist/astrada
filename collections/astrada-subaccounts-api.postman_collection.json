@@ -1,0 +1,1548 @@
+{
+  "item": [
+    {
+      "id": "ae67f3ba-aaaf-4201-a3b4-1fdace8decca",
+      "name": "subaccounts",
+      "description": {
+        "content": "Subaccount resource",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "998a3410-d97c-436f-8f92-d243544960cc",
+          "name": "Create subaccount",
+          "request": {
+            "name": "Create subaccount",
+            "description": {
+              "content": "Creates a new subaccount, allowing you to set network and regional configurations.\n\nEach network's `countries` can be set to either an array of specific ISO 3166 alpha-3 country codes, or the string `\"*\"` to inherit all countries from the parent account's capabilities for that network.\n\nWhen using `\"*\"`, the subaccount will automatically reflect the parent account's current country list. If the parent account's capabilities change, subaccounts configured with `\"*\"` will inherit the updated countries.\n\nThe single and bulk enrollment configurations are not required when creating a subaccount, but if not provided they will default to the same country list as the main `countries` property for that network.\nThe supported card types for single and bulk enrollment is CONSUMER, while the supported funding card types is DEBIT. If not provided, the block rules for both card types will default to the parent account's default block rule for that network and enrollment level.\n\nTo set the default rule on the parent account, please reach out to your account manager or support.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subaccounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48a2018f-cd6c-48d9-9d0c-f74d32d53a2c",
+              "name": "New subaccount created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Subaccount A\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ]\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/subaccounts/81e7c267-0927-4234-a2bd-78cef799de54\"\n    }\n  },\n  \"accountId\": \"073fe1bb-3350-46ad-b3a6-32afb3780994\",\n  \"id\": \"81e7c267-0927-4234-a2bd-78cef799de54\",\n  \"name\": \"Subaccount A\",\n  \"createdAt\": \"2024-05-01T17:08:43.810Z\",\n  \"updatedAt\": \"2024-05-01T17:08:43.810Z\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"USA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"CAN\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"USA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"GBR\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"ITA\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"ITA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"SWE\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f9659ca-ac9b-4640-adfe-4ea6107e353d",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Subaccount A\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ]\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15d5f133-9aa1-4693-a673-ef378cfe0940",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Subaccount A\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ]\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88577f72-6bda-4877-a8a3-a468e72daa2f",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Subaccount A\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ]\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30b5dd2c-1083-485d-895d-48da4a2bf31e",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Subaccount A\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ]\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9fd4bb8-7f08-4e79-b8dc-e7e157d78313",
+          "name": "List subaccounts",
+          "request": {
+            "name": "List subaccounts",
+            "description": {
+              "content": "Returns a list of all subaccounts associated with the account.\n\nThis endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subaccounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<byte>",
+                  "description": "The cursor to use for pagination. Identifies your place on the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Maximum number of items to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fc048483-f51b-4247-a288-165a55c6b026",
+              "name": "Subaccounts list retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/subaccounts\"\n    }\n  },\n  \"_embedded\": {\n    \"subaccounts\": [\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/subaccounts/81e7c267-0927-4234-a2bd-78cef799de54\"\n          }\n        },\n        \"accountId\": \"073fe1bb-3350-46ad-b3a6-32afb3780994\",\n        \"id\": \"81e7c267-0927-4234-a2bd-78cef799de54\",\n        \"name\": \"Subaccount A\",\n        \"createdAt\": \"2024-05-01T17:08:43.810Z\",\n        \"updatedAt\": \"2024-05-01T17:08:43.810Z\",\n        \"configurations\": {\n          \"VISA\": {\n            \"countries\": [\n              \"USA\",\n              \"CAN\"\n            ],\n            \"single-enrollment\": {\n              \"countries\": [\n                \"USA\",\n                \"CAN\"\n              ],\n              \"blockedCardTypes\": [\n                \"CONSUMER\"\n              ],\n              \"blockedFundingCardTypes\": [\n                \"DEBIT\"\n              ]\n            },\n            \"bulk-enrollment\": {\n              \"countries\": [\n                \"USA\",\n                \"CAN\"\n              ],\n              \"blockedCardTypes\": [\n                \"CONSUMER\"\n              ],\n              \"blockedFundingCardTypes\": [\n                \"DEBIT\"\n              ]\n            }\n          },\n          \"MASTERCARD\": {\n            \"countries\": [\n              \"USA\"\n            ],\n            \"single-enrollment\": {\n              \"countries\": [\n                \"USA\"\n              ],\n              \"blockedCardTypes\": [],\n              \"blockedFundingCardTypes\": []\n            },\n            \"bulk-enrollment\": {\n              \"countries\": [\n                \"USA\"\n              ],\n              \"blockedCardTypes\": [],\n              \"blockedFundingCardTypes\": []\n            }\n          }\n        }\n      },\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/subaccounts/3788493c-49f5-4f5e-9152-56abc2a4e153\"\n          }\n        },\n        \"accountId\": \"073fe1bb-3350-46ad-b3a6-32afb3780994\",\n        \"id\": \"3788493c-49f5-4f5e-9152-56abc2a4e153\",\n        \"name\": \"Subaccount B\",\n        \"createdAt\": \"2024-05-01T17:08:43.810Z\",\n        \"updatedAt\": \"2024-05-01T17:08:43.810Z\",\n        \"configurations\": {\n          \"VISA\": {\n            \"countries\": [\n              \"USA\",\n              \"CAN\"\n            ],\n            \"single-enrollment\": {\n              \"countries\": [\n                \"USA\",\n                \"CAN\"\n              ],\n              \"blockedCardTypes\": [],\n              \"blockedFundingCardTypes\": [\n                \"DEBIT\"\n              ]\n            },\n            \"bulk-enrollment\": {\n              \"countries\": [\n                \"USA\",\n                \"CAN\"\n              ],\n              \"blockedCardTypes\": [],\n              \"blockedFundingCardTypes\": []\n            }\n          },\n          \"MASTERCARD\": {\n            \"countries\": [\n              \"USA\"\n            ],\n            \"single-enrollment\": {\n              \"countries\": [\n                \"USA\"\n              ],\n              \"blockedCardTypes\": [\n                \"CONSUMER\"\n              ],\n              \"blockedFundingCardTypes\": []\n            },\n            \"bulk-enrollment\": {\n              \"countries\": [\n                \"USA\"\n              ],\n              \"blockedCardTypes\": [],\n              \"blockedFundingCardTypes\": []\n            }\n          }\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3292c853-cfae-4c53-af9d-f22d72c3491f",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de4ee26a-7af2-47de-8175-311eb19344ad",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7e5098a-d55f-483d-bb99-5f5834e8b811",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c64ab111-7ec3-4a2d-86ee-475e69345e9d",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b76e8d4-cb3c-419f-aee5-4036ded84ef2",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "285a9182-c5e8-469e-8e70-75a52a8f2a65",
+          "name": "Retrieve subaccount",
+          "request": {
+            "name": "Retrieve subaccount",
+            "description": {
+              "content": "Returns detailed information about a specific subaccount by its identifier, including configuration details and associated data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subaccounts",
+                ":subaccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subaccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "66ab9818-86a7-452f-8747-0bc91875efc8",
+              "name": "Details of the subaccount giving the accountId and subaccountId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/subaccounts/81e7c267-0927-4234-a2bd-78cef799de54\"\n    }\n  },\n  \"accountId\": \"073fe1bb-3350-46ad-b3a6-32afb3780994\",\n  \"id\": \"81e7c267-0927-4234-a2bd-78cef799de54\",\n  \"name\": \"Subaccount A\",\n  \"createdAt\": \"2024-05-01T17:08:43.810Z\",\n  \"updatedAt\": \"2024-05-01T17:08:43.810Z\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"USA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"CAN\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"USA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"GBR\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"ITA\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"ITA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"SWE\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae808f34-2b61-4f56-b558-6535f87ede96",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05e53a70-1c5b-4e25-a6e4-f2c51e31c735",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab66b4be-5d07-4580-ad43-00ffb4a784a0",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4272e884-5d7d-44af-baca-44cebcf86b1f",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d372f7c0-996a-4f5b-8938-9300cdafaff2",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bef3b812-d014-4536-8558-04876a9ef7c9",
+          "name": "Update subaccount configurations",
+          "request": {
+            "name": "Update subaccount configurations",
+            "description": {
+              "content": "Update a subaccount name and configurations.\nAll updated configurations are validated against the capabilities of the main account to ensure compliance.\nIt is possible to add new networks and/or regions but it is not possible to remove any configurations that were previously set.\n\nEach network's `countries` can be set to either an array of specific ISO 3166 alpha-3 country codes, or the string `\"*\"` to inherit all countries from the parent account's capabilities for that network.\n\nWhen using `\"*\"`, the subaccount will automatically reflect the parent account's current country list. If the parent account's capabilities change, subaccounts configured with `\"*\"` will inherit the updated countries.\n\nThe single and bulk enrollment configurations are not required when creating a subaccount, but if not provided they will default to the same country list as the main countries property for that network. The supported card types for single and bulk enrollment is CONSUMER, while the supported funding card types is DEBIT. If not provided, the block rules for both card types will default to the parent account's default block rule for that network and enrollment level.\n\nTo set the default rule on the parent account, please reach out to your account manager or support.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subaccounts",
+                ":subaccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subaccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "007f95ea-94e9-48f7-b6b2-1cc57264d7d4",
+              "name": "Specified subaccount updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/subaccounts/81e7c267-0927-4234-a2bd-78cef799de54\"\n    }\n  },\n  \"accountId\": \"073fe1bb-3350-46ad-b3a6-32afb3780994\",\n  \"id\": \"81e7c267-0927-4234-a2bd-78cef799de54\",\n  \"name\": \"Subaccount A\",\n  \"createdAt\": \"2024-05-01T17:08:43.810Z\",\n  \"updatedAt\": \"2024-05-01T17:08:43.810Z\",\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"USA\",\n        \"CAN\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"USA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"CAN\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"USA\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"USA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"GBR\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"ITA\"\n      ],\n      \"single-enrollment\": {\n        \"countries\": [\n          \"ITA\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"countries\": [\n          \"SWE\"\n        ],\n        \"blockedCardTypes\": [\n          \"CONSUMER\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"DEBIT\"\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f217f46-9d1e-488d-9dfd-463bbc3ff4af",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f27b8576-2d61-4ee2-9923-b0452963c30d",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06f16540-ab7a-443d-af94-747afdc6882f",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21284229-2f5b-4fec-9a0b-8f7f56df445a",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07e8bc72-4b59-46f7-81d2-cd12a1400640",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subaccounts",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": {\n    \"VISA\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"MASTERCARD\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    },\n    \"AMEX\": {\n      \"countries\": [\n        \"<string>\"\n      ],\n      \"single-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      },\n      \"bulk-enrollment\": {\n        \"blockedCardTypes\": [\n          \"<string>\"\n        ],\n        \"blockedFundingCardTypes\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"name\": \"<string>\",\n  \"verificationPolicy\": {\n    \"stripeValidationLevel\": \"<string>\",\n    \"sandbox\": \"<boolean>\",\n    \"failedAttemptLockout\": \"<boolean>\"\n  },\n  \"enrollmentPolicy\": {\n    \"cardEnrollment\": \"<boolean>\",\n    \"bankEnrollment\": \"<string>\",\n    \"bulkEnrollment\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.astrada.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "573556a8-3dad-471f-96c9-ee3df0a7f3ed",
+    "name": "Astrada bank-accounts subaccounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to our API Reference. 👋\n\n\nContact Support:\n Email: developer@astrada.co",
+      "type": "text/plain"
+    }
+  }
+}

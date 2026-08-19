@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts network-bulk-feeds API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "network-bulk-feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List network bulk feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/network-bulk-feeds",
+            "params": [
+              {
+                "name": "networkReference",
+                "value": "ABC12345",
+                "type": "query"
+              },
+              {
+                "name": "subaccountId",
+                "value": "2fd4d402-b759-479c-87a6-58d85e345356",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "offset",
+                "value": "20",
+                "type": "query",
+                "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns all network bulk feeds under the account.\n\nBy default, `GET /network-bulk-feeds` returns network bulk feeds ordered by the latest `createdAt`.\n\nThis endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).\n"
+        },
+        {
+          "info": {
+            "name": "Create network bulk feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/network-bulk-feeds",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Registers a new feed for network bulk"
+        },
+        {
+          "info": {
+            "name": "Retrieve a network bulk feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/network-bulk-feeds/:networkBulkFeedId",
+            "params": [
+              {
+                "name": "networkBulkFeedId",
+                "value": "eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific network bulk feed by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

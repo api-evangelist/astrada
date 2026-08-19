@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts subaccounts API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subaccounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List subaccounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/subaccounts",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "ZXhhbXBsZQ==",
+                "type": "query",
+                "description": "The cursor to use for pagination. Identifies your place on the list"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all subaccounts associated with the account.\n\nThis endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).\n"
+        },
+        {
+          "info": {
+            "name": "Create subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/subaccounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Creates a new subaccount, allowing you to set network and regional configurations.\n\nEach network's `countries` can be set to either an array of specific ISO 3166 alpha-3 country codes, or the string `\"*\"` to inherit all countries from the parent account's capabilities for that network.\n\nWhen using `\"*\"`, the subaccount will automatically reflect the parent account's current country list. If the parent account's capabilities change, subaccounts configured with `\"*\"` will inherit the updated count"
+        },
+        {
+          "info": {
+            "name": "Retrieve subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/subaccounts/:subaccountId",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific subaccount by its identifier, including configuration details and associated data."
+        },
+        {
+          "info": {
+            "name": "Update subaccount configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/subaccounts/:subaccountId",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Update a subaccount name and configurations.\nAll updated configurations are validated against the capabilities of the main account to ensure compliance.\nIt is possible to add new networks and/or regions but it is not possible to remove any configurations that were previously set.\n\nEach network's `countries` can be set to either an array of specific ISO 3166 alpha-3 country codes, or the string `\"*\"` to inherit all countries from the parent account's capabilities for that network.\n\nWhen using `\"*"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

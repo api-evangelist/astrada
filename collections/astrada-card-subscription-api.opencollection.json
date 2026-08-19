@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts card-subscription API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "card-subscription",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve card subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/card-subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific card subscription by its identifier, including its data-sharing state."
+        },
+        {
+          "info": {
+            "name": "Update card subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/card-subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Updates an existing card subscription, allowing changes to its data-sharing state. Subscriptions that were enrolled in bulk, and where `enrollmentType = 'network-bulk'` cannot be updated.\n\n**Note:** setting a card subscription to a `deactivated` state is a final action that cannot be undone.\n"
+        },
+        {
+          "info": {
+            "name": "List card subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/card-subscriptions",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "2fd4d402-b759-479c-87a6-58d85e345356",
+                "type": "query"
+              },
+              {
+                "name": "cardId",
+                "value": "8164683a-8d23-4421-9694-1a81fc9b9c37",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "offset",
+                "value": "20",
+                "type": "query",
+                "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns all card subscriptions under the account.\n\nBy default, `GET /card-subscriptions` returns card subscriptions ordered by the latest `updatedAt`. The `cardId` and `subaccountId` filters are mutual exclusive. The `cardId` takes precedence over `subaccountId`.\n\nThis endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

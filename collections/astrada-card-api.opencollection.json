@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts card API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "card",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/cards/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific card by its identifier."
+        },
+        {
+          "info": {
+            "name": "Retrieve cardholder information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/cards/:cardId/cardholder",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns cardholder information, related to a specific cardId, when it's available."
+        },
+        {
+          "info": {
+            "name": "Update cardholder information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/cards/:cardId/cardholder",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Updates cardholder information for a specific card. Use this endpoint to simulate cardholder data that would typically be received through a Network Bulk Feed. This is useful for testing your integration against bulk-enrolled cards without waiting for actual network feed data.\n\n**Note:** This endpoint requires the `cardholder:write` scope and must be directly enabled by Astrada.\n"
+        },
+        {
+          "info": {
+            "name": "List cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/cards",
+            "params": [
+              {
+                "name": "country",
+                "value": "USA",
+                "type": "query",
+                "description": "The card country of issuance following ISO 3166 alpha-3"
+              },
+              {
+                "name": "expiryMonth",
+                "value": "6",
+                "type": "query",
+                "description": "The card expiration month"
+              },
+              {
+                "name": "expiryYear",
+                "value": "2024",
+                "type": "query",
+                "description": "The card expiration year"
+              },
+              {
+                "name": "subaccountId",
+                "value": "2fd4d402-b759-479c-87a6-58d85e345356",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "offset",
+                "value": "20",
+                "type": "query",
+                "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all cards linked to the account.\n\nBy default, `GET /cards` returns cards ordered by the latest updatedAt. You can combine the different filters as documented.\n\nThis endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

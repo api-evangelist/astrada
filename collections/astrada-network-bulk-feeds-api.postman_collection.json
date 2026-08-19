@@ -1,0 +1,1160 @@
+{
+  "item": [
+    {
+      "id": "1c19b0dd-059e-452d-988a-a703b754dd7d",
+      "name": "network-bulk-feeds",
+      "description": {
+        "content": "Network bulk feed resource",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "78bd44ce-026e-4763-9ba3-9d8976c15a65",
+          "name": "Create network bulk feed",
+          "request": {
+            "name": "Create network bulk feed",
+            "description": {
+              "content": "Registers a new feed for network bulk",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "network-bulk-feeds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"network\": \"<string>\",\n  \"networkReference\": \"<string>\",\n  \"subaccountId\": \"<uuid>\",\n  \"expectedCardCount\": \"<integer>\",\n  \"newCards\": 5,\n  \"type\": \"GL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "969e05cf-bfaa-49cf-aab9-bd2ded08e51f",
+              "name": "Resource created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"networkReference\": \"R123456\",\n  \"network\": \"AMEX\",\n  \"subaccountId\": \"24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/network-bulk-feeds/75ea3c99-6bf5-4b16-8f68-0cdc43d75806\"\n    }\n  },\n  \"id\": \"75ea3c99-6bf5-4b16-8f68-0cdc43d75806\",\n  \"subaccountId\": \"f297d659-c13d-4219-aeaa-e10a845140a5\",\n  \"network\": \"MASTERCARD\",\n  \"networkReference\": \"G1234567\",\n  \"state\": \"submitted\",\n  \"type\": \"SMARTDATA\",\n  \"createdAt\": \"2024-12-19T14:45:00Z\",\n  \"updatedAt\": \"2024-12-19T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bff41b33-7815-4c1c-ab0e-def9287726b4",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"networkReference\": \"R123456\",\n  \"network\": \"AMEX\",\n  \"subaccountId\": \"24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11544331-ddec-4de7-8977-01235a63312e",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"networkReference\": \"R123456\",\n  \"network\": \"AMEX\",\n  \"subaccountId\": \"24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9a43fea-0752-470c-a98f-a182442abb28",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"networkReference\": \"R123456\",\n  \"network\": \"AMEX\",\n  \"subaccountId\": \"24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60192399-60ec-438f-90fb-fccbf803604d",
+              "name": "Request conflict with the current state of the target resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"networkReference\": \"R123456\",\n  \"network\": \"AMEX\",\n  \"subaccountId\": \"24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed1065b9-2af0-4b3f-aad1-62cf5a7b0583",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"networkReference\": \"R123456\",\n  \"network\": \"AMEX\",\n  \"subaccountId\": \"24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a16ccbd-f138-4918-91d7-200d721c0a2d",
+          "name": "List network bulk feed",
+          "request": {
+            "name": "List network bulk feed",
+            "description": {
+              "content": "Returns all network bulk feeds under the account.\n\nBy default, `GET /network-bulk-feeds` returns network bulk feeds ordered by the latest `createdAt`.\n\nThis endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "network-bulk-feeds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "networkReference",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Maximum number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The offset to use for pagination. Identifies the position of the first item returned in the collection"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "326e2457-55a7-43f1-8170-0bee43bef3db",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "networkReference",
+                      "value": "ABC12345"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/network-bulk-feeds\"\n    }\n  },\n  \"_embedded\": {\n    \"networkBulkFeeds\": [\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/network-bulk-feeds/75ea3c99-6bf5-4b16-8f68-0cdc43d75806\"\n          }\n        },\n        \"id\": \"75ea3c99-6bf5-4b16-8f68-0cdc43d75806\",\n        \"subaccountId\": \"f297d659-c13d-4219-aeaa-e10a845140a5\",\n        \"network\": \"MASTERCARD\",\n        \"networkReference\": \"G1234567\",\n        \"state\": \"submitted\",\n        \"type\": \"SMARTDATA\",\n        \"createdAt\": \"2024-12-19T14:45:00Z\",\n        \"updatedAt\": \"2024-12-19T14:45:00Z\"\n      },\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/network-bulk-feeds/c73f2da7-aa1f-4775-ad38-864b1b6f3162\"\n          }\n        },\n        \"id\": \"c73f2da7-aa1f-4775-ad38-864b1b6f3162\",\n        \"subaccountId\": \"29cb4277-b812-4137-b008-e0befa8c6a47\",\n        \"network\": \"MASTERCARD\",\n        \"networkReference\": \"G1234567\",\n        \"state\": \"submitted\",\n        \"type\": \"SMARTDATA\",\n        \"createdAt\": \"2024-10-19T14:45:00Z\",\n        \"updatedAt\": \"2024-10-19T14:45:00Z\"\n      },\n      {\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/network-bulk-feeds/a3b1c2d4-5e6f-7890-abcd-ef1234567890\"\n          }\n        },\n        \"id\": \"a3b1c2d4-5e6f-7890-abcd-ef1234567890\",\n        \"subaccountId\": \"f297d659-c13d-4219-aeaa-e10a845140a5\",\n        \"network\": \"VISA\",\n        \"networkReference\": 119999789452,\n        \"state\": \"failed\",\n        \"type\": \"VBDS\",\n        \"errorReason\": \"Starter data ingestion failed: invalid RPIC configuration\",\n        \"createdAt\": \"2024-12-19T14:45:00Z\",\n        \"updatedAt\": \"2024-12-20T10:30:00Z\"\n      }\n    ]\n  },\n  \"totalItems\": 3\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ccbb687-4397-440c-ba8c-fcddeb961607",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "networkReference",
+                      "value": "ABC12345"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26bf4839-b43e-4318-b4d9-97b06d7c33d0",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "networkReference",
+                      "value": "ABC12345"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88785773-b28b-4b15-8d16-8e3006193d78",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "networkReference",
+                      "value": "ABC12345"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34d05a22-589b-4f5c-90e7-844253325719",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "networkReference",
+                      "value": "ABC12345"
+                    },
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f95e6592-ef90-4044-8332-412e44373c62",
+          "name": "Retrieve a network bulk feed",
+          "request": {
+            "name": "Retrieve a network bulk feed",
+            "description": {
+              "content": "Returns detailed information about a specific network bulk feed by its identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "network-bulk-feeds",
+                ":networkBulkFeedId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "networkBulkFeedId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "39fcf980-8425-4305-84ce-a76f10ad7948",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds",
+                    ":networkBulkFeedId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "networkBulkFeedId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/network-bulk-feeds/75ea3c99-6bf5-4b16-8f68-0cdc43d75806\"\n    }\n  },\n  \"id\": \"75ea3c99-6bf5-4b16-8f68-0cdc43d75806\",\n  \"subaccountId\": \"f297d659-c13d-4219-aeaa-e10a845140a5\",\n  \"network\": \"MASTERCARD\",\n  \"networkReference\": \"G1234567\",\n  \"state\": \"submitted\",\n  \"type\": \"SMARTDATA\",\n  \"createdAt\": \"2024-12-19T14:45:00Z\",\n  \"updatedAt\": \"2024-12-19T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4859e5c-2e25-4abe-aac7-6779cba887c1",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds",
+                    ":networkBulkFeedId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "networkBulkFeedId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03a0fda9-fe7a-4dbd-8744-a8d9b1bd2c4f",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds",
+                    ":networkBulkFeedId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "networkBulkFeedId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aa1d33f-2019-4110-828c-daed7f653b2d",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds",
+                    ":networkBulkFeedId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "networkBulkFeedId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71fbdba4-ed74-48e8-9a69-9c5fd946868f",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds",
+                    ":networkBulkFeedId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "networkBulkFeedId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "327ff2e3-90db-4709-b536-c1571b8a802a",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "network-bulk-feeds",
+                    ":networkBulkFeedId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "networkBulkFeedId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.astrada.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "931499ea-f74f-4cae-b2d5-52acad642198",
+    "name": "Astrada bank-accounts network-bulk-feeds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to our API Reference. 👋\n\n\nContact Support:\n Email: developer@astrada.co",
+      "type": "text/plain"
+    }
+  }
+}

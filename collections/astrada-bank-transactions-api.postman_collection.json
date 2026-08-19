@@ -1,0 +1,1445 @@
+{
+  "item": [
+    {
+      "id": "7a216abc-577f-4ddf-a899-e832eefe1f0a",
+      "name": "bank-transactions",
+      "description": {
+        "content": "Access bank transactions synced from connected accounts. Transactions are ingested via Plaid and can be matched against card transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1d63a0a-0bf6-433b-8750-3eb2882b9c61",
+          "name": "Retrieve bank transaction",
+          "request": {
+            "name": "Retrieve bank transaction",
+            "description": {
+              "content": "Returns detailed information about a specific bank transaction by its identifier, including match status and transaction metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-transactions",
+                ":subaccountId",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subaccountId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "transactionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9d05e6ea-c545-42a5-9d25-710f3089f113",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n    },\n    \"bankAccount\": {\n      \"href\": \"/bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\"\n    },\n    \"card\": {\n      \"href\": \"/cards/5dec2c49-0aa5-4683-a317-427eb5d115f3\"\n    },\n    \"match\": {\n      \"href\": \"/transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e\"\n    }\n  },\n  \"id\": \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\",\n  \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n  \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n  \"bankAccountId\": \"3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\",\n  \"cardId\": \"5dec2c49-0aa5-4683-a317-427eb5d115f3\",\n  \"matchId\": \"b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e\",\n  \"date\": \"2025-10-15\",\n  \"amount\": 42.5,\n  \"currency\": \"USD\",\n  \"description\": \"UBER TRIP\",\n  \"merchantName\": \"Uber\",\n  \"category\": [\n    \"Travel\"\n  ],\n  \"transactionType\": \"debit\",\n  \"source\": \"PLAID\",\n  \"statementId\": null,\n  \"status\": \"early_cleared\",\n  \"settlement\": {\n    \"state\": \"early_cleared\",\n    \"emissionType\": \"early_clearing\",\n    \"emittedAt\": \"2025-10-15T15:00:00.000Z\",\n    \"supersededAt\": null\n  },\n  \"createdAt\": \"2025-10-15T14:30:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ead2d3bf-7185-419b-832d-d73c65bad79e",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b5c5b9c-c0a6-41ba-ae1f-ffb46e989c30",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe1820a0-1083-4ee6-9be1-0813e29fcd87",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7852a568-7e70-41d5-9bc8-9c1ebf515cdf",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "transactionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20b53544-9253-4a88-b048-91bc6872da93",
+          "name": "List bank transactions",
+          "request": {
+            "name": "List bank transactions",
+            "description": {
+              "content": "Returns a list of bank transactions for a subaccount. Bank transactions are synced from connected financial institutions. A movement may briefly appear as its pending posting until the posted transaction replaces it (the pending row is then removed from the feed).\n\nBy default, `GET /bank-transactions/{subaccountId}` returns transactions ordered by the latest `date`.\n\nThis endpoint supports cursor-based pagination and various filters including date range, amount range, and match status.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-transactions",
+                ":subaccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bankAccountId",
+                  "value": "<uuid>",
+                  "description": "Filter by bank account identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "Filter results from this date (inclusive), in YYYY-MM-DD format"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format"
+                },
+                {
+                  "disabled": false,
+                  "key": "minAmount",
+                  "value": "<number>",
+                  "description": "Filter transactions with an amount greater than or equal to this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxAmount",
+                  "value": "<number>",
+                  "description": "Filter transactions with an amount less than or equal to this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "transactionType",
+                  "value": "<string>",
+                  "description": "Filter bank transactions by transaction type"
+                },
+                {
+                  "disabled": false,
+                  "key": "matched",
+                  "value": "<string>",
+                  "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Filter transactions by source."
+                },
+                {
+                  "disabled": false,
+                  "key": "statementId",
+                  "value": "<uuid>",
+                  "description": "Filter transactions by the statement they were imported from."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "250",
+                  "description": "Maximum number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<byte>",
+                  "description": "The cursor to use for pagination. Identifies your place on the list"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "cardId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subaccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1a009e3e-732b-44cf-ae44-a900d5af937a",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bankAccountId",
+                      "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-10-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-10-31"
+                    },
+                    {
+                      "key": "minAmount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "maxAmount",
+                      "value": "500"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "debit"
+                    },
+                    {
+                      "key": "matched",
+                      "value": "true"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statementId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"/bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n        },\n        \"bankAccount\": {\n          \"href\": \"/bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\"\n        },\n        \"card\": {\n          \"href\": \"/cards/5dec2c49-0aa5-4683-a317-427eb5d115f3\"\n        },\n        \"match\": {\n          \"href\": \"/transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e\"\n        }\n      },\n      \"id\": \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\",\n      \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n      \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n      \"bankAccountId\": \"3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\",\n      \"cardId\": \"5dec2c49-0aa5-4683-a317-427eb5d115f3\",\n      \"matchId\": \"b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e\",\n      \"date\": \"2025-10-15\",\n      \"amount\": 42.5,\n      \"currency\": \"USD\",\n      \"description\": \"UBER TRIP\",\n      \"merchantName\": \"Uber\",\n      \"category\": [\n        \"Travel\"\n      ],\n      \"transactionType\": \"debit\",\n      \"source\": \"PLAID\",\n      \"statementId\": null,\n      \"status\": \"matched\",\n      \"settlement\": null,\n      \"createdAt\": \"2025-10-15T14:30:00.000Z\"\n    },\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"/bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/2e5f8a1b-4c7d-3e9f-b0a2-8d6c4f1e7b3a\"\n        },\n        \"bankAccount\": {\n          \"href\": \"/bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\"\n        },\n        \"card\": {\n          \"href\": \"/cards/5dec2c49-0aa5-4683-a317-427eb5d115f3\"\n        }\n      },\n      \"id\": \"2e5f8a1b-4c7d-3e9f-b0a2-8d6c4f1e7b3a\",\n      \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n      \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n      \"bankAccountId\": \"3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\",\n      \"cardId\": \"5dec2c49-0aa5-4683-a317-427eb5d115f3\",\n      \"matchId\": null,\n      \"date\": \"2025-10-14\",\n      \"amount\": 156.23,\n      \"currency\": \"USD\",\n      \"description\": \"AMAZON MARKETPLACE\",\n      \"merchantName\": \"Amazon\",\n      \"category\": [\n        \"Shopping\"\n      ],\n      \"transactionType\": \"debit\",\n      \"source\": \"PLAID\",\n      \"statementId\": null,\n      \"status\": \"posted\",\n      \"settlement\": null,\n      \"createdAt\": \"2025-10-14T09:15:00.000Z\"\n    }\n  ],\n  \"pagination\": {\n    \"cursor\": \"ZXhhbXBsZQ==\",\n    \"hasMore\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4788e735-aa0b-4f9a-a917-8c38e56763ec",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bankAccountId",
+                      "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-10-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-10-31"
+                    },
+                    {
+                      "key": "minAmount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "maxAmount",
+                      "value": "500"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "debit"
+                    },
+                    {
+                      "key": "matched",
+                      "value": "true"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statementId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ae06b15-869c-494c-a920-71aa920ba21e",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bankAccountId",
+                      "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-10-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-10-31"
+                    },
+                    {
+                      "key": "minAmount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "maxAmount",
+                      "value": "500"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "debit"
+                    },
+                    {
+                      "key": "matched",
+                      "value": "true"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statementId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "631ff03a-cd48-4687-9c71-4d2b04cc0bf3",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bankAccountId",
+                      "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-10-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-10-31"
+                    },
+                    {
+                      "key": "minAmount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "maxAmount",
+                      "value": "500"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "debit"
+                    },
+                    {
+                      "key": "matched",
+                      "value": "true"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statementId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f874084-1a13-4814-b61f-7ad375d04927",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bankAccountId",
+                      "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-10-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-10-31"
+                    },
+                    {
+                      "key": "minAmount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "maxAmount",
+                      "value": "500"
+                    },
+                    {
+                      "key": "transactionType",
+                      "value": "debit"
+                    },
+                    {
+                      "key": "matched",
+                      "value": "true"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statementId",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6801324c-0347-45f4-ac34-4a5bb4d06a0e",
+          "name": "Trigger bank transaction webhooks",
+          "request": {
+            "name": "Trigger bank transaction webhooks",
+            "description": {
+              "content": "Manually triggers webhook delivery for specified bank transactions. This can be used to re-emit webhooks that may have been missed or to force re-matching of transactions.\n\nYou can specify which webhook event types to emit: `banktransaction.created` for transaction data or `transaction.match.created` for match results.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-transactions",
+                ":subaccountId",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subaccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<uuid>\"\n  ],\n  \"webhooks\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"forceRematch\": false,\n  \"dispatchUnmatched\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89144bab-a2fb-4582-96d9-3e8963bbf4f2",
+              "name": "Webhooks triggered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"transaction.match.created\"\n  ],\n  \"forceRematch\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Processed 1 transactions\",\n  \"emitted\": 2,\n  \"resent\": 0,\n  \"matched\": 1,\n  \"skipped\": 0,\n  \"failed\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d716353d-b656-4bd5-9c1a-6f1b603ae0a9",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"transaction.match.created\"\n  ],\n  \"forceRematch\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d45c0cb-c514-4e58-b5bf-897d1873fcb6",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"transaction.match.created\"\n  ],\n  \"forceRematch\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e7bb6f2-4580-4d40-8bea-fbd1e6d35a69",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"transaction.match.created\"\n  ],\n  \"forceRematch\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a4d8e2a-5426-4f1e-b59c-eac7f8b5175b",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-transactions",
+                    ":subaccountId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subaccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c\"\n  ],\n  \"webhooks\": [\n    \"banktransaction.created\",\n    \"transaction.match.created\"\n  ],\n  \"forceRematch\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.astrada.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16f4a05d-f915-4e4f-9d77-a4d41e64555b",
+    "name": "Astrada bank-accounts bank-transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to our API Reference. 👋\n\n\nContact Support:\n Email: developer@astrada.co",
+      "type": "text/plain"
+    }
+  }
+}

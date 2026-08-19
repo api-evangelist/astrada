@@ -1,0 +1,3143 @@
+{
+  "item": [
+    {
+      "id": "dfafcd4f-2c3e-4a52-8b6e-dc9b7f0da78e",
+      "name": "bank-links",
+      "description": {
+        "content": "Manage bank enrollment links. A bank link represents an invitation for a user to connect their bank account via Plaid.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "68cfbea6-6c59-41c2-bbd8-1c4e411f08f5",
+          "name": "Create bank link",
+          "request": {
+            "name": "Create bank link",
+            "description": {
+              "content": "Creates a new bank link to initiate a bank enrollment. The response includes a `hostedLink` URL where the user can connect their bank account via Plaid.\n\nThe hosted link expires after 4 hours. If the link expires before the user completes enrollment, retrieve the bank link via `GET /bank-links/{bankLinkId}` to get a refreshed URL.\n\nCreating a bank link with an ID that already exists for the account will return a `409 Conflict` error, unless the existing link has expired.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"subaccountId\": \"<uuid>\",\n  \"filters\": {\n    \"accountTypes\": [\n      \"<string>\"\n    ],\n    \"linkCustomizationName\": \"<string>\"\n  },\n  \"bin6\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e068eff9-cbab-4746-b4cf-69b63df7f636",
+              "name": "Bank link created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/bank-links/enrollment_abc123\"\n    }\n  },\n  \"id\": \"enrollment_abc123\",\n  \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\",\n  \"state\": \"pending\",\n  \"hostedLink\": \"https://hosted.plaid.com/link/abc123\",\n  \"linkExpiresAt\": \"2025-10-03T14:25:27.000Z\",\n  \"createdAt\": \"2025-10-03T10:25:27.069Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bd4859c-d5a9-45e7-b0c2-757db87fd5fe",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3386b502-4530-4f9c-b5b5-4cf35fc72d40",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c8a34d3-ea7e-44f5-b3f9-50bbb05d39f0",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f144a9fd-aa57-44f9-9da5-1b5f39d045f7",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a171c192-d350-4f08-a751-d5d5f4c88414",
+              "name": "Request conflict with the current state of the target resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea20c364-67c4-43ea-9ab8-d2733403e46a",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"enrollment_abc123\",\n  \"subaccountId\": \"50cced63-ee4e-4ff7-a469-aaa989f220f2\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32b94252-299b-4266-b64d-2d8b27b7ee12",
+          "name": "List bank links",
+          "request": {
+            "name": "List bank links",
+            "description": {
+              "content": "Returns a list of bank links under the account.\n\nBy default, `GET /bank-links` returns bank links ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subaccountId",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter bank links by state"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "250",
+                  "description": "Maximum number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<byte>",
+                  "description": "The cursor to use for pagination. Identifies your place on the list"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fd5877cd-9019-4c63-aebd-4a5d0c8d004a",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"/bank-links/enrollment_792dcb7d\"\n        },\n        \"bankAccounts\": [\n          {\n            \"href\": \"/bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\"\n          }\n        ]\n      },\n      \"id\": \"enrollment_792dcb7d\",\n      \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n      \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n      \"state\": \"completed\",\n      \"hostedLink\": null,\n      \"linkExpiresAt\": null,\n      \"completedAt\": \"2025-10-03T10:55:42.000Z\",\n      \"bankAccounts\": [\n        {\n          \"id\": \"3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\",\n          \"name\": \"Checking\"\n        }\n      ],\n      \"createdAt\": \"2025-10-03T10:25:27.069Z\"\n    },\n    {\n      \"_links\": {\n        \"self\": {\n          \"href\": \"/bank-links/enrollment_a1b2c3d4\"\n        }\n      },\n      \"id\": \"enrollment_a1b2c3d4\",\n      \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n      \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n      \"state\": \"pending\",\n      \"hostedLink\": \"https://hosted.plaid.com/link/abc123\",\n      \"linkExpiresAt\": \"2025-10-04T14:25:27.000Z\",\n      \"createdAt\": \"2025-10-04T10:25:27.069Z\"\n    }\n  ],\n  \"pagination\": {\n    \"cursor\": \"ZXhhbXBsZQ==\",\n    \"hasMore\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0274b4f9-b121-49f0-88b3-b0f0322abccc",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8a3d6aa-670d-4399-8030-2418632d6b32",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9da8969-39d9-423c-b079-340d77f49a5c",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2ac98a6-a033-4747-bb1d-e250f68b7b9a",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subaccountId",
+                      "value": "2fd4d402-b759-479c-87a6-58d85e345356"
+                    },
+                    {
+                      "key": "state",
+                      "value": "completed"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "250"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "ZXhhbXBsZQ=="
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d25a966-1555-4f1f-b176-26724bd34205",
+          "name": "Delete bank link",
+          "request": {
+            "name": "Delete bank link",
+            "description": {
+              "content": "Deletes a bank link and all associated resources, including the bank subscription, bank accounts, and bank transactions.\n\n**Note:** This action is irreversible and will revoke access to the connected financial institution.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links",
+                ":bankLinkId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bankLinkId",
+                  "description": "(Required) The client-provided identifier of the bank link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "de50113c-96ea-41ee-9a18-18af2acd3dbe",
+              "name": "Bank link deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "85023cb5-6796-4046-bed8-d9d2283be3c1",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92672e4a-7f67-40e4-8b80-c13f35283a98",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd347552-f3d2-4b88-b7ab-6f3fb46110d0",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6d773f7-9c89-451f-8a19-dd1f95199b7b",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddf2f4b4-51a0-4f54-ad0d-57753381027c",
+              "name": "Request conflict with the current state of the target resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3b646b3-8653-4cf2-b001-c5bf67d3b923",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26d120a1-9ad6-4e12-9061-0c9ebfa2359f",
+          "name": "Retrieve bank link",
+          "request": {
+            "name": "Retrieve bank link",
+            "description": {
+              "content": "Returns detailed information about a specific bank link by its identifier.\n\nIf the bank link is in `pending` state and the hosted link URL has expired, this endpoint will automatically refresh the URL and return the updated link.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links",
+                ":bankLinkId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bankLinkId",
+                  "description": "(Required) The client-provided identifier of the bank link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a7dc3ac2-bc1d-4c5e-81ce-005f91d14ae8",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/bank-links/enrollment_792dcb7d\"\n    },\n    \"bankAccounts\": [\n      {\n        \"href\": \"/bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\"\n      }\n    ]\n  },\n  \"id\": \"enrollment_792dcb7d\",\n  \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n  \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n  \"state\": \"completed\",\n  \"hostedLink\": null,\n  \"linkExpiresAt\": null,\n  \"completedAt\": \"2025-10-03T10:55:42.000Z\",\n  \"bankAccounts\": [\n    {\n      \"id\": \"3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\",\n      \"name\": \"Checking\"\n    }\n  ],\n  \"createdAt\": \"2025-10-03T10:25:27.069Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc80cb67-c3b6-4462-a9bf-820716d5d245",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "422a3f73-1c4f-49e1-83f8-7f2f3a385539",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05e19068-32cb-4e16-818e-34d92f0e5e6e",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ef538df-ba98-4599-8751-23aaee28f90c",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6da8d159-2b9b-4160-b165-221346aa37d0",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3eec854-5283-49e4-b7d6-d37d2fc8c6c3",
+          "name": "Complete bank link",
+          "request": {
+            "name": "Complete bank link",
+            "description": {
+              "content": "Completes a bank link enrollment, transitioning it from `pending` to `completed` state. The request body must contain `state: \"completed\"`.\n\nWhen a bank link is completed, the system exchanges the enrollment credentials with the provider, creates a bank subscription (connection), and discovers the associated bank accounts.\n\nThis endpoint is idempotent — completing an already completed bank link returns the existing subscription and accounts.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links",
+                ":bankLinkId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bankLinkId",
+                  "description": "(Required) The client-provided identifier of the bank link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"state\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35d83ae4-bd66-488c-9247-82cda105bdb2",
+              "name": "Bank link completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/bank-links/enrollment_792dcb7d\"\n    },\n    \"bankAccounts\": [\n      {\n        \"href\": \"/bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\"\n      }\n    ]\n  },\n  \"id\": \"enrollment_792dcb7d\",\n  \"accountId\": \"8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\",\n  \"subaccountId\": \"1fcb895e-9217-4a6f-9d10-5a7dcef86c11\",\n  \"state\": \"completed\",\n  \"hostedLink\": null,\n  \"linkExpiresAt\": null,\n  \"completedAt\": \"2025-10-03T10:55:42.000Z\",\n  \"bankAccounts\": [\n    {\n      \"id\": \"3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c\",\n      \"name\": \"Checking\"\n    }\n  ],\n  \"createdAt\": \"2025-10-03T10:25:27.069Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "393eb997-8699-4bc6-9320-3c542f08e61e",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f89550d-66bb-4a42-9696-09c106c9f593",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c44579f-35fa-4f11-a7e0-17c378827acd",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09899afb-b9d5-492b-8f93-c2c5f8a5405b",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72c12dd8-3bab-48e4-8112-ebf537547e92",
+              "name": "Request conflict with the current state of the target resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e7f9d54-a16c-436e-982e-255caf274f87",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a17b4e28-5f79-4201-8229-ebf648a7eb6b",
+          "name": "Sync bank link",
+          "request": {
+            "name": "Sync bank link",
+            "description": {
+              "content": "Triggers a manual sync of transactions for the bank link's associated subscription. This fetches the latest transactions from the financial institution.\n\nTransaction syncs also occur automatically via provider webhooks and scheduled jobs. Use this endpoint to force an immediate sync when needed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links",
+                ":bankLinkId",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bankLinkId",
+                  "description": "(Required) The client-provided identifier of the bank link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"webhooks\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"force\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "789450e6-ba23-4da3-9bea-e7e379a39d59",
+              "name": "Sync triggered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Transactions synced successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f21052bc-264c-41c3-910b-f28ba28d20cf",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39848083-c78b-4999-a143-c65e37e1b92b",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8c8e108-aea1-4ad7-9586-5eb30c0b843f",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d09d091-fc56-41b1-bc10-459591d4fe4d",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "171fd738-2777-40e1-8aeb-4b11eab35a8e",
+              "name": "Request conflict with the current state of the target resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84168354-25ae-49cb-992d-703dff4459de",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    \"banktransaction.created\"\n  ],\n  \"force\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e1720576-9e83-4314-bc78-43b617e0809e",
+          "name": "Update bank link webhook",
+          "request": {
+            "name": "Update bank link webhook",
+            "description": {
+              "content": "Updates the webhook URL for a bank link. Webhook events related to this bank link and its associated resources will be delivered to the specified URL.\n\nAfter updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank-links",
+                ":bankLinkId",
+                "webhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bankLinkId",
+                  "description": "(Required) The client-provided identifier of the bank link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "accounts:write accounts:read subaccounts:write subaccounts:read card-connector-data-links:write card-connector-consents:read card-connector-consents:write webhooks:read webhooks:write card-subscriptions:write card-subscriptions:read card-verifications:write card-verifications:read cards:read cardholder:read cardholder:write transactions:read transaction-messages:read network-bulk-feeds:read network-bulk-feeds:write network-links:write enrollment-methods:write simulation:write banking:read banking:write banking:admin appstore:enrollment:write appstore:cards:read appstore:transactions:read appstore:transactions:sync appstore:sessions:read appstore:sessions:write appstore:tokens:read appstore:tokens:write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "implicit"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"webhookUrl\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f2c55a6e-66d6-48b6-b774-71cd79011756",
+              "name": "Webhook URL updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"pending\",\n  \"message\": \"Webhook update requested. The update will be confirmed when a WEBHOOK_UPDATE_ACKNOWLEDGED webhook is received from Plaid.\",\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29ddace5-2f49-493d-97ec-fb548d8db029",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"detail\": \"Request object failed validation.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "035b9899-b3a7-4b6b-b72c-7733fef14f98",
+              "name": "Authentication credentials were either missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Unauthorized\",\n  \"detail\": \"Authentication credentials were either missing or incorrect.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45f5c0cc-36de-4ea1-beb8-132c04b8dbe0",
+              "name": "Authentication credentials used do not have have permissions to perform the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"detail\": \"You do not have permission to access the requested resource.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ab57d08-eca0-4b7b-8ac5-95e844053655",
+              "name": "The requested resource was not found on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"detail\": \"The requested resource was not found on the server.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8491102-e400-4934-93db-0e292ea19082",
+              "name": "Request conflict with the current state of the target resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afc130df-473d-4dd7-a619-ca2f6465fda0",
+              "name": "The server encountered an unexpected condition that prevented it from fulfilling the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank-links",
+                    ":bankLinkId",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bankLinkId",
+                      "description": "(Required) The client-provided identifier of the bank link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhookUrl\": \"https://example.com/webhooks/banking\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Internal Server Error\",\n  \"detail\": \"The server encountered an unexpected condition that prevented it from fulfilling the request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.astrada.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c757cda0-e96a-4103-94da-a8518cdd7a72",
+    "name": "Astrada bank-accounts bank-links API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to our API Reference. 👋\n\n\nContact Support:\n Email: developer@astrada.co",
+      "type": "text/plain"
+    }
+  }
+}

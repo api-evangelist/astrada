@@ -1,0 +1,232 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts bank-links API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "bank-links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List bank links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-links",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "2fd4d402-b759-479c-87a6-58d85e345356",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "completed",
+                "type": "query",
+                "description": "Filter bank links by state"
+              },
+              {
+                "name": "limit",
+                "value": "250",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "cursor",
+                "value": "ZXhhbXBsZQ==",
+                "type": "query",
+                "description": "The cursor to use for pagination. Identifies your place on the list"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of bank links under the account.\n\nBy default, `GET /bank-links` returns bank links ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+        },
+        {
+          "info": {
+            "name": "Create bank link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/bank-links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Creates a new bank link to initiate a bank enrollment. The response includes a `hostedLink` URL where the user can connect their bank account via Plaid.\n\nThe hosted link expires after 4 hours. If the link expires before the user completes enrollment, retrieve the bank link via `GET /bank-links/{bankLinkId}` to get a refreshed URL.\n\nCreating a bank link with an ID that already exists for the account will return a `409 Conflict` error, unless the existing link has expired.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve bank link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-links/:bankLinkId",
+            "params": [
+              {
+                "name": "bankLinkId",
+                "value": "enrollment_792dcb7d",
+                "type": "path",
+                "description": "The client-provided identifier of the bank link."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific bank link by its identifier.\n\nIf the bank link is in `pending` state and the hosted link URL has expired, this endpoint will automatically refresh the URL and return the updated link.\n"
+        },
+        {
+          "info": {
+            "name": "Complete bank link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/bank-links/:bankLinkId",
+            "params": [
+              {
+                "name": "bankLinkId",
+                "value": "enrollment_792dcb7d",
+                "type": "path",
+                "description": "The client-provided identifier of the bank link."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Completes a bank link enrollment, transitioning it from `pending` to `completed` state. The request body must contain `state: \"completed\"`.\n\nWhen a bank link is completed, the system exchanges the enrollment credentials with the provider, creates a bank subscription (connection), and discovers the associated bank accounts.\n\nThis endpoint is idempotent — completing an already completed bank link returns the existing subscription and accounts.\n"
+        },
+        {
+          "info": {
+            "name": "Delete bank link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.astrada.co/bank-links/:bankLinkId",
+            "params": [
+              {
+                "name": "bankLinkId",
+                "value": "enrollment_792dcb7d",
+                "type": "path",
+                "description": "The client-provided identifier of the bank link."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Deletes a bank link and all associated resources, including the bank subscription, bank accounts, and bank transactions.\n\n**Note:** This action is irreversible and will revoke access to the connected financial institution.\n"
+        },
+        {
+          "info": {
+            "name": "Sync bank link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/bank-links/:bankLinkId/sync",
+            "params": [
+              {
+                "name": "bankLinkId",
+                "value": "enrollment_792dcb7d",
+                "type": "path",
+                "description": "The client-provided identifier of the bank link."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Triggers a manual sync of transactions for the bank link's associated subscription. This fetches the latest transactions from the financial institution.\n\nTransaction syncs also occur automatically via provider webhooks and scheduled jobs. Use this endpoint to force an immediate sync when needed.\n"
+        },
+        {
+          "info": {
+            "name": "Update bank link webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/bank-links/:bankLinkId/webhook",
+            "params": [
+              {
+                "name": "bankLinkId",
+                "value": "enrollment_792dcb7d",
+                "type": "path",
+                "description": "The client-provided identifier of the bank link."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Updates the webhook URL for a bank link. Webhook events related to this bank link and its associated resources will be delivered to the specified URL.\n\nAfter updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

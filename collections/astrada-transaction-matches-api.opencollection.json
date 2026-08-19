@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts transaction-matches API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transaction-matches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve transaction match",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/transaction-matches/:subaccountId/:transactionMatchId",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              },
+              {
+                "name": "transactionMatchId",
+                "value": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific transaction match, including the confidence level, numeric score, and a breakdown of the scoring factors."
+        },
+        {
+          "info": {
+            "name": "List transaction matches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/transaction-matches/:subaccountId",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              },
+              {
+                "name": "bankAccountId",
+                "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c",
+                "type": "query",
+                "description": "Filter by bank account identifier"
+              },
+              {
+                "name": "cardId",
+                "value": "6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b",
+                "type": "path"
+              },
+              {
+                "name": "bankTransactionId",
+                "value": "7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c",
+                "type": "query",
+                "description": "Filter by bank transaction identifier"
+              },
+              {
+                "name": "cardTransactionId",
+                "value": "a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d",
+                "type": "query",
+                "description": "Filter by card transaction identifier"
+              },
+              {
+                "name": "minConfidence",
+                "value": "MEDIUM",
+                "type": "query",
+                "description": "Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches."
+              },
+              {
+                "name": "startDate",
+                "value": "2025-10-01",
+                "type": "query",
+                "description": "Filter results from this date (inclusive), in YYYY-MM-DD format"
+              },
+              {
+                "name": "endDate",
+                "value": "2025-10-31",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format"
+              },
+              {
+                "name": "limit",
+                "value": "250",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "cursor",
+                "value": "ZXhhbXBsZQ==",
+                "type": "query",
+                "description": "The cursor to use for pagination. Identifies your place on the list"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of transaction matches for a subaccount. Each match represents a link between a bank transaction and a card transaction, along with a confidence score and the reasoning behind the match.\n\nBy default, matches are filtered to `MEDIUM` confidence and above. Use the `minConfidence` parameter to adjust the threshold.\n\nBy default, `GET /transaction-matches/{subaccountId}` returns matches ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

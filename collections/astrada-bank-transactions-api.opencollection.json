@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts bank-transactions API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "bank-transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve bank transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-transactions/:subaccountId/:transactionId",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              },
+              {
+                "name": "transactionId",
+                "value": "9340721f-bdce-4afa-bd9d-26cceb9d2176",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific bank transaction by its identifier, including match status and transaction metadata."
+        },
+        {
+          "info": {
+            "name": "List bank transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-transactions/:subaccountId",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              },
+              {
+                "name": "bankAccountId",
+                "value": "3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c",
+                "type": "query",
+                "description": "Filter by bank account identifier"
+              },
+              {
+                "name": "cardId",
+                "value": "6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "2025-10-01",
+                "type": "query",
+                "description": "Filter results from this date (inclusive), in YYYY-MM-DD format"
+              },
+              {
+                "name": "endDate",
+                "value": "2025-10-31",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive), in YYYY-MM-DD format"
+              },
+              {
+                "name": "minAmount",
+                "value": "10",
+                "type": "query",
+                "description": "Filter transactions with an amount greater than or equal to this value"
+              },
+              {
+                "name": "maxAmount",
+                "value": "500",
+                "type": "query",
+                "description": "Filter transactions with an amount less than or equal to this value"
+              },
+              {
+                "name": "transactionType",
+                "value": "debit",
+                "type": "query",
+                "description": "Filter bank transactions by transaction type"
+              },
+              {
+                "name": "matched",
+                "value": "true",
+                "type": "query",
+                "description": "Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by source."
+              },
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by the statement they were imported from."
+              },
+              {
+                "name": "limit",
+                "value": "250",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "cursor",
+                "value": "ZXhhbXBsZQ==",
+                "type": "query",
+                "description": "The cursor to use for pagination. Identifies your place on the list"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of bank transactions for a subaccount. Bank transactions are synced from connected financial institutions. A movement may briefly appear as its pending posting until the posted transaction replaces it (the pending row is then removed from the feed).\n\nBy default, `GET /bank-transactions/{subaccountId}` returns transactions ordered by the latest `date`.\n\nThis endpoint supports cursor-based pagination and various filters including date range, amount range, and match status.\n"
+        },
+        {
+          "info": {
+            "name": "Trigger bank transaction webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/bank-transactions/:subaccountId/webhooks",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Manually triggers webhook delivery for specified bank transactions. This can be used to re-emit webhooks that may have been missed or to force re-matching of transactions.\n\nYou can specify which webhook event types to emit: `banktransaction.created` for transaction data or `transaction.match.created` for match results.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

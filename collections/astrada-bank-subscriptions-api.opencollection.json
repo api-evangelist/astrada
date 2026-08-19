@@ -1,0 +1,150 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts bank-subscriptions API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "bank-subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve bank subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-subscriptions/:bankSubscriptionId",
+            "params": [
+              {
+                "name": "bankSubscriptionId",
+                "value": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific bank subscription by its identifier, including the connection state and webhook configuration."
+        },
+        {
+          "info": {
+            "name": "Retrieve bank subscription by connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-subscriptions/by-connection/:connectionId",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "conn_abc123def456",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a bank subscription by its provider connection identifier (e.g. Plaid item ID).\n\nThis is useful when you have the provider's connection ID and need to look up the corresponding subscription.\n"
+        },
+        {
+          "info": {
+            "name": "List bank subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-subscriptions",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "2fd4d402-b759-479c-87a6-58d85e345356",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by state"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by provider connection identifier"
+              },
+              {
+                "name": "limit",
+                "value": "250",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "cursor",
+                "value": "ZXhhbXBsZQ==",
+                "type": "query",
+                "description": "The cursor to use for pagination. Identifies your place on the list"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of bank subscriptions (active connections to financial institutions) under the account.\n\nBank subscriptions are created automatically when a bank link enrollment is completed. Each subscription represents a connection to a single financial institution.\n\nBy default, `GET /bank-subscriptions` returns subscriptions ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+        },
+        {
+          "info": {
+            "name": "Update bank subscription webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/bank-subscriptions/:bankSubscriptionId/webhook",
+            "params": [
+              {
+                "name": "bankSubscriptionId",
+                "value": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Updates the webhook URL for a bank subscription. Webhook events for transactions and matches associated with this subscription will be delivered to the specified URL.\n\nAfter updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

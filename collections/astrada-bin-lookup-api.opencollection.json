@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts bin-lookup API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "bin-lookup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lookup card information by BIN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bin-lookup",
+            "params": [
+              {
+                "name": "bin",
+                "value": "",
+                "type": "query",
+                "description": "The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Retrieve card information such as network, type, and issuing bank by providing the card's BIN (Bank Identification Number)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

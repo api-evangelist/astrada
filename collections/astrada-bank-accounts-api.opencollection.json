@@ -1,0 +1,204 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "bank-accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-accounts/:bankAccountId",
+            "params": [
+              {
+                "name": "bankAccountId",
+                "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns detailed information about a specific bank account by its identifier."
+        },
+        {
+          "info": {
+            "name": "Update bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.astrada.co/bank-accounts/:bankAccountId",
+            "params": [
+              {
+                "name": "bankAccountId",
+                "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Updates a bank account. Card links are detected automatically — the first time a card's transactions produce a high-confidence match against this account's feed, the card is linked without any API call. This endpoint is the manual override: use it to pre-link cards before any spend exists, correct an assignment, or import history.\n\nEach card in `cardIds` must belong to the same subaccount as the bank account. A card can only be linked to one bank account at a time — attempting to link a card tha"
+        },
+        {
+          "info": {
+            "name": "Delete bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.astrada.co/bank-accounts/:bankAccountId",
+            "params": [
+              {
+                "name": "bankAccountId",
+                "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Deletes a bank account and all associated bank transactions and transaction matches.\n\n**Note:** This action is irreversible.\n"
+        },
+        {
+          "info": {
+            "name": "Link enrolled cards to bank accounts (admin backfill)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/bank-accounts/link-enrolled-cards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Admin backfill/retry for immediate mask-linking: matches the subaccount's\nENROLLED cards against its credit bank accounts by mask (an enrolled\ncard's last 4 digits) and links each exact match. The same\nexactly-one-or-skip rules as completion-time linking apply — a mask\nmatching multiple cards, or multiple accounts claiming a mask, links\nnothing (transaction-based discovery remains the backstop). Idempotent:\nalready-linked pairs are skipped. Intended for onboarding backfills\n(cards enrolled befor"
+        },
+        {
+          "info": {
+            "name": "List bank accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/bank-accounts",
+            "params": [
+              {
+                "name": "subaccountId",
+                "value": "2fd4d402-b759-479c-87a6-58d85e345356",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "active",
+                "type": "query",
+                "description": "Filter bank accounts by state"
+              },
+              {
+                "name": "cardId",
+                "value": "6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "250",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "cursor",
+                "value": "ZXhhbXBsZQ==",
+                "type": "query",
+                "description": "The cursor to use for pagination. Identifies your place on the list"
+              },
+              {
+                "name": "virtual",
+                "value": "",
+                "type": "query",
+                "description": "Filter by virtual account status."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Returns a list of bank accounts under the account. Bank accounts are created automatically when a bank link enrollment is completed.\n\nBy default, `GET /bank-accounts` returns bank accounts ordered by the latest `createdAt`.\n\nThis endpoint supports cursor-based pagination.\n"
+        },
+        {
+          "info": {
+            "name": "Refresh bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/bank-accounts/:bankAccountId/refresh",
+            "params": [
+              {
+                "name": "bankAccountId",
+                "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Triggers a refresh of bank account data from the financial institution. If the account requires re-authentication, the response will include a new hosted link URL for the user to complete re-authentication.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

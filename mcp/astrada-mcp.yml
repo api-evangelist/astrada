@@ -159,3 +159,9 @@ tools:
 - name: updateWebhook
   description: Update webhook
   source_operation: openapi/astrada-openapi-original.json#updateWebhook
+deployment:
+  mode: none
+  verified: derived
+  tools: 50
+  checked: '2026-08-12'
+  source: catalog MCP census

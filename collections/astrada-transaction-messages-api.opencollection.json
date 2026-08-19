@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts transaction-messages API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transaction-messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the raw transaction message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/transaction-messages/:transactionMessageId/raw",
+            "params": [
+              {
+                "name": "transactionMessageId",
+                "value": "9340721f-bdce-4afa-bd9d-26cceb9d2176",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Return a raw transaction message by the transaction message unique identifier."
+        },
+        {
+          "info": {
+            "name": "Retrieve transaction message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.astrada.co/transaction-messages/:transactionMessageId",
+            "params": [
+              {
+                "name": "transactionMessageId",
+                "value": "9340721f-bdce-4afa-bd9d-26cceb9d2176",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "Return a transaction message by its unique identifier, including details about the transaction's type and relevant transactional data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

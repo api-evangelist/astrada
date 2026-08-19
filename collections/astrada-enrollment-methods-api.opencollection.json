@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Astrada bank-accounts enrollment-methods API",
+    "version": "2024-02-28"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "enrollment-methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List the available enrollment methods given a card BIN (BETA)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.astrada.co/enrollment-methods",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "implicit",
+              "authorizationUrl": "https://api.astrada.co/auth/realms/{accountId}/protocol/openid-connect/token",
+              "credentials": {
+                "clientId": "{{clientId}}"
+              }
+            }
+          },
+          "docs": "🚧 **Beta** — This endpoint is in beta. Its results may not be accurate, so don't rely on it as a fully-supported endpoint yet.\n\nList the available enrollment methods given a card BIN."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
