@@ -50,6 +50,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Bank Accounts
+  tags_raw:
   - bank-accounts
   properties:
   - type: OpenAPI
@@ -98,6 +100,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Bank Transactions
+  tags_raw:
   - bank-transactions
   properties:
   - type: OpenAPI
@@ -112,6 +116,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - BIN Lookup
+  tags_raw:
   - bin-lookup
   properties:
   - type: OpenAPI
@@ -126,6 +132,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Card
+  tags_raw:
   - card
   properties:
   - type: OpenAPI
@@ -154,6 +162,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Card Verification
+  tags_raw:
   - card-verification
   properties:
   - type: OpenAPI
@@ -196,6 +206,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Subaccounts
+  tags_raw:
   - subaccounts
   properties:
   - type: OpenAPI
@@ -240,6 +252,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Transaction
+  tags_raw:
   - transactions
   properties:
   - type: OpenAPI
@@ -254,6 +268,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
