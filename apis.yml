@@ -144,7 +144,7 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
-  - Card
+  - Cards
   tags_raw:
   - card
   properties:
