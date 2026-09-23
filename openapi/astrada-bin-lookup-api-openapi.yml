@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts bin-lookup API
+  title: Astrada Bin Lookup API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
 tags:
-- name: bin-lookup
+- name: Bin Lookup
   description: BIN Lookup
 paths:
   /bin-lookup:
@@ -19,7 +17,7 @@ paths:
     - $ref: '#/components/parameters/bin-required'
     get:
       tags:
-      - bin-lookup
+      - Bin Lookup
       summary: Lookup card information by BIN
       description: Retrieve card information such as network, type, and issuing bank by providing the card's BIN (Bank Identification Number).
       security:
@@ -47,6 +45,144 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
+  responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+  parameters:
+    bin-required:
+      in: query
+      name: bin
+      required: true
+      schema:
+        type: string
+        pattern: ^\d{6,11}$
+      description: The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.
+  examples:
+    bin-lookup:
+      description: Example response for BIN lookup request
+      value:
+        bin: '411111'
+        network: VISA
+        type: COMMERCIAL
+        fundingType: CREDIT
+        issuerName: Example Bank
+        issuerCountry: USA
+        issuerRegion: NA
   schemas:
     bin-lookup:
       type: object
@@ -90,144 +226,6 @@ components:
       - bin
       - network
       - fundingType
-  responses:
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    bad-request:
-      description: The server cannot or will not process the request due to something that is perceived to be a client error
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Bad Request
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    detail:
-                      type: string
-                  required:
-                  - title
-                  - detail
-            required:
-            - detail
-            - title
-          examples:
-            Example Generic Bad Request Payload Response:
-              value:
-                title: Bad Request
-                detail: Request object failed validation.
-            Example Generic Bad Request Parameters Response:
-              value:
-                title: Bad Request
-                detail: Request parameters are invalid.
-  parameters:
-    bin-required:
-      in: query
-      name: bin
-      required: true
-      schema:
-        type: string
-        pattern: ^\d{6,11}$
-      description: The card's Bank Identification Number (BIN), consisting of the first 6 to 11 digits of the card number.
-  examples:
-    bin-lookup:
-      description: Example response for BIN lookup request
-      value:
-        bin: '411111'
-        network: VISA
-        type: COMMERCIAL
-        fundingType: CREDIT
-        issuerName: Example Bank
-        issuerCountry: USA
-        issuerRegion: NA
   securitySchemes:
     main-auth:
       type: oauth2

@@ -1,12 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts bank-links API
+  title: Astrada Bank Links API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
@@ -25,9 +23,7 @@ paths:
         The hosted link expires after 4 hours. If the link expires before the user completes enrollment, retrieve the bank link via `GET /bank-links/{bankLinkId}` to get a refreshed URL.
 
 
-        Creating a bank link with an ID that already exists for the account will return a `409 Conflict` error, unless the existing link has expired.
-
-        '
+        Creating a bank link with an ID that already exists for the account will return a `409 Conflict` error, unless the existing link has expired.'
       operationId: CreateBankLink
       security:
       - main-auth:
@@ -181,9 +177,7 @@ paths:
         By default, `GET /bank-links` returns bank links ordered by the latest `createdAt`.
 
 
-        This endpoint supports cursor-based pagination.
-
-        '
+        This endpoint supports cursor-based pagination.'
       operationId: ListBankLinks
       parameters:
       - $ref: '#/components/parameters/subaccount-id'
@@ -270,9 +264,7 @@ paths:
       description: 'Deletes a bank link and all associated resources, including the bank subscription, bank accounts, and bank transactions.
 
 
-        **Note:** This action is irreversible and will revoke access to the connected financial institution.
-
-        '
+        **Note:** This action is irreversible and will revoke access to the connected financial institution.'
       operationId: DeleteBankLink
       security:
       - main-auth:
@@ -299,9 +291,7 @@ paths:
       description: 'Returns detailed information about a specific bank link by its identifier.
 
 
-        If the bank link is in `pending` state and the hosted link URL has expired, this endpoint will automatically refresh the URL and return the updated link.
-
-        '
+        If the bank link is in `pending` state and the hosted link URL has expired, this endpoint will automatically refresh the URL and return the updated link.'
       operationId: GetBankLink
       security:
       - main-auth:
@@ -336,9 +326,7 @@ paths:
         When a bank link is completed, the system exchanges the enrollment credentials with the provider, creates a bank subscription (connection), and discovers the associated bank accounts.
 
 
-        This endpoint is idempotent — completing an already completed bank link returns the existing subscription and accounts.
-
-        '
+        This endpoint is idempotent — completing an already completed bank link returns the existing subscription and accounts.'
       operationId: PatchBankLink
       security:
       - main-auth:
@@ -394,9 +382,7 @@ paths:
       description: 'Triggers a manual sync of transactions for the bank link''s associated subscription. This fetches the latest transactions from the financial institution.
 
 
-        Transaction syncs also occur automatically via provider webhooks and scheduled jobs. Use this endpoint to force an immediate sync when needed.
-
-        '
+        Transaction syncs also occur automatically via provider webhooks and scheduled jobs. Use this endpoint to force an immediate sync when needed.'
       operationId: SyncBankLink
       security:
       - main-auth:
@@ -464,9 +450,7 @@ paths:
       description: 'Updates the webhook URL for a bank link. Webhook events related to this bank link and its associated resources will be delivered to the specified URL.
 
 
-        After updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.
-
-        '
+        After updating, the webhook status will be set to `pending` until the provider acknowledges the new URL, at which point it transitions to `confirmed`.'
       operationId: UpdateBankLinkWebhook
       security:
       - main-auth:
@@ -531,58 +515,26 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
-  parameters:
-    subaccount-id:
-      in: query
-      name: subaccountId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
-    bank-link-state:
-      in: query
-      name: state
-      description: Filter bank links by state
-      required: false
-      schema:
-        type: string
-        enum:
-        - pending
-        - completed
-        - expired
-      example: completed
-    banking-limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 250
-      example: 250
-    bank-link-id:
-      in: path
-      name: bankLinkId
-      description: The client-provided identifier of the bank link.
-      required: true
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 256
-        pattern: ^[a-zA-Z0-9_-]+$
-      example: enrollment_792dcb7d
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
+  examples:
+    bank-link:
+      description: Example of a completed Bank Link resource
+      value:
+        _links:
+          self:
+            href: /bank-links/enrollment_792dcb7d
+          bankAccounts:
+          - href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+        id: enrollment_792dcb7d
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        state: completed
+        hostedLink: null
+        linkExpiresAt: null
+        completedAt: '2025-10-03T10:55:42.000Z'
+        bankAccounts:
+        - id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          name: Checking
+        createdAt: '2025-10-03T10:25:27.069Z'
   responses:
     conflict:
       description: Request conflict with the current state of the target resource
@@ -599,48 +551,6 @@ components:
                 title: Conflict
                 detail: The target resource already exists.
                 currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -679,6 +589,25 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -716,26 +645,81 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-  examples:
-    bank-link:
-      description: Example of a completed Bank Link resource
-      value:
-        _links:
-          self:
-            href: /bank-links/enrollment_792dcb7d
-          bankAccounts:
-          - href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-        id: enrollment_792dcb7d
-        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
-        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
-        state: completed
-        hostedLink: null
-        linkExpiresAt: null
-        completedAt: '2025-10-03T10:55:42.000Z'
-        bankAccounts:
-        - id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-          name: Checking
-        createdAt: '2025-10-03T10:25:27.069Z'
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+  parameters:
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    bank-link-state:
+      in: query
+      name: state
+      description: Filter bank links by state
+      required: false
+      schema:
+        type: string
+        enum:
+        - pending
+        - completed
+        - expired
+      example: completed
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
+    bank-link-id:
+      in: path
+      name: bankLinkId
+      description: The client-provided identifier of the bank link.
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+        pattern: ^[a-zA-Z0-9_-]+$
+      example: enrollment_792dcb7d
   schemas:
     conflict:
       type: object
@@ -754,27 +738,6 @@ components:
           description: Requested value for the property causing the conflict
       required:
       - detail
-    link:
-      type: object
-      properties:
-        href:
-          type: string
-        templated:
-          type: boolean
-        type:
-          type: string
-        deprecation:
-          type: string
-        name:
-          type: string
-        profile:
-          type: string
-        title:
-          type: string
-        hreflang:
-          type: string
-      required:
-      - href
     bank-link:
       type: object
       required:
@@ -830,14 +793,16 @@ components:
           - completed
           - expired
         hostedLink:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The hosted URL where the user can complete the bank enrollment. This link expires after 4 hours and is automatically refreshed when retrieved via GET.
         linkExpiresAt:
           description: Date and time when the hosted link expires, in UTC, following ISO 8601 format.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         completedAt:
           description: Date and time when the bank link enrollment was completed, in UTC, following ISO 8601 format. Only present when state is `completed`.
           type: string
@@ -887,8 +852,9 @@ components:
                 type: string
                 description: The display name of the bank account.
               mask:
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
                 description: 'Last 4 digits of the account number. For `credit` accounts this is the card
 
                   number''s last 4 — the per-card identity for bank-connected (e.g. American
@@ -899,8 +865,9 @@ components:
 
                   '
               type:
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
                 description: Normalized account type (e.g. `checking`, `savings`, `credit`).
               cardIds:
                 type: array
@@ -944,8 +911,9 @@ components:
                       type: string
                       pattern: ^\d{4}$
                     network:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                     enrollmentType:
                       type: string
                       enum:
@@ -954,6 +922,27 @@ components:
           description: Date and time when this resource was created, in UTC, following ISO 8601 format.
           type: string
           format: date-time
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
   securitySchemes:
     main-auth:
       type: oauth2

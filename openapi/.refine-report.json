@@ -1,21 +1,7 @@
 {
   "provider": "astrada",
   "sources": [
-    "astrada-bank-accounts-api-openapi.yml",
-    "astrada-bank-links-api-openapi.yml",
-    "astrada-bank-subscriptions-api-openapi.yml",
-    "astrada-bank-transactions-api-openapi.yml",
-    "astrada-bin-lookup-api-openapi.yml",
-    "astrada-card-api-openapi.yml",
-    "astrada-card-subscription-api-openapi.yml",
-    "astrada-card-verification-api-openapi.yml",
-    "astrada-enrollment-methods-api-openapi.yml",
-    "astrada-network-bulk-feeds-api-openapi.yml",
-    "astrada-subaccounts-api-openapi.yml",
-    "astrada-transaction-matches-api-openapi.yml",
-    "astrada-transaction-messages-api-openapi.yml",
-    "astrada-transactions-api-openapi.yml",
-    "astrada-webhooks-api-openapi.yml"
+    "_original/astrada-openapi-original.json"
   ],
   "outputs": [
     "astrada-bank-accounts-api-openapi.yml",
@@ -37,6 +23,26 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "astrada-openapi-original.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "astrada-bank-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-bank-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-bank-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-bank-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-bin-lookup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-card-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-card-subscription-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-card-verification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-enrollment-methods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-network-bulk-feeds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-subaccounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-transaction-matches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-transaction-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "astrada-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

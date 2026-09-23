@@ -1,12 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts card-subscription API
+  title: Astrada Card Subscription API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
@@ -57,9 +55,7 @@ paths:
       description: 'Updates an existing card subscription, allowing changes to its data-sharing state. Subscriptions that were enrolled in bulk, and where `enrollmentType = ''network-bulk''` cannot be updated.
 
 
-        **Note:** setting a card subscription to a `deactivated` state is a final action that cannot be undone.
-
-        '
+        **Note:** setting a card subscription to a `deactivated` state is a final action that cannot be undone.'
       security:
       - main-auth:
         - card-subscriptions:write
@@ -135,9 +131,7 @@ paths:
         By default, `GET /card-subscriptions` returns card subscriptions ordered by the latest `updatedAt`. The `cardId` and `subaccountId` filters are mutual exclusive. The `cardId` takes precedence over `subaccountId`.
 
 
-        This endpoint supports [offset-based pagination](https://docs.astrada.co/reference/pagination).
-
-        '
+        This endpoint supports offset-based pagination.'
       security:
       - main-auth:
         - card-subscriptions:read
@@ -259,7 +253,141 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
+  responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
   parameters:
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    subscription-id:
+      in: path
+      name: subscriptionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3
     offset:
       in: query
       name: offset
@@ -269,14 +397,14 @@ components:
         type: number
         default: 0
       example: 20
-    subaccount-id:
+    card-id:
       in: query
-      name: subaccountId
+      name: cardId
       required: false
       schema:
         type: string
         format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
+      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
     limit:
       in: query
       name: limit
@@ -288,22 +416,162 @@ components:
         maximum: 100
         default: 25
       example: 25
-    card-id:
-      in: query
-      name: cardId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
-    subscription-id:
-      in: path
-      name: subscriptionId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3
+  schemas:
+    unprocessable-entity:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Unprocessable Entity
+      required:
+      - detail
+      - title
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
+    card-subscription:
+      type: object
+      required:
+      - _links
+      - id
+      - subaccountId
+      - cardId
+      - enrollmentType
+      - state
+      - effectiveDate
+      - expirationDate
+      - createdAt
+      - updatedAt
+      properties:
+        _links:
+          type: object
+          required:
+          - self
+          - card
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+            card:
+              $ref: '#/components/schemas/link'
+            verifications:
+              $ref: '#/components/schemas/link'
+              description: 'The link to this card''s 3-D Secure verifications (`/card-verifications/3ds?cardId=`). Useful when a subscription is stuck at `reqSCA` to inspect why verification failed.
+
+                '
+            networkBulkFeed:
+              $ref: '#/components/schemas/link'
+              description: 'The link to the network bulk feed associated with this card subscription, if applicable. This link may be present when the `enrollmentType` is `network-bulk`. It will not be present for subscriptions created through the `cardholder-single` flow.
+
+                '
+            bankAccount:
+              $ref: '#/components/schemas/link'
+              description: 'The link to the bank account this subscription''s card was materialized from (`/bank-accounts/{bankAccountId}`). Present only when the `enrollmentType` is `bank-feed` — the bank-connected analog of `networkBulkFeed`. Not present for `cardholder-single` or `network-bulk` subscriptions.
+
+                '
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of this subscription entity.
+        accountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the account related to this entity.
+        subaccountId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subaccount related to this entity.
+        cardId:
+          type: string
+          format: uuid
+          description: The unique identifier of the card related to this entity.
+        customerReferenceId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: An optional id in UUID format passed by the customer to associate a context with the subscription.
+        state:
+          type: string
+          description: State of the subscription.
+          enum:
+          - active
+          - deactivated
+          - expired
+          - reqSCA
+          - failed-to-create
+        effectiveDate:
+          description: Date and time when this card subscription will be activated and start receiving data, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        expirationDate:
+          description: Date and time when this card subscription will become expired and stop receiving data, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        networkBulkFeedId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: The unique identifier of the network bulk feed associated with this card subscription. Present when the `enrollmentType` is `network-bulk`, null otherwise.
+        bankAccountId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: The bank account this subscription's card was originally materialized from — present only when `enrollmentType` is `bank-feed` (the analog of `networkBulkFeedId` for bank-connected enrollments). This is provenance and does not re-point if a re-link later attaches the card to a successor account; the current link surface is the bank account's `cardIds`.
+        enrollmentType:
+          type: string
+          description: The flow that led to the creation of the card subscription. `cardholder-single` refers to enrollments where cardholders themselves are responsible for inputting card data and where a single card is attempted at a time. `network-bulk` refers to enrollments where card data will be captured by Astrada using network data sources (eg Mastercard Smart Data) and where many cards may be attempted at once. `bank-feed` refers to cards materialized from a bank connection (e.g. American Express via the hosted bank-linking flow) — the bank-side analog of `network-bulk`, with `bankAccountId` as the back-reference.
+          enum:
+          - cardholder-single
+          - network-bulk
+          - bank-feed
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
   examples:
     card-subscription:
       description: Example of Card Subscription resource
@@ -367,277 +635,6 @@ components:
         expirationDate: '2025-06-19T14:45:00Z'
         createdAt: '2024-12-19T14:45:00Z'
         updatedAt: '2024-12-19T14:45:00Z'
-  responses:
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    bad-request:
-      description: The server cannot or will not process the request due to something that is perceived to be a client error
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Bad Request
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    detail:
-                      type: string
-                  required:
-                  - title
-                  - detail
-            required:
-            - detail
-            - title
-          examples:
-            Example Generic Bad Request Payload Response:
-              value:
-                title: Bad Request
-                detail: Request object failed validation.
-            Example Generic Bad Request Parameters Response:
-              value:
-                title: Bad Request
-                detail: Request parameters are invalid.
-  schemas:
-    conflict:
-      type: object
-      properties:
-        detail:
-          type: string
-        title:
-          type: string
-          enum:
-          - Conflict
-        currentValue:
-          type: string
-          description: Current value for the property causing the conflict
-        requestedValue:
-          type: string
-          description: Requested value for the property causing the conflict
-      required:
-      - detail
-    unprocessable-entity:
-      type: object
-      properties:
-        detail:
-          type: string
-        title:
-          type: string
-          enum:
-          - Unprocessable Entity
-      required:
-      - detail
-      - title
-    link:
-      type: object
-      properties:
-        href:
-          type: string
-        templated:
-          type: boolean
-        type:
-          type: string
-        deprecation:
-          type: string
-        name:
-          type: string
-        profile:
-          type: string
-        title:
-          type: string
-        hreflang:
-          type: string
-      required:
-      - href
-    card-subscription:
-      type: object
-      required:
-      - _links
-      - id
-      - subaccountId
-      - cardId
-      - enrollmentType
-      - state
-      - effectiveDate
-      - expirationDate
-      - createdAt
-      - updatedAt
-      properties:
-        _links:
-          type: object
-          required:
-          - self
-          - card
-          properties:
-            self:
-              $ref: '#/components/schemas/link'
-            card:
-              $ref: '#/components/schemas/link'
-            verifications:
-              $ref: '#/components/schemas/link'
-              description: 'The link to this card''s 3-D Secure verifications (`/card-verifications/3ds?cardId=`). Useful when a subscription is stuck at `reqSCA` to inspect why verification failed.
-
-                '
-            networkBulkFeed:
-              $ref: '#/components/schemas/link'
-              description: 'The link to the network bulk feed associated with this card subscription, if applicable. This link may be present when the `enrollmentType` is `network-bulk`. It will not be present for subscriptions created through the `cardholder-single` flow.
-
-                '
-            bankAccount:
-              $ref: '#/components/schemas/link'
-              description: 'The link to the bank account this subscription''s card was materialized from (`/bank-accounts/{bankAccountId}`). Present only when the `enrollmentType` is `bank-feed` — the bank-connected analog of `networkBulkFeed`. Not present for `cardholder-single` or `network-bulk` subscriptions.
-
-                '
-        id:
-          type: string
-          format: uuid
-          description: The unique identifier of this subscription entity.
-        accountId:
-          type: string
-          format: uuid
-          description: The unique identifier of the account related to this entity.
-        subaccountId:
-          type: string
-          format: uuid
-          description: The unique identifier of the subaccount related to this entity.
-        cardId:
-          type: string
-          format: uuid
-          description: The unique identifier of the card related to this entity.
-        customerReferenceId:
-          type: string
-          format: uuid
-          nullable: true
-          description: An optional id in UUID format passed by the customer to associate a context with the subscription.
-        state:
-          type: string
-          description: State of the subscription.
-          enum:
-          - active
-          - deactivated
-          - expired
-          - reqSCA
-          - failed-to-create
-        effectiveDate:
-          description: Date and time when this card subscription will be activated and start receiving data, in UTC, following ISO 8601 format.
-          type: string
-          format: date-time
-        expirationDate:
-          description: Date and time when this card subscription will become expired and stop receiving data, in UTC, following ISO 8601 format.
-          type: string
-          format: date-time
-        networkBulkFeedId:
-          type: string
-          format: uuid
-          nullable: true
-          description: The unique identifier of the network bulk feed associated with this card subscription. Present when the `enrollmentType` is `network-bulk`, null otherwise.
-        bankAccountId:
-          type: string
-          format: uuid
-          nullable: true
-          description: The bank account this subscription's card was originally materialized from — present only when `enrollmentType` is `bank-feed` (the analog of `networkBulkFeedId` for bank-connected enrollments). This is provenance and does not re-point if a re-link later attaches the card to a successor account; the current link surface is the bank account's `cardIds`.
-        enrollmentType:
-          type: string
-          description: The flow that led to the creation of the card subscription. `cardholder-single` refers to enrollments where cardholders themselves are responsible for inputting card data and where a single card is attempted at a time. `network-bulk` refers to enrollments where card data will be captured by Astrada using network data sources (eg Mastercard Smart Data) and where many cards may be attempted at once. `bank-feed` refers to cards materialized from a bank connection (e.g. American Express via the hosted bank-linking flow) — the bank-side analog of `network-bulk`, with `bankAccountId` as the back-reference.
-          enum:
-          - cardholder-single
-          - network-bulk
-          - bank-feed
-        createdAt:
-          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
-          type: string
-          format: date-time
-        updatedAt:
-          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
-          type: string
-          format: date-time
   securitySchemes:
     main-auth:
       type: oauth2

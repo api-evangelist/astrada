@@ -1,12 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts card-verification API
+  title: Astrada Card Verification API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
@@ -31,9 +29,7 @@ paths:
 
         active lock succeeds and clears nothing. The HIGHEST per-fingerprint lockout
 
-        is **not** affected by this endpoint.
-
-        '
+        is **not** affected by this endpoint.'
       security:
       - main-auth:
         - subaccounts:write
@@ -107,9 +103,7 @@ paths:
 
         cards declined synchronously at creation (the `POST` returned `400`): those
 
-        attempts are persisted as failed verifications with `currentStepId: null`.
-
-        '
+        attempts are persisted as failed verifications with `currentStepId: null`.'
       security:
       - main-auth:
         - card-verifications:read
@@ -226,6 +220,63 @@ paths:
           $ref: '#/components/responses/server-error'
 components:
   responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -286,197 +337,7 @@ components:
           example:
             title: Not Found
             detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
   schemas:
-    card-verification:
-      type: object
-      properties:
-        _links:
-          type: object
-          properties:
-            self:
-              $ref: '#/components/schemas/link'
-              description: The link to this verification resource.
-            steps:
-              $ref: '#/components/schemas/link'
-              description: The link to this verification's steps (`/card-verifications/3ds/{verificationId}/steps`).
-            currentStep:
-              $ref: '#/components/schemas/link'
-              description: 'The link to the step the client should execute next. Absent once the
-
-                verification reaches a terminal `state` (`completed` or `failed`).
-
-                '
-          required:
-          - self
-          - steps
-        id:
-          description: The unique identifier of the Verification entity.
-          type: string
-          format: uuid
-        subaccountId:
-          description: The unique identifier of the subaccount related to this entity.
-          type: string
-          format: uuid
-        cardId:
-          description: The unique identifier of the card related to this entity.
-          type: string
-          format: uuid
-        type:
-          description: Verification Step Type
-          type: string
-          enum:
-          - 3DS
-        currentStepId:
-          description: 'The identifier of the next step the client should execute. `null` when
-
-            the verification has no follow-up step — typically because the issuer
-
-            supports frictionless authentication, or because the card did not
-
-            require interactive 3DS. When `null`, `state` will be `completed` on the
-
-            creation response and clients should not call any `/steps/...` endpoint.
-
-
-            On retrieved/listed verifications, `currentStepId` is also `null` with
-
-            `state: failed` when the card was declined synchronously at creation
-
-            (the creation call returned `400`, and the attempt is persisted as a
-
-            failed verification with its `failureReason`).
-
-
-            For the HIGHEST tier, a frictionless 3DS outcome does NOT complete the
-
-            verification: it returns `stripe-holds-pending` (the cardholder must
-
-            initiate two small verification holds via `/steps/place-holds`), which
-
-            then advances to `stripe-amount-confirm` (the cardholder reads the two
-
-            amounts back via `/steps/amount-confirm`).
-
-            '
-          type: string
-          nullable: true
-          enum:
-          - fingerprint
-          - challenge
-          - stripe-3ds
-          - stripe-holds-pending
-          - stripe-amount-confirm
-          - null
-        state:
-          description: Current Verification state
-          type: string
-          enum:
-          - completed
-          - failed
-          - in-progress
-        clientSecret:
-          description: Stripe SetupIntent or PaymentIntent client secret, used by the client to run `stripe.handleNextAction`. Returned whenever the verification is on the Stripe 3DS step — on the creation response (`POST /card-verifications/3ds`) and on the retrieve response (`GET /card-verifications/3ds/{verificationId}`) while `currentStepId` is `stripe-3ds`.
-          type: string
-        stripePublishableKey:
-          description: Stripe publishable key to initialize Stripe.js on the client. Returned alongside `clientSecret` (creation response and retrieve response while `currentStepId` is `stripe-3ds`).
-          type: string
-        authenticationFlow:
-          description: 'The 3DS authentication flow attested by the issuer, surfaced at the terminal state.
-
-            `challenge` = the cardholder actively authenticated; `frictionless` = the issuer approved
-
-            without interaction; `null` = 3DS was not engaged (e.g. a low-risk automatic skip).
-
-            '
-          type: string
-          nullable: true
-          enum:
-          - challenge
-          - frictionless
-          - null
-        failureReason:
-          $ref: '#/components/schemas/failure-reason'
-          description: 'Normalized, customer-facing reason the verification failed. Present only when
-
-            `state` is `failed` — read it to triage the failure (category, retryability,
-
-            and the issuer''s message). See the `FailureReason` schema.
-
-            '
-        createdAt:
-          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
-          type: string
-          format: date-time
-        updatedAt:
-          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
-          type: string
-          format: date-time
-      required:
-      - id
-      - subaccountId
-      - cardId
-      - type
-      - state
-      - createdAt
-      - updatedAt
-      - _links
     failure-reason:
       type: object
       description: 'Normalized, customer-facing reason a card verification failed. Present only when the
@@ -559,6 +420,141 @@ components:
       - category
       - description
       - retryable
+    card-verification:
+      type: object
+      properties:
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+              description: The link to this verification resource.
+            steps:
+              $ref: '#/components/schemas/link'
+              description: The link to this verification's steps (`/card-verifications/3ds/{verificationId}/steps`).
+            currentStep:
+              $ref: '#/components/schemas/link'
+              description: 'The link to the step the client should execute next. Absent once the
+
+                verification reaches a terminal `state` (`completed` or `failed`).
+
+                '
+          required:
+          - self
+          - steps
+        id:
+          description: The unique identifier of the Verification entity.
+          type: string
+          format: uuid
+        subaccountId:
+          description: The unique identifier of the subaccount related to this entity.
+          type: string
+          format: uuid
+        cardId:
+          description: The unique identifier of the card related to this entity.
+          type: string
+          format: uuid
+        type:
+          description: Verification Step Type
+          type: string
+          enum:
+          - 3DS
+        currentStepId:
+          description: 'The identifier of the next step the client should execute. `null` when
+
+            the verification has no follow-up step — typically because the issuer
+
+            supports frictionless authentication, or because the card did not
+
+            require interactive 3DS. When `null`, `state` will be `completed` on the
+
+            creation response and clients should not call any `/steps/...` endpoint.
+
+
+            On retrieved/listed verifications, `currentStepId` is also `null` with
+
+            `state: failed` when the card was declined synchronously at creation
+
+            (the creation call returned `400`, and the attempt is persisted as a
+
+            failed verification with its `failureReason`).
+
+
+            For the HIGHEST tier, a frictionless 3DS outcome does NOT complete the
+
+            verification: it returns `stripe-holds-pending` (the cardholder must
+
+            initiate two small verification holds via `/steps/place-holds`), which
+
+            then advances to `stripe-amount-confirm` (the cardholder reads the two
+
+            amounts back via `/steps/amount-confirm`).
+
+            '
+          type:
+          - string
+          - 'null'
+          enum:
+          - fingerprint
+          - challenge
+          - stripe-3ds
+          - stripe-holds-pending
+          - stripe-amount-confirm
+          - null
+        state:
+          description: Current Verification state
+          type: string
+          enum:
+          - completed
+          - failed
+          - in-progress
+        clientSecret:
+          description: Stripe SetupIntent or PaymentIntent client secret, used by the client to run `stripe.handleNextAction`. Returned whenever the verification is on the Stripe 3DS step — on the creation response (`POST /card-verifications/3ds`) and on the retrieve response (`GET /card-verifications/3ds/{verificationId}`) while `currentStepId` is `stripe-3ds`.
+          type: string
+        stripePublishableKey:
+          description: Stripe publishable key to initialize Stripe.js on the client. Returned alongside `clientSecret` (creation response and retrieve response while `currentStepId` is `stripe-3ds`).
+          type: string
+        authenticationFlow:
+          description: 'The 3DS authentication flow attested by the issuer, surfaced at the terminal state.
+
+            `challenge` = the cardholder actively authenticated; `frictionless` = the issuer approved
+
+            without interaction; `null` = 3DS was not engaged (e.g. a low-risk automatic skip).
+
+            '
+          type:
+          - string
+          - 'null'
+          enum:
+          - challenge
+          - frictionless
+          - null
+        failureReason:
+          $ref: '#/components/schemas/failure-reason'
+          description: 'Normalized, customer-facing reason the verification failed. Present only when
+
+            `state` is `failed` — read it to triage the failure (category, retryability,
+
+            and the issuer''s message). See the `FailureReason` schema.
+
+            '
+        createdAt:
+          description: Date and time when this resource was created, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+        updatedAt:
+          description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
+          type: string
+          format: date-time
+      required:
+      - id
+      - subaccountId
+      - cardId
+      - type
+      - state
+      - createdAt
+      - updatedAt
+      - _links
     link:
       type: object
       properties:

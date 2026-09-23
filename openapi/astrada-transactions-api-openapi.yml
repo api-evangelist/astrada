@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts transactions API
+  title: Astrada Transactions API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
 tags:
-- name: transactions
+- name: Transactions
   description: Transaction resource
 paths:
   /transactions/{transactionId}:
@@ -19,11 +17,9 @@ paths:
     - $ref: '#/components/parameters/transaction-id'
     get:
       tags:
-      - transactions
+      - Transactions
       summary: Retrieve transaction
-      description: 'Returns a transaction by its unique identifier, including details about the transaction''s state and relevant transactional data.
-
-        '
+      description: Returns a transaction by its unique identifier, including details about the transaction's state and relevant transactional data.
       operationId: GetTransactionById
       security:
       - main-auth:
@@ -51,7 +47,7 @@ paths:
   /transactions:
     get:
       tags:
-      - transactions
+      - Transactions
       summary: List transactions
       description: 'Returns a list of all transactions under the account.
 
@@ -59,9 +55,7 @@ paths:
         By default, `GET /transactions` returns transactions ordered by the latest `createdAt`. You can combine the different filters as documented.
 
 
-        This endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).
-
-        '
+        This endpoint supports cursor-based pagination.'
       operationId: GetTransactions
       parameters:
       - $ref: '#/components/parameters/transaction-message-id'
@@ -153,113 +147,7 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
-  parameters:
-    subaccount-id:
-      in: query
-      name: subaccountId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
-    limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-      example: 25
-    transaction-message-id:
-      in: query
-      name: transactionMessageId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 9a88aa0e-c1d3-4e70-b5e1-45ab64eb5aac
-    order:
-      in: query
-      name: order
-      required: false
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-        default: desc
-      example: desc
-    card-id:
-      in: query
-      name: cardId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
-    transaction-id:
-      in: path
-      name: transactionId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
   responses:
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -298,6 +186,25 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -335,6 +242,93 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+  parameters:
+    order:
+      in: query
+      name: order
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+      example: desc
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    transaction-message-id:
+      in: query
+      name: transactionMessageId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 9a88aa0e-c1d3-4e70-b5e1-45ab64eb5aac
+    card-id:
+      in: query
+      name: cardId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
+    transaction-id:
+      in: path
+      name: transactionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
   examples:
     transaction:
       description: Example of Transaction resource
@@ -415,20 +409,24 @@ components:
           description: The details relating to the acceptor (merchant) from the latest transaction message.
           properties:
             city:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               description: The acceptor's registered city. Defined by the acquirer/processor.
             country:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               description: The acceptor's registered country following ISO 3166 alpha-3.
             mcc:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               description: The Merchant Category Code provided by the acquirer/processor. Used to classify businesses by the types of goods provided or services rendered.
             state:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               description: The acceptor's registered state (e.g. Michigan) as assigned by the acquirer/processor.
           required:
           - city
@@ -436,9 +434,10 @@ components:
           - mcc
           - state
         cardId:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: The unique identifier of the card related to this entity. Null only for bank-sourced transactions on a bank account with no linked cards (the card-less unified feed); the `_links.card` link is omitted in that case.
         cardholderBillingCurrency:
           type: string
@@ -452,8 +451,9 @@ components:
           format: double
           description: The settled amount models the bottom line impact to the customer's bank statement in the card's issued currency. This amount will change as financial messages are added to the Transaction.
         descriptor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Cleansed merchant name.
         id:
           type: string
@@ -488,9 +488,10 @@ components:
           format: double
           description: This amount models the hold on the cardholder account, in the currency the transaction was conducted in, that occurs after an authorization and before a financial message. This amount will change as both authorization and financial messages are added to the Transaction in order to reflect the remaining hold amount.
         transactionOccurrenceDate:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date
-          nullable: true
           description: The UTC date when the transaction took place, following ISO 8601 format (YYYY-MM-DD). This is a date-only field with no time component.
         transactionSettledAmount:
           type: number

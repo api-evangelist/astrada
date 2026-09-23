@@ -1,12 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts transaction-matches API
+  title: Astrada Transaction Matches API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
@@ -61,9 +59,7 @@ paths:
         By default, `GET /transaction-matches/{subaccountId}` returns matches ordered by the latest `createdAt`.
 
 
-        This endpoint supports cursor-based pagination.
-
-        '
+        This endpoint supports cursor-based pagination.'
       operationId: ListTransactionMatches
       parameters:
       - $ref: '#/components/parameters/bank-account-id-2'
@@ -168,152 +164,7 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
-  parameters:
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
-    card-transaction-id:
-      in: query
-      name: cardTransactionId
-      description: Filter by card transaction identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
-    transaction-match-id:
-      in: path
-      name: transactionMatchId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: c3d4e5f6-a7b8-9012-cdef-123456789012
-    start-date:
-      in: query
-      name: startDate
-      description: Filter results from this date (inclusive), in YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        format: date
-      example: '2025-10-01'
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
-    min-confidence:
-      in: query
-      name: minConfidence
-      description: Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.
-      required: false
-      schema:
-        type: string
-        enum:
-        - HIGH
-        - MEDIUM
-        - LOW
-        default: MEDIUM
-      example: MEDIUM
-    bank-transaction-id:
-      in: query
-      name: bankTransactionId
-      description: Filter by bank transaction identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
-    bank-account-id-2:
-      in: query
-      name: bankAccountId
-      description: Filter by bank account identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-    banking-limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 250
-      example: 250
-    end-date:
-      in: query
-      name: endDate
-      description: Filter results up to this date (inclusive), in YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        format: date
-      example: '2025-10-31'
-    subaccount-id-2:
-      in: path
-      name: subaccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
   responses:
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -352,6 +203,151 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+  parameters:
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    min-confidence:
+      in: query
+      name: minConfidence
+      description: Filter transaction matches by minimum confidence level. Defaults to `MEDIUM`, which returns HIGH and MEDIUM matches.
+      required: false
+      schema:
+        type: string
+        enum:
+        - HIGH
+        - MEDIUM
+        - LOW
+        default: MEDIUM
+      example: MEDIUM
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    bank-transaction-id:
+      in: query
+      name: bankTransactionId
+      description: Filter by bank transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+    bank-account-id-2:
+      in: query
+      name: bankAccountId
+      description: Filter by bank account identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+    card-transaction-id:
+      in: query
+      name: cardTransactionId
+      description: Filter by card transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+    transaction-match-id:
+      in: path
+      name: transactionMatchId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: c3d4e5f6-a7b8-9012-cdef-123456789012
+    start-date:
+      in: query
+      name: startDate
+      description: Filter results from this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-01'
+    end-date:
+      in: query
+      name: endDate
+      description: Filter results up to this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-31'
   schemas:
     transaction-match:
       type: object
@@ -430,9 +426,10 @@ components:
           description: Summary of the matched card transaction.
           properties:
             cardId:
-              type: string
+              type:
+              - string
+              - 'null'
               format: uuid
-              nullable: true
               description: The card identifier associated with the matched card transaction.
             date:
               type: string
@@ -463,8 +460,9 @@ components:
               type: string
               description: The transaction description.
             merchantName:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               description: The merchant name.
         reasons:
           type: array
@@ -486,12 +484,14 @@ components:
                 description: The individual score for this factor.
               cardValue:
                 description: The value from the card transaction used for comparison. May be a string or numeric value.
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               bankValue:
                 description: The value from the bank transaction used for comparison. May be a string or numeric value.
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               diff:
                 type: number
                 description: The numeric difference between the card and bank values.

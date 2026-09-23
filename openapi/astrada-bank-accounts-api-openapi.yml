@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts API
+  title: Astrada Bank Accounts API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
 tags:
-- name: bank-accounts
+- name: Bank Accounts
   description: Manage connected bank accounts. Bank accounts are created automatically when a bank link enrollment is completed.
 paths:
   /bank-accounts/{bankAccountId}:
@@ -19,14 +17,12 @@ paths:
     - $ref: '#/components/parameters/bank-account-id'
     delete:
       tags:
-      - bank-accounts
+      - Bank Accounts
       summary: Delete bank account
       description: 'Deletes a bank account and all associated bank transactions and transaction matches.
 
 
-        **Note:** This action is irreversible.
-
-        '
+        **Note:** This action is irreversible.'
       operationId: DeleteBankAccount
       security:
       - main-auth:
@@ -46,7 +42,7 @@ paths:
           $ref: '#/components/responses/server-error'
     get:
       tags:
-      - bank-accounts
+      - Bank Accounts
       summary: Retrieve bank account
       description: Returns detailed information about a specific bank account by its identifier.
       operationId: GetBankAccount
@@ -73,7 +69,7 @@ paths:
           $ref: '#/components/responses/server-error'
     patch:
       tags:
-      - bank-accounts
+      - Bank Accounts
       summary: Update bank account
       description: 'Updates a bank account. Card links are detected automatically — the first time a card''s transactions produce a high-confidence match against this account''s feed, the card is linked without any API call. This endpoint is the manual override: use it to pre-link cards before any spend exists, correct an assignment, or import history.
 
@@ -87,9 +83,7 @@ paths:
         Optionally include a `backfill` object with `startDate` and/or `endDate` to trigger a backfill of historical bank transactions for the specified date range. An automatically detected link re-matches the account''s already-synced unmatched transactions around the new card''s activity on its own; IMPORTING bank history from before the link (pulling older transactions from the provider) still happens only through this endpoint''s `backfill`.
 
 
-        The current card set is always readable at `GET /bank-accounts/{bankAccountId}` (`cardIds`), and `GET /bank-accounts?cardId=` finds the account a card is linked to.
-
-        '
+        The current card set is always readable at `GET /bank-accounts/{bankAccountId}` (`cardIds`), and `GET /bank-accounts?cardId=` finds the account a card is linked to.'
       operationId: UpdateBankAccount
       security:
       - main-auth:
@@ -205,7 +199,7 @@ paths:
   /bank-accounts/link-enrolled-cards:
     post:
       tags:
-      - bank-accounts
+      - Bank Accounts
       summary: Link enrolled cards to bank accounts (admin backfill)
       description: 'Admin backfill/retry for immediate mask-linking: matches the subaccount''s
 
@@ -225,9 +219,7 @@ paths:
 
         directory failure at completion. Emits no webhook — linked cardIds
 
-        appear on subsequent bank-account reads.
-
-        '
+        appear on subsequent bank-account reads.'
       operationId: LinkEnrolledCards
       security:
       - main-auth:
@@ -283,7 +275,7 @@ paths:
   /bank-accounts:
     get:
       tags:
-      - bank-accounts
+      - Bank Accounts
       summary: List bank accounts
       description: 'Returns a list of bank accounts under the account. Bank accounts are created automatically when a bank link enrollment is completed.
 
@@ -291,9 +283,7 @@ paths:
         By default, `GET /bank-accounts` returns bank accounts ordered by the latest `createdAt`.
 
 
-        This endpoint supports cursor-based pagination.
-
-        '
+        This endpoint supports cursor-based pagination.'
       operationId: ListBankAccounts
       parameters:
       - $ref: '#/components/parameters/subaccount-id'
@@ -410,11 +400,9 @@ paths:
     - $ref: '#/components/parameters/bank-account-id'
     post:
       tags:
-      - bank-accounts
+      - Bank Accounts
       summary: Refresh bank account
-      description: 'Triggers a refresh of bank account data from the financial institution. If the account requires re-authentication, the response will include a new hosted link URL for the user to complete re-authentication.
-
-        '
+      description: Triggers a refresh of bank account data from the financial institution. If the account requires re-authentication, the response will include a new hosted link URL for the user to complete re-authentication.
       operationId: RefreshBankAccount
       security:
       - main-auth:
@@ -459,121 +447,7 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
-  parameters:
-    subaccount-id:
-      in: query
-      name: subaccountId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
-    bank-account-id:
-      in: path
-      name: bankAccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
-    bank-account-state:
-      in: query
-      name: state
-      description: Filter bank accounts by state
-      required: false
-      schema:
-        type: string
-        enum:
-        - active
-        - auth_required
-        - disconnected
-      example: active
-    banking-limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 250
-      example: 250
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
   responses:
-    conflict:
-      description: Request conflict with the current state of the target resource
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/conflict'
-          examples:
-            Minimum shape (detail only):
-              value:
-                detail: Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.
-            Resource conflict with currentValue:
-              value:
-                title: Conflict
-                detail: The target resource already exists.
-                currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -593,6 +467,21 @@ components:
           example:
             title: Forbidden
             detail: You do not have permission to access the requested resource.
+    conflict:
+      description: Request conflict with the current state of the target resource
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/conflict'
+          examples:
+            Minimum shape (detail only):
+              value:
+                detail: Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.
+            Resource conflict with currentValue:
+              value:
+                title: Conflict
+                detail: The target resource already exists.
+                currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
     server-error:
       description: The server encountered an unexpected condition that prevented it from fulfilling the request
       content:
@@ -612,6 +501,25 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -649,36 +557,104 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-  examples:
-    bank-account:
-      description: Example of a Bank Account resource
-      value:
-        _links:
-          self:
-            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-          transactions:
-            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11?bankAccountId=3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-          statements:
-            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c/statements
-          bankLink:
-            href: /bank-links/enrollment_792dcb7d
-        id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
-        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
-        bankLinkId: enrollment_792dcb7d
-        externalId: plaid_acc_792dcb7d
-        cardIds:
-        - 5dec2c49-0aa5-4683-a317-427eb5d115f3
-        virtual: false
-        institutionName: Chase
-        name: Checking
-        mask: '1234'
-        type: checking
-        currency: USD
-        state: active
-        createdAt: '2025-10-03T10:55:42.000Z'
-        updatedAt: '2025-10-03T10:55:42.000Z'
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+  parameters:
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    bank-account-state:
+      in: query
+      name: state
+      description: Filter bank accounts by state
+      required: false
+      schema:
+        type: string
+        enum:
+        - active
+        - auth_required
+        - disconnected
+      example: active
+    bank-account-id:
+      in: path
+      name: bankAccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
   schemas:
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
     bank-account:
       type: object
       required:
@@ -726,8 +702,9 @@ components:
           format: uuid
           description: The unique identifier of the subaccount associated with this bank account.
         bankLinkId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The identifier of the bank link that created this account. Null for virtual accounts.
         externalId:
           type: string
@@ -775,8 +752,9 @@ components:
                 pattern: ^\d{4}$
                 description: The card number's last 4 — equals this account's mask by construction.
               network:
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
                 description: The card network when the institution implies it (e.g. `amex`); null until a PAN enrollment upgrades the card in place.
               enrollmentType:
                 type: string
@@ -790,15 +768,17 @@ components:
           type: string
           description: The name of the connected financial institution.
         institutionId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The provider identifier of the connected institution (Plaid `ins_*`). Null for virtual accounts and connections made before this field was captured.
         name:
           type: string
           description: The display name of the bank account (e.g. "Checking", "Savings").
         mask:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The last 4 digits of the account number. For `credit` accounts this is the card number's last 4 — the per-card identity for bank-connected (e.g. American Express) card enrollments. Not guaranteed to be per-card when the institution combines multiple cards into a single account.
         type:
           type: string
@@ -812,8 +792,9 @@ components:
           - investment
           - other
         subtype:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The raw provider account subtype (e.g. Plaid `credit card`, `checking`). Null when the provider did not supply one or for accounts connected before this field was captured.
         currency:
           type: string
@@ -864,23 +845,35 @@ components:
           type: string
       required:
       - href
-    conflict:
-      type: object
-      properties:
-        detail:
-          type: string
-        title:
-          type: string
-          enum:
-          - Conflict
-        currentValue:
-          type: string
-          description: Current value for the property causing the conflict
-        requestedValue:
-          type: string
-          description: Requested value for the property causing the conflict
-      required:
-      - detail
+  examples:
+    bank-account:
+      description: Example of a Bank Account resource
+      value:
+        _links:
+          self:
+            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          transactions:
+            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11?bankAccountId=3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          statements:
+            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c/statements
+          bankLink:
+            href: /bank-links/enrollment_792dcb7d
+        id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        bankLinkId: enrollment_792dcb7d
+        externalId: plaid_acc_792dcb7d
+        cardIds:
+        - 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        virtual: false
+        institutionName: Chase
+        name: Checking
+        mask: '1234'
+        type: checking
+        currency: USD
+        state: active
+        createdAt: '2025-10-03T10:55:42.000Z'
+        updatedAt: '2025-10-03T10:55:42.000Z'
   securitySchemes:
     main-auth:
       type: oauth2

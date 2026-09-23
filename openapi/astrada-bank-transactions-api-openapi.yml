@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts bank-transactions API
+  title: Astrada Bank Transactions API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
 tags:
-- name: bank-transactions
+- name: Bank Transactions
   description: Access bank transactions synced from connected accounts. Transactions are ingested via Plaid and can be matched against card transactions.
 paths:
   /bank-transactions/{subaccountId}/{transactionId}:
@@ -20,7 +18,7 @@ paths:
     - $ref: '#/components/parameters/transaction-id'
     get:
       tags:
-      - bank-transactions
+      - Bank Transactions
       summary: Retrieve bank transaction
       description: Returns detailed information about a specific bank transaction by its identifier, including match status and transaction metadata.
       operationId: GetBankTransaction
@@ -50,7 +48,7 @@ paths:
     - $ref: '#/components/parameters/subaccount-id-2'
     get:
       tags:
-      - bank-transactions
+      - Bank Transactions
       summary: List bank transactions
       description: 'Returns a list of bank transactions for a subaccount. Bank transactions are synced from connected financial institutions. A movement may briefly appear as its pending posting until the posted transaction replaces it (the pending row is then removed from the feed).
 
@@ -58,9 +56,7 @@ paths:
         By default, `GET /bank-transactions/{subaccountId}` returns transactions ordered by the latest `date`.
 
 
-        This endpoint supports cursor-based pagination and various filters including date range, amount range, and match status.
-
-        '
+        This endpoint supports cursor-based pagination and various filters including date range, amount range, and match status.'
       operationId: ListBankTransactions
       parameters:
       - $ref: '#/components/parameters/bank-account-id-2'
@@ -198,14 +194,12 @@ paths:
     - $ref: '#/components/parameters/subaccount-id-2'
     post:
       tags:
-      - bank-transactions
+      - Bank Transactions
       summary: Trigger bank transaction webhooks
       description: 'Manually triggers webhook delivery for specified bank transactions. This can be used to re-emit webhooks that may have been missed or to force re-matching of transactions.
 
 
-        You can specify which webhook event types to emit: `banktransaction.created` for transaction data or `transaction.match.created` for match results.
-
-        '
+        You can specify which webhook event types to emit: `banktransaction.created` for transaction data or `transaction.match.created` for match results.'
       operationId: TriggerBankTransactionWebhooks
       security:
       - main-auth:
@@ -326,42 +320,6 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
-  examples:
-    bank-transaction:
-      description: Example of a Bank Transaction resource
-      value:
-        _links:
-          self:
-            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
-          bankAccount:
-            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-          card:
-            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
-          match:
-            href: /transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
-        id: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
-        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
-        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
-        bankAccountId: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-        cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
-        matchId: b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
-        date: '2025-10-15'
-        amount: 42.5
-        currency: USD
-        description: UBER TRIP
-        merchantName: Uber
-        category:
-        - Travel
-        transactionType: debit
-        source: PLAID
-        statementId: null
-        status: early_cleared
-        settlement:
-          state: early_cleared
-          emissionType: early_clearing
-          emittedAt: '2025-10-15T15:00:00.000Z'
-          supersededAt: null
-        createdAt: '2025-10-15T14:30:00.000Z'
   parameters:
     transaction-type:
       in: query
@@ -374,6 +332,23 @@ components:
         - debit
         - credit
       example: debit
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
     min-amount:
       in: query
       name: minAmount
@@ -382,6 +357,15 @@ components:
       schema:
         type: number
       example: 10
+    start-date:
+      in: query
+      name: startDate
+      description: Filter results from this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-01'
     matched:
       in: query
       name: matched
@@ -393,6 +377,30 @@ components:
         - 'true'
         - 'false'
       example: 'true'
+    max-amount:
+      in: query
+      name: maxAmount
+      description: Filter transactions with an amount less than or equal to this value
+      required: false
+      schema:
+        type: number
+      example: 500
+    transaction-id:
+      in: path
+      name: transactionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
     end-date:
       in: query
       name: endDate
@@ -422,57 +430,49 @@ components:
         maximum: 1000
         default: 250
       example: 250
-    transaction-id:
-      in: path
-      name: transactionId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
-    subaccount-id-2:
-      in: path
-      name: subaccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
-    start-date:
-      in: query
-      name: startDate
-      description: Filter results from this date (inclusive), in YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        format: date
-      example: '2025-10-01'
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
-    max-amount:
-      in: query
-      name: maxAmount
-      description: Filter transactions with an amount less than or equal to this value
-      required: false
-      schema:
-        type: number
-      example: 500
   responses:
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
     server-error:
       description: The server encountered an unexpected condition that prevented it from fulfilling the request
       content:
@@ -492,6 +492,25 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -529,67 +548,42 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
+  examples:
+    bank-transaction:
+      description: Example of a Bank Transaction resource
+      value:
+        _links:
+          self:
+            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+          bankAccount:
+            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          card:
+            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
+          match:
+            href: /transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+        id: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        bankAccountId: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+        cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        matchId: b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+        date: '2025-10-15'
+        amount: 42.5
+        currency: USD
+        description: UBER TRIP
+        merchantName: Uber
+        category:
+        - Travel
+        transactionType: debit
+        source: PLAID
+        statementId: null
+        status: early_cleared
+        settlement:
+          state: early_cleared
+          emissionType: early_clearing
+          emittedAt: '2025-10-15T15:00:00.000Z'
+          supersededAt: null
+        createdAt: '2025-10-15T14:30:00.000Z'
   schemas:
     link:
       type: object
@@ -666,14 +660,16 @@ components:
           format: uuid
           description: The unique identifier of the bank account this transaction belongs to.
         cardId:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: The identifier of the card linked to the bank account, used for transaction matching.
         matchId:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: The identifier of the transaction match, if this bank transaction has been matched to a card transaction.
         date:
           type: string
@@ -688,16 +684,19 @@ components:
           minLength: 3
           maxLength: 3
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The transaction description provided by the financial institution.
         merchantName:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The name of the merchant.
         category:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           description: The transaction categories assigned by the provider.
           items:
             type: string
@@ -726,9 +725,10 @@ components:
           - PLAID
           - UPLOAD
         statementId:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: The identifier of the bank statement this transaction was imported from, if applicable.
         status:
           type: string
@@ -752,8 +752,9 @@ components:
           - early_cleared
           - superseded
         settlement:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Settlement outcome on the unified transaction feed. Present when the movement has settled live; null otherwise (unmatched, connector off, or shadow-only).
           required:
           - state
@@ -773,14 +774,16 @@ components:
               - early_clearing
               - bank_only
             emittedAt:
-              type: string
+              type:
+              - string
+              - 'null'
               format: date-time
-              nullable: true
               description: When the settlement was emitted to the feed.
             supersededAt:
-              type: string
+              type:
+              - string
+              - 'null'
               format: date-time
-              nullable: true
               description: When the settlement was superseded or corrected, if applicable.
         createdAt:
           description: Date and time when this resource was created, in UTC, following ISO 8601 format.

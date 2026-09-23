@@ -1,12 +1,10 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts enrollment-methods API
+  title: Astrada Enrollment Methods API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
@@ -84,44 +82,6 @@ paths:
           $ref: '#/components/responses/server-error'
 components:
   responses:
-    content-too-large:
-      description: Content Too Large
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Content Too Large
-            required:
-            - detail
-            - title
-          example:
-            title: Content Too Large
-            detail: The size of the request payload exceeds the maximum limit allowed by the server. Please reduce the size of your request.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -141,6 +101,25 @@ components:
           example:
             title: Forbidden
             detail: You do not have permission to access the requested resource.
+    content-too-large:
+      description: Content Too Large
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Content Too Large
+            required:
+            - detail
+            - title
+          example:
+            title: Content Too Large
+            detail: The size of the request payload exceeds the maximum limit allowed by the server. Please reduce the size of your request.
     server-error:
       description: The server encountered an unexpected condition that prevented it from fulfilling the request
       content:
@@ -197,6 +176,25 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
   securitySchemes:
     main-auth:
       type: oauth2

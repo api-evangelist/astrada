@@ -1,23 +1,21 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Astrada bank-accounts webhooks API
+  title: Astrada Webhooks API
   version: '2024-02-28'
   contact:
     email: developer@astrada.co
-  description: 'Welcome to our API Reference. 👋
-
-    '
+  description: Welcome to our API Reference. 👋
 servers:
 - url: https://api.astrada.co
 security: null
 tags:
-- name: webhooks
+- name: Webhooks
   description: Manage webhooks
 paths:
   /webhooks:
     post:
       tags:
-      - webhooks
+      - Webhooks
       summary: Create webhook
       description: Registers a new webhook for capturing event notifications.
       operationId: createWebhook
@@ -114,14 +112,12 @@ paths:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/cursor'
       tags:
-      - webhooks
+      - Webhooks
       summary: List webhooks
       description: 'Returns all webhooks configured under the account, optionally filtered by subaccount, including details on the events each webhook is subscribed to.
 
 
-        This endpoint supports [cursor-based pagination](https://docs.astrada.co/reference/pagination).
-
-        '
+        This endpoint supports cursor-based pagination.'
       operationId: listWebhooks
       security:
       - main-auth:
@@ -205,7 +201,7 @@ paths:
     - $ref: '#/components/parameters/webhook-id'
     delete:
       tags:
-      - webhooks
+      - Webhooks
       summary: Delete webhook
       description: Remove a configured webhook by its identifier. Results in the resource being deleted and no longer available.
       operationId: deleteWebhook
@@ -227,7 +223,7 @@ paths:
           $ref: '#/components/responses/server-error'
     get:
       tags:
-      - webhooks
+      - Webhooks
       summary: Retrieve webhook
       description: Returns detailed information about a specific webhook by its identifier, including its configuration and event subscription details.
       operationId: getWebhook
@@ -256,7 +252,7 @@ paths:
           $ref: '#/components/responses/server-error'
     patch:
       tags:
-      - webhooks
+      - Webhooks
       summary: Update webhook
       description: Updates the configuration of an existing webhook, allowing changes to the event subscriptions or notification URL.
       operationId: updateWebhook
@@ -301,6 +297,124 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
+  responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    bad-request:
+      description: The server cannot or will not process the request due to something that is perceived to be a client error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Bad Request
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  required:
+                  - title
+                  - detail
+            required:
+            - detail
+            - title
+          examples:
+            Example Generic Bad Request Payload Response:
+              value:
+                title: Bad Request
+                detail: Request object failed validation.
+            Example Generic Bad Request Parameters Response:
+              value:
+                title: Bad Request
+                detail: Request parameters are invalid.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
   parameters:
     subaccount-id:
       in: query
@@ -310,6 +424,15 @@ components:
         type: string
         format: uuid
       example: 2fd4d402-b759-479c-87a6-58d85e345356
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
     limit:
       in: query
       name: limit
@@ -329,15 +452,6 @@ components:
         type: string
         format: uuid
       example: 3c750084-a60f-478c-ab91-c53567d11fac
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
   schemas:
     webhook-event-types:
       type: array
@@ -376,8 +490,9 @@ components:
           type: string
           format: uri
         description:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         eventTypes:
           $ref: '#/components/schemas/webhook-event-types'
         subaccountId:
@@ -424,124 +539,6 @@ components:
           type: string
       required:
       - href
-  responses:
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    bad-request:
-      description: The server cannot or will not process the request due to something that is perceived to be a client error
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Bad Request
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    detail:
-                      type: string
-                  required:
-                  - title
-                  - detail
-            required:
-            - detail
-            - title
-          examples:
-            Example Generic Bad Request Payload Response:
-              value:
-                title: Bad Request
-                detail: Request object failed validation.
-            Example Generic Bad Request Parameters Response:
-              value:
-                title: Bad Request
-                detail: Request parameters are invalid.
   examples:
     webhook:
       description: Example of Webhook resource
