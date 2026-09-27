@@ -80,25 +80,8 @@ paths:
           $ref: '#/components/responses/server-error'
 components:
   responses:
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
+    no-content:
+      description: The request has been successfully processed and there is no content to return
     server-error:
       description: The server encountered an unexpected condition that prevented it from fulfilling the request
       content:
@@ -118,8 +101,6 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    no-content:
-      description: The request has been successfully processed and there is no content to return
     unauthorized:
       description: Authentication credentials were either missing or incorrect
       content:
@@ -139,6 +120,29 @@ components:
           example:
             title: Unauthorized
             detail: Authentication credentials were either missing or incorrect.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -176,30 +180,47 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    not-found:
-      description: The requested resource was not found on the server
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
       content:
         application/problem+json:
           schema:
             type: object
             properties:
-              type:
-                type: string
-              instance:
-                type: string
               detail:
                 type: string
               title:
                 type: string
                 enum:
-                - Not Found
+                - Forbidden
             required:
             - detail
             - title
           example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
   schemas:
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
     transaction-message:
       type: object
       properties:
@@ -425,27 +446,6 @@ components:
       required:
       - _links
       - raw
-    link:
-      type: object
-      properties:
-        href:
-          type: string
-        templated:
-          type: boolean
-        type:
-          type: string
-        deprecation:
-          type: string
-        name:
-          type: string
-        profile:
-          type: string
-        title:
-          type: string
-        hreflang:
-          type: string
-      required:
-      - href
   parameters:
     transaction-message-id-2:
       in: path
@@ -456,35 +456,6 @@ components:
         format: uuid
       example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
   examples:
-    raw-transaction-message:
-      description: Example of Raw Transaction Message resource
-      value:
-        _links:
-          self:
-            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc/raw
-          message:
-            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc
-        raw:
-          messageTypeIndicator: '0100'
-          primaryAccountNumber: 444444******0000
-          processingCode: '000000'
-          transactionAmount: '000000000145'
-          transmissionDateTime: '0425000000'
-          systemsTraceAuditNumber: '537254'
-          localTransactionTime: '133945'
-          localTransactionDate: '0424'
-          merchantType: '5734'
-          acquiringInstitutionIdentificationCode: KWGBYTEI4FL0QQQ
-          retrievalReferenceNumber: IWVQ22_2024-04-24
-          authorizationIdentificationResponse: '537254'
-          responseCode: '00'
-          cardAcceptorTerminalIdentification: TERMINAL01
-          cardAcceptorIdentificationCode: KWGBYTEI4FL0QQQ
-          cardAcceptorNameLocation: Uber                    LONDON      LNDGBR
-          transactionCurrencyCode: '840'
-          cardholderBillingAmount: 000000000118
-          cardholderBillingCurrency: '826'
-          networkManagementInformationCode: MASTERCARD
     transaction-message:
       description: Example of Transaction Message resource
       value:
@@ -520,6 +491,35 @@ components:
         transactionReference: IWVQ22_2024-04-24
         transactionType: DEBIT_01
         transmissionDateTime: '2024-04-25T00:00:00.000Z'
+    raw-transaction-message:
+      description: Example of Raw Transaction Message resource
+      value:
+        _links:
+          self:
+            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc/raw
+          message:
+            href: /transaction-messages/80b08eeb-c4cc-4e5c-8d0b-15bc2e04b4dc
+        raw:
+          messageTypeIndicator: '0100'
+          primaryAccountNumber: 444444******0000
+          processingCode: '000000'
+          transactionAmount: '000000000145'
+          transmissionDateTime: '0425000000'
+          systemsTraceAuditNumber: '537254'
+          localTransactionTime: '133945'
+          localTransactionDate: '0424'
+          merchantType: '5734'
+          acquiringInstitutionIdentificationCode: KWGBYTEI4FL0QQQ
+          retrievalReferenceNumber: IWVQ22_2024-04-24
+          authorizationIdentificationResponse: '537254'
+          responseCode: '00'
+          cardAcceptorTerminalIdentification: TERMINAL01
+          cardAcceptorIdentificationCode: KWGBYTEI4FL0QQQ
+          cardAcceptorNameLocation: Uber                    LONDON      LNDGBR
+          transactionCurrencyCode: '840'
+          cardholderBillingAmount: 000000000118
+          cardholderBillingCurrency: '826'
+          networkManagementInformationCode: MASTERCARD
   securitySchemes:
     main-auth:
       type: oauth2

@@ -164,107 +164,7 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
-  responses:
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
   parameters:
-    banking-limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 250
-      example: 250
-    subaccount-id-2:
-      in: path
-      name: subaccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
     cursor:
       in: query
       name: cursor
@@ -274,6 +174,40 @@ components:
         type: string
         format: byte
       example: ZXhhbXBsZQ==
+    bank-account-id-2:
+      in: query
+      name: bankAccountId
+      description: Filter by bank account identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+    start-date:
+      in: query
+      name: startDate
+      description: Filter results from this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-01'
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
     min-confidence:
       in: query
       name: minConfidence
@@ -287,58 +221,17 @@ components:
         - LOW
         default: MEDIUM
       example: MEDIUM
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
-    bank-transaction-id:
+    banking-limit:
       in: query
-      name: bankTransactionId
-      description: Filter by bank transaction identifier
+      name: limit
+      description: Maximum number of items to return
       required: false
       schema:
-        type: string
-        format: uuid
-      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
-    bank-account-id-2:
-      in: query
-      name: bankAccountId
-      description: Filter by bank account identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-    card-transaction-id:
-      in: query
-      name: cardTransactionId
-      description: Filter by card transaction identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
-    transaction-match-id:
-      in: path
-      name: transactionMatchId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: c3d4e5f6-a7b8-9012-cdef-123456789012
-    start-date:
-      in: query
-      name: startDate
-      description: Filter results from this date (inclusive), in YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        format: date
-      example: '2025-10-01'
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
     end-date:
       in: query
       name: endDate
@@ -348,7 +241,54 @@ components:
         type: string
         format: date
       example: '2025-10-31'
+    bank-transaction-id:
+      in: query
+      name: bankTransactionId
+      description: Filter by bank transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+    transaction-match-id:
+      in: path
+      name: transactionMatchId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: c3d4e5f6-a7b8-9012-cdef-123456789012
+    card-transaction-id:
+      in: query
+      name: cardTransactionId
+      description: Filter by card transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
   schemas:
+    link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+        type:
+          type: string
+        deprecation:
+          type: string
+        name:
+          type: string
+        profile:
+          type: string
+        title:
+          type: string
+        hreflang:
+          type: string
+      required:
+      - href
     transaction-match:
       type: object
       required:
@@ -502,27 +442,87 @@ components:
           description: Date and time when this match was created, in UTC, following ISO 8601 format.
           type: string
           format: date-time
-    link:
-      type: object
-      properties:
-        href:
-          type: string
-        templated:
-          type: boolean
-        type:
-          type: string
-        deprecation:
-          type: string
-        name:
-          type: string
-        profile:
-          type: string
-        title:
-          type: string
-        hreflang:
-          type: string
-      required:
-      - href
+  responses:
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
   examples:
     transaction-match:
       description: Example of a Transaction Match resource
