@@ -346,6 +346,23 @@ components:
           type: string
       required:
       - href
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
     network-bulk-feeds:
       type: object
       required:
@@ -431,68 +448,30 @@ components:
           description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
           type: string
           format: date-time
-    conflict:
-      type: object
-      properties:
-        detail:
-          type: string
-        title:
-          type: string
-          enum:
-          - Conflict
-        currentValue:
-          type: string
-          description: Current value for the property causing the conflict
-        requestedValue:
-          type: string
-          description: Requested value for the property causing the conflict
-      required:
-      - detail
-  parameters:
-    subaccount-id:
-      in: query
-      name: subaccountId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
-    offset:
-      in: query
-      name: offset
-      description: The offset to use for pagination. Identifies the position of the first item returned in the collection
-      required: false
-      schema:
-        type: number
-        default: 0
-      example: 20
-    network-reference:
-      in: query
-      name: networkReference
-      required: false
-      schema:
-        type: string
-      example: ABC12345
-    limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-      example: 25
-    network-bulk-feed-id:
-      in: path
-      name: networkBulkFeedId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3
   responses:
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
     unauthorized:
       description: Authentication credentials were either missing or incorrect
       content:
@@ -531,29 +510,21 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    not-found:
-      description: The requested resource was not found on the server
+    conflict:
+      description: Request conflict with the current state of the target resource
       content:
         application/problem+json:
           schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
+            $ref: '#/components/schemas/conflict'
+          examples:
+            Minimum shape (detail only):
+              value:
+                detail: Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.
+            Resource conflict with currentValue:
+              value:
+                title: Conflict
+                detail: The target resource already exists.
+                currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -610,21 +581,50 @@ components:
           example:
             title: Forbidden
             detail: You do not have permission to access the requested resource.
-    conflict:
-      description: Request conflict with the current state of the target resource
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/conflict'
-          examples:
-            Minimum shape (detail only):
-              value:
-                detail: Card verification with id=9fab1bea-bc1e-4757-bd47-479422e5983b was abandoned by the user during the authentication process. Please start a new verification.
-            Resource conflict with currentValue:
-              value:
-                title: Conflict
-                detail: The target resource already exists.
-                currentValue: 396aebd2-002f-4ccf-9b4d-f961c693e6e2
+  parameters:
+    network-bulk-feed-id:
+      in: path
+      name: networkBulkFeedId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: eb2ded7e-11fa-46fc-bd3e-f5b1d56fd3b3
+    network-reference:
+      in: query
+      name: networkReference
+      required: false
+      schema:
+        type: string
+      example: ABC12345
+    offset:
+      in: query
+      name: offset
+      description: The offset to use for pagination. Identifies the position of the first item returned in the collection
+      required: false
+      schema:
+        type: number
+        default: 0
+      example: 20
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+      example: 25
   examples:
     network-bulk-feeds-failed:
       description: Example of a Network Bulk Feed resource in failed state (VISA)

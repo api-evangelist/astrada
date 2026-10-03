@@ -321,95 +321,6 @@ paths:
           $ref: '#/components/responses/server-error'
 components:
   parameters:
-    subaccount-id-2:
-      in: path
-      name: subaccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
-    transaction-id:
-      in: path
-      name: transactionId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
-    max-amount:
-      in: query
-      name: maxAmount
-      description: Filter transactions with an amount less than or equal to this value
-      required: false
-      schema:
-        type: number
-      example: 500
-    min-amount:
-      in: query
-      name: minAmount
-      description: Filter transactions with an amount greater than or equal to this value
-      required: false
-      schema:
-        type: number
-      example: 10
-    matched:
-      in: query
-      name: matched
-      description: Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'true'
-        - 'false'
-      example: 'true'
-    bank-account-id-2:
-      in: query
-      name: bankAccountId
-      description: Filter by bank account identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
-    start-date:
-      in: query
-      name: startDate
-      description: Filter results from this date (inclusive), in YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        format: date
-      example: '2025-10-01'
-    transaction-type:
-      in: query
-      name: transactionType
-      description: Filter bank transactions by transaction type
-      required: false
-      schema:
-        type: string
-        enum:
-        - debit
-        - credit
-      example: debit
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
     banking-limit:
       in: query
       name: limit
@@ -421,6 +332,70 @@ components:
         maximum: 1000
         default: 250
       example: 250
+    min-amount:
+      in: query
+      name: minAmount
+      description: Filter transactions with an amount greater than or equal to this value
+      required: false
+      schema:
+        type: number
+      example: 10
+    transaction-type:
+      in: query
+      name: transactionType
+      description: Filter bank transactions by transaction type
+      required: false
+      schema:
+        type: string
+        enum:
+        - debit
+        - credit
+      example: debit
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+    start-date:
+      in: query
+      name: startDate
+      description: Filter results from this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-01'
+    bank-account-id-2:
+      in: query
+      name: bankAccountId
+      description: Filter by bank account identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+    matched:
+      in: query
+      name: matched
+      description: Filter bank transactions by match status. Set to `true` to return only matched transactions, or `false` for unmatched.
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'true'
+        - 'false'
+      example: 'true'
+    transaction-id:
+      in: path
+      name: transactionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 9340721f-bdce-4afa-bd9d-26cceb9d2176
     end-date:
       in: query
       name: endDate
@@ -430,6 +405,31 @@ components:
         type: string
         format: date
       example: '2025-10-31'
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    max-amount:
+      in: query
+      name: maxAmount
+      description: Filter transactions with an amount less than or equal to this value
+      required: false
+      schema:
+        type: number
+      example: 500
   responses:
     server-error:
       description: The server encountered an unexpected condition that prevented it from fulfilling the request
@@ -450,25 +450,6 @@ components:
           example:
             title: Internal Server Error
             detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     not-found:
       description: The requested resource was not found on the server
       content:
@@ -492,6 +473,44 @@ components:
           example:
             title: Not Found
             detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -529,25 +548,6 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
   schemas:
     bank-transaction:
       type: object
