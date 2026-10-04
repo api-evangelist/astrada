@@ -447,24 +447,64 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
+  parameters:
+    bank-account-state:
+      in: query
+      name: state
+      description: Filter bank accounts by state
+      required: false
+      schema:
+        type: string
+        enum:
+        - active
+        - auth_required
+        - disconnected
+      example: active
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
+    bank-account-id:
+      in: path
+      name: bankAccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
   schemas:
-    conflict:
-      type: object
-      properties:
-        detail:
-          type: string
-        title:
-          type: string
-          enum:
-          - Conflict
-        currentValue:
-          type: string
-          description: Current value for the property causing the conflict
-        requestedValue:
-          type: string
-          description: Requested value for the property causing the conflict
-      required:
-      - detail
     link:
       type: object
       properties:
@@ -486,6 +526,23 @@ components:
           type: string
       required:
       - href
+    conflict:
+      type: object
+      properties:
+        detail:
+          type: string
+        title:
+          type: string
+          enum:
+          - Conflict
+        currentValue:
+          type: string
+          description: Current value for the property causing the conflict
+        requestedValue:
+          type: string
+          description: Requested value for the property causing the conflict
+      required:
+      - detail
     bank-account:
       type: object
       required:
@@ -655,135 +712,7 @@ components:
           description: Date and time when this resource was last updated, in UTC, following ISO 8601 format.
           type: string
           format: date-time
-  parameters:
-    banking-limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 250
-      example: 250
-    bank-account-id:
-      in: path
-      name: bankAccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
-    subaccount-id:
-      in: query
-      name: subaccountId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
-    bank-account-state:
-      in: query
-      name: state
-      description: Filter bank accounts by state
-      required: false
-      schema:
-        type: string
-        enum:
-        - active
-        - auth_required
-        - disconnected
-      example: active
-  examples:
-    bank-account:
-      description: Example of a Bank Account resource
-      value:
-        _links:
-          self:
-            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-          transactions:
-            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11?bankAccountId=3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-          statements:
-            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c/statements
-          bankLink:
-            href: /bank-links/enrollment_792dcb7d
-        id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
-        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
-        bankLinkId: enrollment_792dcb7d
-        externalId: plaid_acc_792dcb7d
-        cardIds:
-        - 5dec2c49-0aa5-4683-a317-427eb5d115f3
-        virtual: false
-        institutionName: Chase
-        name: Checking
-        mask: '1234'
-        type: checking
-        currency: USD
-        state: active
-        createdAt: '2025-10-03T10:55:42.000Z'
-        updatedAt: '2025-10-03T10:55:42.000Z'
   responses:
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
     conflict:
       description: Request conflict with the current state of the target resource
       content:
@@ -836,25 +765,6 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -874,6 +784,96 @@ components:
           example:
             title: Forbidden
             detail: You do not have permission to access the requested resource.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+  examples:
+    bank-account:
+      description: Example of a Bank Account resource
+      value:
+        _links:
+          self:
+            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          transactions:
+            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11?bankAccountId=3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+          statements:
+            href: /bank-accounts/3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c/statements
+          bankLink:
+            href: /bank-links/enrollment_792dcb7d
+        id: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        bankLinkId: enrollment_792dcb7d
+        externalId: plaid_acc_792dcb7d
+        cardIds:
+        - 5dec2c49-0aa5-4683-a317-427eb5d115f3
+        virtual: false
+        institutionName: Chase
+        name: Checking
+        mask: '1234'
+        type: checking
+        currency: USD
+        state: active
+        createdAt: '2025-10-03T10:55:42.000Z'
+        updatedAt: '2025-10-03T10:55:42.000Z'
   securitySchemes:
     main-auth:
       type: oauth2

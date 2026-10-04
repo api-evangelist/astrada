@@ -515,6 +515,58 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
+  parameters:
+    bank-link-state:
+      in: query
+      name: state
+      description: Filter bank links by state
+      required: false
+      schema:
+        type: string
+        enum:
+        - pending
+        - completed
+        - expired
+      example: completed
+    bank-link-id:
+      in: path
+      name: bankLinkId
+      description: The client-provided identifier of the bank link.
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+        pattern: ^[a-zA-Z0-9_-]+$
+      example: enrollment_792dcb7d
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      description: The cursor to use for pagination. Identifies your place on the list
+      schema:
+        type: string
+        format: byte
+      example: ZXhhbXBsZQ==
+    subaccount-id:
+      in: query
+      name: subaccountId
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 2fd4d402-b759-479c-87a6-58d85e345356
+    banking-limit:
+      in: query
+      name: limit
+      description: Maximum number of items to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 250
+      example: 250
   schemas:
     link:
       type: object
@@ -738,101 +790,7 @@ components:
           description: Date and time when this resource was created, in UTC, following ISO 8601 format.
           type: string
           format: date-time
-  parameters:
-    bank-link-state:
-      in: query
-      name: state
-      description: Filter bank links by state
-      required: false
-      schema:
-        type: string
-        enum:
-        - pending
-        - completed
-        - expired
-      example: completed
-    banking-limit:
-      in: query
-      name: limit
-      description: Maximum number of items to return
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 250
-      example: 250
-    bank-link-id:
-      in: path
-      name: bankLinkId
-      description: The client-provided identifier of the bank link.
-      required: true
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 256
-        pattern: ^[a-zA-Z0-9_-]+$
-      example: enrollment_792dcb7d
-    subaccount-id:
-      in: query
-      name: subaccountId
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 2fd4d402-b759-479c-87a6-58d85e345356
-    cursor:
-      in: query
-      name: cursor
-      required: false
-      description: The cursor to use for pagination. Identifies your place on the list
-      schema:
-        type: string
-        format: byte
-      example: ZXhhbXBsZQ==
   responses:
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
     conflict:
       description: Request conflict with the current state of the target resource
       content:
@@ -885,25 +843,6 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
     forbidden:
       description: Authentication credentials used do not have have permissions to perform the request
       content:
@@ -923,6 +862,67 @@ components:
           example:
             title: Forbidden
             detail: You do not have permission to access the requested resource.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
   examples:
     bank-link:
       description: Example of a completed Bank Link resource
