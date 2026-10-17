@@ -82,6 +82,44 @@ paths:
           $ref: '#/components/responses/server-error'
 components:
   responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -119,25 +157,6 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
     unauthorized:
       description: Authentication credentials were either missing or incorrect
       content:
@@ -157,25 +176,6 @@ components:
           example:
             title: Unauthorized
             detail: Authentication credentials were either missing or incorrect.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
     content-too-large:
       description: Content Too Large
       content:

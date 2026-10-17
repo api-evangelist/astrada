@@ -458,70 +458,45 @@ components:
       - createdAt
       - updatedAt
       - _links
-  parameters:
-    card-id.required:
-      in: query
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
-    verification-id:
-      in: path
-      name: verificationId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 9cac38a2-6584-4c1f-92fd-85223774979b
-  examples:
-    card-verification-failed:
-      description: Example of a failed Card Verification, with a populated failureReason explaining why the 3DS verification failed.
-      value:
-        _links:
-          self:
-            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b
-          steps:
-            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b/steps
-        id: 9fab1bea-bc1e-4757-bd47-479422e5983b
-        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
-        cardId: 8309b5f8-d5d8-49bb-9001-38bf1bb0f1e4
-        type: 3DS
-        currentStepId: null
-        state: failed
-        authenticationFlow: frictionless
-        failureReason:
-          category: authentication_declined
-          description: The card issuer declined the 3-D Secure authentication.
-          retryable: true
-          issuerMessage: Your bank declined this verification. Please contact your bank or try another card.
-          code: '05'
-          acsReferences:
-            acsTransactionId: 8a880dc0-d2d2-4067-bcb1-b08d1690b26e
-            acsReferenceNumber: ACME-ACS-2024-0042
-            dsTransactionId: 97267598-fae6-494f-8453-2d3807e0c77f
-        createdAt: '2024-01-04T18:53:32.000Z'
-        updatedAt: '2024-01-04T18:55:12.000Z'
-    card-verification:
-      description: Example of Card Verification resource
-      value:
-        _links:
-          self:
-            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b
-          steps:
-            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b/steps
-          currentStep:
-            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b/steps/fingerprint
-        id: 9fab1bea-bc1e-4757-bd47-479422e5983b
-        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
-        cardId: 8309b5f8-d5d8-49bb-9001-38bf1bb0f1e4
-        type: 3DS
-        currentStepId: fingerprint
-        state: in-progress
-        createdAt: '2024-01-04T18:53:32.000Z'
-        updatedAt: '2023-01-04T10:55:12.000Z'
   responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
     bad-request:
       description: The server cannot or will not process the request due to something that is perceived to be a client error
       content:
@@ -559,63 +534,6 @@ components:
               value:
                 title: Bad Request
                 detail: Request parameters are invalid.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
     not-found:
       description: The requested resource was not found on the server
       content:
@@ -639,6 +557,88 @@ components:
           example:
             title: Not Found
             detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
+  parameters:
+    verification-id:
+      in: path
+      name: verificationId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 9cac38a2-6584-4c1f-92fd-85223774979b
+    card-id.required:
+      in: query
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 8164683a-8d23-4421-9694-1a81fc9b9c37
+  examples:
+    card-verification:
+      description: Example of Card Verification resource
+      value:
+        _links:
+          self:
+            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b
+          steps:
+            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b/steps
+          currentStep:
+            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b/steps/fingerprint
+        id: 9fab1bea-bc1e-4757-bd47-479422e5983b
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        cardId: 8309b5f8-d5d8-49bb-9001-38bf1bb0f1e4
+        type: 3DS
+        currentStepId: fingerprint
+        state: in-progress
+        createdAt: '2024-01-04T18:53:32.000Z'
+        updatedAt: '2023-01-04T10:55:12.000Z'
+    card-verification-failed:
+      description: Example of a failed Card Verification, with a populated failureReason explaining why the 3DS verification failed.
+      value:
+        _links:
+          self:
+            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b
+          steps:
+            href: /card-verifications/3ds/9fab1bea-bc1e-4757-bd47-479422e5983b/steps
+        id: 9fab1bea-bc1e-4757-bd47-479422e5983b
+        subaccountId: f297d659-c13d-4219-aeaa-e10a845140a5
+        cardId: 8309b5f8-d5d8-49bb-9001-38bf1bb0f1e4
+        type: 3DS
+        currentStepId: null
+        state: failed
+        authenticationFlow: frictionless
+        failureReason:
+          category: authentication_declined
+          description: The card issuer declined the 3-D Secure authentication.
+          retryable: true
+          issuerMessage: Your bank declined this verification. Please contact your bank or try another card.
+          code: '05'
+          acsReferences:
+            acsTransactionId: 8a880dc0-d2d2-4067-bcb1-b08d1690b26e
+            acsReferenceNumber: ACME-ACS-2024-0042
+            dsTransactionId: 97267598-fae6-494f-8453-2d3807e0c77f
+        createdAt: '2024-01-04T18:53:32.000Z'
+        updatedAt: '2024-01-04T18:55:12.000Z'
   securitySchemes:
     main-auth:
       type: oauth2

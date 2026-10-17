@@ -164,32 +164,59 @@ paths:
         '500':
           $ref: '#/components/responses/server-error'
 components:
+  examples:
+    transaction-match:
+      description: Example of a Transaction Match resource
+      value:
+        _links:
+          self:
+            href: /transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+          cardTransaction:
+            href: /transaction-messages/a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+          bankTransaction:
+            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+          card:
+            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
+        id: b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
+        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
+        cardTransactionId: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+        bankTransactionId: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+        confidence: HIGH
+        score: 0.85
+        cardTransaction:
+          cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
+          date: '2025-10-15'
+          amount: 42.5
+          currency: USD
+          descriptor: UBER TRIP
+        bankTransaction:
+          date: '2025-10-15'
+          amount: 42.5
+          currency: USD
+          description: UBER TRIP
+          merchantName: Uber
+        reasons:
+        - type: Amount
+          score: 1
+          cardValue: '42.50'
+          bankValue: '42.50'
+          diff: 0
+          message: Exact amount match ($42.50)
+        - type: Date
+          score: 0.9
+          cardValue: '2025-10-15'
+          bankValue: '2025-10-15'
+          diff: 0
+          message: Transaction dates within 1 day
+        - type: Merchant
+          score: 0.85
+          cardValue: UBER TRIP
+          bankValue: Uber
+          diff: 0
+          message: Merchant name contains match (Uber)
+        createdAt: '2025-10-15T14:31:00.000Z'
   parameters:
-    bank-account-id-2:
-      in: query
-      name: bankAccountId
-      description: Filter by bank account identifier
-      required: false
-      schema:
-        type: string
-        format: uuid
-      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
-    subaccount-id-2:
-      in: path
-      name: subaccountId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
-    card-id-2:
-      in: path
-      name: cardId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
     cursor:
       in: query
       name: cursor
@@ -199,24 +226,14 @@ components:
         type: string
         format: byte
       example: ZXhhbXBsZQ==
-    start-date:
-      in: query
-      name: startDate
-      description: Filter results from this date (inclusive), in YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        format: date
-      example: '2025-10-01'
-    bank-transaction-id:
-      in: query
-      name: bankTransactionId
-      description: Filter by bank transaction identifier
-      required: false
+    transaction-match-id:
+      in: path
+      name: transactionMatchId
+      required: true
       schema:
         type: string
         format: uuid
-      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
+      example: c3d4e5f6-a7b8-9012-cdef-123456789012
     banking-limit:
       in: query
       name: limit
@@ -228,15 +245,40 @@ components:
         maximum: 1000
         default: 250
       example: 250
-    end-date:
+    card-id-2:
+      in: path
+      name: cardId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 6d18f5bb-b9d6-4237-97c2-44b1bdb71d6b
+    subaccount-id-2:
+      in: path
+      name: subaccountId
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 24c4f90d-ab3b-4f6e-8a1d-d251a4fcf34c
+    bank-account-id-2:
       in: query
-      name: endDate
-      description: Filter results up to this date (inclusive), in YYYY-MM-DD format
+      name: bankAccountId
+      description: Filter by bank account identifier
       required: false
       schema:
         type: string
-        format: date
-      example: '2025-10-31'
+        format: uuid
+      example: 3a8f2c1d-5e7b-4d9a-b6c8-9f0e1d2a3b4c
+    bank-transaction-id:
+      in: query
+      name: bankTransactionId
+      description: Filter by bank transaction identifier
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
     card-transaction-id:
       in: query
       name: cardTransactionId
@@ -246,6 +288,24 @@ components:
         type: string
         format: uuid
       example: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
+    start-date:
+      in: query
+      name: startDate
+      description: Filter results from this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-01'
+    end-date:
+      in: query
+      name: endDate
+      description: Filter results up to this date (inclusive), in YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        format: date
+      example: '2025-10-31'
     min-confidence:
       in: query
       name: minConfidence
@@ -259,14 +319,87 @@ components:
         - LOW
         default: MEDIUM
       example: MEDIUM
-    transaction-match-id:
-      in: path
-      name: transactionMatchId
-      required: true
-      schema:
-        type: string
-        format: uuid
-      example: c3d4e5f6-a7b8-9012-cdef-123456789012
+  responses:
+    forbidden:
+      description: Authentication credentials used do not have have permissions to perform the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Forbidden
+            required:
+            - detail
+            - title
+          example:
+            title: Forbidden
+            detail: You do not have permission to access the requested resource.
+    server-error:
+      description: The server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Internal Server Error
+            required:
+            - detail
+            - title
+          example:
+            title: Internal Server Error
+            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    not-found:
+      description: The requested resource was not found on the server
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+              instance:
+                type: string
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Not Found
+            required:
+            - detail
+            - title
+          example:
+            title: Not Found
+            detail: The requested resource was not found on the server.
+    unauthorized:
+      description: Authentication credentials were either missing or incorrect
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+              title:
+                type: string
+                enum:
+                - Unauthorized
+            required:
+            - detail
+            - title
+          example:
+            title: Unauthorized
+            detail: Authentication credentials were either missing or incorrect.
   schemas:
     link:
       type: object
@@ -442,139 +575,6 @@ components:
           description: Date and time when this match was created, in UTC, following ISO 8601 format.
           type: string
           format: date-time
-  responses:
-    server-error:
-      description: The server encountered an unexpected condition that prevented it from fulfilling the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Internal Server Error
-            required:
-            - detail
-            - title
-          example:
-            title: Internal Server Error
-            detail: The server encountered an unexpected condition that prevented it from fulfilling the request.
-    forbidden:
-      description: Authentication credentials used do not have have permissions to perform the request
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Forbidden
-            required:
-            - detail
-            - title
-          example:
-            title: Forbidden
-            detail: You do not have permission to access the requested resource.
-    unauthorized:
-      description: Authentication credentials were either missing or incorrect
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Unauthorized
-            required:
-            - detail
-            - title
-          example:
-            title: Unauthorized
-            detail: Authentication credentials were either missing or incorrect.
-    not-found:
-      description: The requested resource was not found on the server
-      content:
-        application/problem+json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-              instance:
-                type: string
-              detail:
-                type: string
-              title:
-                type: string
-                enum:
-                - Not Found
-            required:
-            - detail
-            - title
-          example:
-            title: Not Found
-            detail: The requested resource was not found on the server.
-  examples:
-    transaction-match:
-      description: Example of a Transaction Match resource
-      value:
-        _links:
-          self:
-            href: /transaction-matches/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
-          cardTransaction:
-            href: /transaction-messages/a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
-          bankTransaction:
-            href: /bank-transactions/1fcb895e-9217-4a6f-9d10-5a7dcef86c11/7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
-          card:
-            href: /cards/5dec2c49-0aa5-4683-a317-427eb5d115f3
-        id: b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e
-        accountId: 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
-        subaccountId: 1fcb895e-9217-4a6f-9d10-5a7dcef86c11
-        cardTransactionId: a9b8c7d6-e5f4-3a2b-1c0d-9e8f7a6b5c4d
-        bankTransactionId: 7f2a9c4e-3b1d-4e8f-a5c7-6d0e2f9b8a3c
-        confidence: HIGH
-        score: 0.85
-        cardTransaction:
-          cardId: 5dec2c49-0aa5-4683-a317-427eb5d115f3
-          date: '2025-10-15'
-          amount: 42.5
-          currency: USD
-          descriptor: UBER TRIP
-        bankTransaction:
-          date: '2025-10-15'
-          amount: 42.5
-          currency: USD
-          description: UBER TRIP
-          merchantName: Uber
-        reasons:
-        - type: Amount
-          score: 1
-          cardValue: '42.50'
-          bankValue: '42.50'
-          diff: 0
-          message: Exact amount match ($42.50)
-        - type: Date
-          score: 0.9
-          cardValue: '2025-10-15'
-          bankValue: '2025-10-15'
-          diff: 0
-          message: Transaction dates within 1 day
-        - type: Merchant
-          score: 0.85
-          cardValue: UBER TRIP
-          bankValue: Uber
-          diff: 0
-          message: Merchant name contains match (Uber)
-        createdAt: '2025-10-15T14:31:00.000Z'
   securitySchemes:
     main-auth:
       type: oauth2
