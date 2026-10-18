@@ -83,6 +83,8 @@ apis:
   humanURL: https://docs.astrada.co/reference
   baseURL: https://api.astrada.co
   tags:
+  - Bank Links
+  tags_raw:
   - bank-links
   properties:
   - type: OpenAPI
