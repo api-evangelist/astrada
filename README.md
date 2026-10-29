@@ -64,6 +64,191 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Astrada is a company surfaced as a portfolio company of qed-investors and added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.
+Astrada is the data layer for autonomous finance, providing real-time, structured card transaction data pulled directly from the card networks rather than relying on delayed bank feeds. Its Transaction Data API lets expense management, travel, and accounting/ERP platforms enroll corporate cards (with 3DS cardholder verification), receive real-time transaction messages and enriched transactions, link bank accounts, and auto-reconcile card-to-bank activity. Founded in 2024 by Salman Syed (ex-Mastercard, Marqeta, Fidel API), Astrada is PCI DSS v4 Level 1 certified, a Mastercard Start Path and Visa Ventures portfolio company, and is backed by QED Investors.
 
-Backed by: qed-investors — https://astrada.co/
+**Areas:** Company · Fintech · Payments · Card Data · Transaction Data · Reconciliation · Expense Management · Data Infrastructure
+
+## Astrada on APIs.io
+
+Everything profiled for Astrada is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/astrada/](https://apis.io/providers/astrada/)** — or go straight to one of the APIs or properties below.
+
+### APIs (15)
+
+- [Astrada Bank Accounts API](https://apis.io/apis/astrada/astrada-bank-accounts-api/) — Manage connected bank accounts. Bank accounts are created automatically when a bank link enrollment is completed.
+- [Astrada Bank Links API](https://apis.io/apis/astrada/astrada-bank-links-api/) — Manage bank enrollment links. A bank link represents an invitation for a user to connect their bank account via Plaid.
+- [Astrada Bank Subscriptions API](https://apis.io/apis/astrada/astrada-bank-subscriptions-api/) — Manage bank subscriptions (Plaid connections). A subscription represents an active connection to a financial institution.
+- [Astrada Bank Transactions API](https://apis.io/apis/astrada/astrada-bank-transactions-api/) — Access bank transactions synced from connected accounts. Transactions are ingested via Plaid and can be matched against card transactions.
+- [Astrada Bin Lookup API](https://apis.io/apis/astrada/astrada-bin-lookup-api/) — BIN Lookup
+- [Astrada Card API](https://apis.io/apis/astrada/astrada-card-api/) — Card resource
+- [Astrada Card Subscription API](https://apis.io/apis/astrada/astrada-card-subscription-api/) — Card Subscription resource
+- [Astrada Card Verification API](https://apis.io/apis/astrada/astrada-card-verification-api/) — Card Verification
+- [Astrada Enrollment Methods API](https://apis.io/apis/astrada/astrada-enrollment-methods-api/) — Enrollment methods resource
+- [Astrada Network Bulk Feeds API](https://apis.io/apis/astrada/astrada-network-bulk-feeds-api/) — Network bulk feed resource
+- [Astrada Subaccounts API](https://apis.io/apis/astrada/astrada-subaccounts-api/) — Subaccount resource
+- [Astrada Transaction Matches API](https://apis.io/apis/astrada/astrada-transaction-matches-api/) — Access transaction matches between bank and card transactions, including confidence scores and match reasoning.
+- [Astrada Transaction Messages API](https://apis.io/apis/astrada/astrada-transaction-messages-api/) — Transaction messages resource
+- [Astrada Transactions API](https://apis.io/apis/astrada/astrada-transactions-api/) — Transaction resource
+- [Astrada Webhooks API](https://apis.io/apis/astrada/astrada-webhooks-api/) — Manage webhooks
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (2)
+
+Event-driven and webhook contracts.
+
+- [Astrada Webhook Events](https://apis.io/asyncapis/astrada/astrada-events-asyncapi/)
+- [Astrada Webhooks](https://apis.io/asyncapis/astrada/astrada-webhooks/)
+
+#### Event channels (11)
+
+Individual events and webhooks the provider emits.
+
+- [banklink.completed](https://apis.io/channels/astrada/banklink-completed/)
+- [banktransaction.created](https://apis.io/channels/astrada/banktransaction-created/)
+- [banktransaction.deleted](https://apis.io/channels/astrada/banktransaction-deleted/)
+- [cardsubscription.created](https://apis.io/channels/astrada/cardsubscription-created/)
+- [cardsubscription.updated](https://apis.io/channels/astrada/cardsubscription-updated/)
+- [enrichment.merchant.created](https://apis.io/channels/astrada/enrichment-merchant-created/)
+- [transaction.created](https://apis.io/channels/astrada/transaction-created/)
+- [transaction.match.created](https://apis.io/channels/astrada/transaction-match-created/)
+- [transaction.match.deleted](https://apis.io/channels/astrada/transaction-match-deleted/)
+- [transaction.updated](https://apis.io/channels/astrada/transaction-updated/)
+- [transactionmessage.created](https://apis.io/channels/astrada/transactionmessage-created/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [astrada](https://apis.io/servers/astrada/astrada/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Astrada Agentic Access](https://apis.io/agentic-access/astrada/astrada-agentic-access/)
+
+#### Collections (30)
+
+Postman and Open Collection request collections.
+
+- [Astrada bank-accounts API](https://apis.io/collections/astrada/open-astrada-bank-accounts-api/)
+- [Astrada bank-accounts bank-links API](https://apis.io/collections/astrada/open-astrada-bank-links-api/)
+- [Astrada bank-accounts bank-subscriptions API](https://apis.io/collections/astrada/open-astrada-bank-subscriptions-api/)
+- [Astrada bank-accounts bank-transactions API](https://apis.io/collections/astrada/open-astrada-bank-transactions-api/)
+- [Astrada bank-accounts bin-lookup API](https://apis.io/collections/astrada/open-astrada-bin-lookup-api/)
+- [Astrada bank-accounts card API](https://apis.io/collections/astrada/open-astrada-card-api/)
+- [Astrada bank-accounts card-subscription API](https://apis.io/collections/astrada/open-astrada-card-subscription-api/)
+- [Astrada bank-accounts card-verification API](https://apis.io/collections/astrada/open-astrada-card-verification-api/)
+- [Astrada bank-accounts enrollment-methods API](https://apis.io/collections/astrada/open-astrada-enrollment-methods-api/)
+- [Astrada bank-accounts network-bulk-feeds API](https://apis.io/collections/astrada/open-astrada-network-bulk-feeds-api/)
+- [Astrada bank-accounts subaccounts API](https://apis.io/collections/astrada/open-astrada-subaccounts-api/)
+- [Astrada bank-accounts transaction-matches API](https://apis.io/collections/astrada/open-astrada-transaction-matches-api/)
+- [Astrada bank-accounts transaction-messages API](https://apis.io/collections/astrada/open-astrada-transaction-messages-api/)
+- [Astrada bank-accounts transactions API](https://apis.io/collections/astrada/open-astrada-transactions-api/)
+- [Astrada bank-accounts webhooks API](https://apis.io/collections/astrada/open-astrada-webhooks-api/)
+- [Astrada bank-accounts API](https://apis.io/collections/astrada/postman-astrada-bank-accounts-api/)
+- [Astrada bank-accounts bank-links API](https://apis.io/collections/astrada/postman-astrada-bank-links-api/)
+- [Astrada bank-accounts bank-subscriptions API](https://apis.io/collections/astrada/postman-astrada-bank-subscriptions-api/)
+- [Astrada bank-accounts bank-transactions API](https://apis.io/collections/astrada/postman-astrada-bank-transactions-api/)
+- [Astrada bank-accounts bin-lookup API](https://apis.io/collections/astrada/postman-astrada-bin-lookup-api/)
+- [Astrada bank-accounts card API](https://apis.io/collections/astrada/postman-astrada-card-api/)
+- [Astrada bank-accounts card-subscription API](https://apis.io/collections/astrada/postman-astrada-card-subscription-api/)
+- [Astrada bank-accounts card-verification API](https://apis.io/collections/astrada/postman-astrada-card-verification-api/)
+- [Astrada bank-accounts enrollment-methods API](https://apis.io/collections/astrada/postman-astrada-enrollment-methods-api/)
+- [Astrada bank-accounts network-bulk-feeds API](https://apis.io/collections/astrada/postman-astrada-network-bulk-feeds-api/)
+- …and 5 more published on APIs.io
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Astrada Openapi Overlay](https://apis.io/overlays/astrada/astrada-openapi-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Astrada Authentication](https://apis.io/security/astrada/astrada-authentication/)
+- [Astrada Domain Security](https://apis.io/security/astrada/astrada-domain-security/)
+- [Astrada Trust Center](https://apis.io/security/astrada/astrada-trust-center/)
+- [Astrada Vulnerability Disclosure](https://apis.io/security/astrada/astrada-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Astrada Scopes](https://apis.io/scopes/astrada/astrada-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://astrada.co/)
+- [Documentation](https://docs.astrada.co/docs/home)
+- [Getting started](https://docs.astrada.co/docs/getting-started-1)
+- [API reference](https://docs.astrada.co/reference)
+- [Sign up](https://astrada.co/company/contact)
+- [Support](https://astrada.co/company/contact)
+- [Blog](https://astrada.co/blog)
+- [Security](https://astrada.co/security)
+- [Compliance](https://astrada.co/security)
+- [Terms of service](https://astrada.co/legal)
+- [Privacy policy](https://astrada.co/legal)
+- [Status](https://status.astrada.co)
+
+## API Evangelist rating
+
+**Kin Score 54.7** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 58.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 53.0 |
+| Access clarity | 50.0 |
+
+**Agent readiness 34.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 48.2** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/astrada/](https://apis.io/providers/astrada/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Astrada: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/astrada/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
